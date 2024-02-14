@@ -17,4 +17,8 @@ LoginRepository userDAO;
 		return userDAO.ValidateUser(userName, password);
 	}
 	
+	@Transactional
+	public void updateUserDetails(Object LoginUserDetails) throws Exception {
+		userDAO.updateUserDetails(LoginUserDetails);
+	}
 }

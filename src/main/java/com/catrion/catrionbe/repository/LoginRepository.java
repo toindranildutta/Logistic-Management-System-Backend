@@ -2,9 +2,11 @@ package com.catrion.catrionbe.repository;
 
 import java.io.StringWriter;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+ 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.catrion.catrionbe.dto.LoginResponseDTO;
+import com.catrion.catrionbe.entity.LoginUserDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Repository
@@ -102,6 +105,22 @@ public class LoginRepository {
 
 		return userPassword;
 	}
-
+	public void updateUserDetails(Object   loginUserDetails) throws Exception {
+		logger.info("Inside updateUserDetails");
+		try {
+			Session session = this.sessionFactory.openSession();
+			final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
+		 
+		 
+			
+ 		 
+			session.update(loginUserDetails);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception in updateUserDetails " + e.getMessage());
+			throw e;
+		}
+		logger.info("returning updateUserDetails");
+	} 
 	
 }

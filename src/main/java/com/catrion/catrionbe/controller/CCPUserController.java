@@ -1,18 +1,20 @@
 package com.catrion.catrionbe.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
- 
 
+import com.catrion.catrionbe.entity.LoginUserDetails;
 import com.catrion.catrionbe.service.CCPUserService;
 import com.catrion.catrionbe.utils.ErrorResponse;
 import com.catrion.catrionbe.utils.Validator;
@@ -83,4 +85,31 @@ public class CCPUserController {
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Validation Failed");		
 	}	
+	
+	
+	@RequestMapping(value = "/updateLoginUserDetails", method = RequestMethod.PUT, headers = "Accept=application/json")
+	public ResponseEntity<String> updateLoginUserDetails(@RequestBody LoginUserDetails loginUserDetails) {
+		
+		List<ErrorResponse> errorMap = new ArrayList<>();
+		String successjson = "";
+		
+		try {
+			logger.info("Inside updateLoginUserDetails ");
+			userService.updateUserDetails(loginUserDetails);
+			errorMap.add(new ErrorResponse("SAVE-001", "LoginUserDetails updated successfully."));
+			successjson = new ObjectMapper().writeValueAsString(errorMap);
+			logger.info("return from updateLoginUserDetails "+successjson);
+		} catch (Exception e) {
+			logger.error("Exception Occured updateLoginUserDetails: " + e.getMessage());
+			logger.error("Error occured"+e);
+			errorMap.add(new ErrorResponse("EXEC-001", e.getMessage()));
+			String errjson = null;
+			try {
+			errjson = new ObjectMapper().writeValueAsString(errorMap);
+			}catch (Exception e1) { } 
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( errjson);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(successjson);		
+	}
+
 }
