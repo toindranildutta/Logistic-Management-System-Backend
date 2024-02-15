@@ -79,7 +79,7 @@ public class CCPUserController {
 			
  		} catch (Exception e) {
 			System.out.println("Exception Occured 7" + e);
-			errorMap.add(new ErrorResponse("ERROR-001", "The mobile number/password entered is incorrect. Please enter correct login details"));
+			errorMap.add(new ErrorResponse("ERROR-001", "Service API or DB unable to communicate.Please contact Admin"));
 			logger.error("Exception Occured Validate User : " + e.getMessage());
 			logger.error("Error occured"+e);
 		}
