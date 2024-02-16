@@ -24,7 +24,7 @@ public class LoginRepository {
 	final Logger logger = Logger.getLogger(LoginRepository.class);
 
 	
-	public String ValidateUser(String emailId, String prnNumber) throws Exception {
+	public String ValidateUser(String mobileNumber, String prnNumber) throws Exception {
 		logger.info("Inside listUniversities");
 		Session session = this.sessionFactory.openSession();	
 		StringWriter sw = new StringWriter();
@@ -43,9 +43,8 @@ public class LoginRepository {
  	 //	if (passwordString != "" || passwordString !="null"  ) {
 		
 			System.out.println("passwordString  2 " + passwordString);
-			System.out.println("emailId " + emailId);
-		Query query = session.createQuery("from LoginUserDetails as o where o.emailId= :emailId  and o.prnNumber=:prnNumber and o.isAprroved=:yesFlag");
- 		query.setString("emailId",emailId);
+ 		Query query = session.createQuery("from LoginUserDetails as o where o.mobileNumber= :mobileNumber  and o.prnNumber=:prnNumber and o.isAprroved=:yesFlag");
+ 		query.setString("mobileNumber",mobileNumber);
  		query.setString("prnNumber",prnNumber);
  		query.setString("yesFlag",yesFlag);
 		
@@ -55,8 +54,8 @@ public class LoginRepository {
 			Session session11 = this.sessionFactory.openSession();	
 			userFound= "true";
 			System.out.println("userFound    true   "  );
-		Query query11 = session11.createQuery("from LoginUserDetails as o where o.emailId=:emailId");
-		query11.setString("emailId",emailId);
+		Query query11 = session11.createQuery("from LoginUserDetails as o where o.mobileNumber=:mobileNumber");
+		query11.setString("mobileNumber",mobileNumber);
 		 
 		List list11 = query11.list();
 		System.out.println("userFound    next    "  );
