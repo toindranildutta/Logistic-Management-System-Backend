@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
- 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,7 +24,7 @@ public class LoginRepository {
 	final Logger logger = Logger.getLogger(LoginRepository.class);
 
 	
-	public String ValidateUser(String emailId, String password) throws Exception {
+	public String ValidateUser(String emailId, String prnNumber) throws Exception {
 		logger.info("Inside listUniversities");
 		Session session = this.sessionFactory.openSession();	
 		StringWriter sw = new StringWriter();
@@ -39,16 +38,15 @@ public class LoginRepository {
 		// emailIdAvailable =  (checkForUniqueemailId(emailId)) ;
 		
 		// if (emailIdAvailable == "false") {
-			 passwordString = getUserPassword(emailId);
+	 //		 passwordString = getUserPassword(emailId);
 		 
-			 System.out.println("passwordString  1   " + passwordString); 
-		if (passwordString != "" || passwordString !="null"  ) {
+ 	 //	if (passwordString != "" || passwordString !="null"  ) {
 		
 			System.out.println("passwordString  2 " + passwordString);
 			System.out.println("emailId " + emailId);
-		Query query = session.createQuery("from LoginUserDetails as o where o.emailId= :emailId  and o.password=:password and o.isAprroved=:yesFlag");
+		Query query = session.createQuery("from LoginUserDetails as o where o.emailId= :emailId  and o.prnNumber=:prnNumber and o.isAprroved=:yesFlag");
  		query.setString("emailId",emailId);
- 		query.setString("password",password);
+ 		query.setString("prnNumber",prnNumber);
  		query.setString("yesFlag",yesFlag);
 		
 		List list = query.list();
@@ -65,10 +63,10 @@ public class LoginRepository {
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.writeValue(sw, list11);
 			} else {
-				throw new Exception("This mobile number/password does not match in our records. Please Sign Up");  
+				throw new Exception("This Email /PRN does not match in our records. Please Sign Up");  
 
 			}	
-		}		 
+	//	}		 
 		
 		} catch (Exception e) {
 			//e.printStackTrace();
@@ -108,19 +106,168 @@ public class LoginRepository {
 	public void updateUserDetails(Object   loginUserDetails) throws Exception {
 		logger.info("Inside updateUserDetails");
 		try {
+			System.out.println("  Inside updateLoginUserDetails 3" );
 			Session session = this.sessionFactory.openSession();
 			final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
+			LoginUserDetails pojo = mapper.convertValue(loginUserDetails, LoginUserDetails.class);
+			 
 		 
-		 
-			
+			System.out.println("  Inside updateLoginUserDetails 4" );
  		 
-			session.update(loginUserDetails);
+			session.update(pojo);
 		} catch (Exception e) {
+			System.out.println("Exception Occured 7" + e);
 			e.printStackTrace();
 			logger.error("Exception in updateUserDetails " + e.getMessage());
 			throw e;
 		}
 		logger.info("returning updateUserDetails");
 	} 
+	
+	
+	public String validateOTP (String otpNumber, String phoneNumber) throws Exception {
+		String smsMessage= "Your Mobile Number Verified successfully.";
+		try {
+			System.out.println("1");
+
+			 
+			
+			String username = phoneNumber;
+			String userNameAvailable = "false";	
+			
+			int optpNum  = Integer.parseInt(otpNumber);
+			String otpGenerated = "";
+ 			  userNameAvailable =  (checkForValidOTP(optpNum , phoneNumber)) ;
+			System.out.println("2");
+			if (userNameAvailable == "false") {
+				smsMessage="Mobile Number not found";
+				 
+				 // throw new Exception("Mobile Number not found");  
+			}
+        else {
+        	 otpGenerated = getGeneratedOTP(phoneNumber);
+				 
+				// throw new Exception("Mobile Number already exists, please use different mobile number");  
+			 }
+			
+			
+			System.out.println("Generated OTP "+otpGenerated);
+			
+			
+			System.out.println(" otpGenerated    "+otpGenerated); 
+			
+			if (otpGenerated == otpNumber && userNameAvailable == "true") {
+				 
+			 
+				smsMessage="OTP Verified";
+				
+			}
+			else {
+				smsMessage="OTP not matched";
+				throw new Exception("This mobile number/Last Name does not match in our records. Please Sign Up");
+				
+			}
+			
+
+		} catch(Exception ex) {
+
+		System.out.println(ex.getMessage());
+
+		}
+		return smsMessage;	
+	}
+	
+	public String checkForValidOTP (int otpNumber, String phoneNumber) throws Exception{
+		logger.info("Inside checkForUniqueUsername");
+		System.out.println("Inside checkForUniqueUsername");
+		Session session = this.sessionFactory.getCurrentSession();	
+		String userFound = "false";
+
+		try {
+ 			
+ 		Query query = session.createQuery("  from StudentAdmission as o where o.userName=? and o.OTPGenerated=?   ");
+		query.setParameter(0,phoneNumber);
+		query.setParameter(1,otpNumber);
+		
+ 		List list = query.list();
+		
+		if ((list != null) && (list.size() > 0)) {
+			userFound= "true";
+ 		} 		 
+		} catch (Exception e) {
+			//System.out.println( " checkForUniqueUsername - User not found");
+			e.printStackTrace();
+			logger.error("Exception in listusers " + e.getMessage());
+			//throw e;
+		}
+		 
+		logger.info("returning listusers with DATA ");	 
+ 		return userFound;		
+	}
+	
+	public String getGeneratedOTP(String phoneNumber) throws Exception {
+		System.out.println("getUserPassword " + phoneNumber);
+ 		Session session = this.sessionFactory.getCurrentSession();		
+ 		String generatedOTP =  "0000";
+		try {
+			String hql ="SELECT u.OTPGenerated  FROM StudentAdmission u WHERE u.userName=? ";
+	                 
+			Query query = session.createQuery(hql);
+			query.setParameter(0,phoneNumber);
+			List list = query.list();
+			
+			if ((list != null) && (list.size() > 0)) {
+				generatedOTP =  (String) query.list().get(0);
+	 		} 		 
+			else {
+				generatedOTP= "0000";
+			}
+			
+ 		} catch (Exception e) {
+ 			getUserPassword("getUserPassword Exception");
+			throw e;
+		}
+
+		return generatedOTP;
+	}
+	
+	public String recoverPassword(String phoneNumber , String password) throws Exception {
+		String smsMessage= "New Passord :";
+		try {
+			System.out.println("1");
+
+			String gatewayUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS?";
+
+			String APIKey = "kfm8QUjyBk6GzEIhbIHGEA";
+
+ 			String senderid = "TESTIN";
+
+			String channel = "2";
+
+			String DCS = "0";
+			
+			String flashsms = "0";
+			System.out.println("2");
+			 
+				 
+			 
+				
+				Session session = this.sessionFactory.getCurrentSession();
+				
+				Query query = session.createSQLQuery("update  SCHOOL_admission  set password ='"+password+"' where userName = '" + phoneNumber + "'");
+				query.executeUpdate();
+				
+				 
+				smsMessage="Successfully reset the password ";
+			 
+			
+
+		} catch(Exception ex) {
+
+		System.out.println(ex.getMessage());
+		smsMessage="reset password not happening";
+		}
+		return smsMessage;	
+	}
 	
 }

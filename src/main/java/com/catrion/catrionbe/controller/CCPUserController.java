@@ -29,9 +29,9 @@ public class CCPUserController {
 	final Logger logger = Logger.getLogger(CCPUserController.class);
 	
 	
-	@RequestMapping(value = "/checkUserCredentials",params = { "userName", "password" }, method = RequestMethod.POST, headers = "Accept=application/json")
+	@RequestMapping(value = "/checkUserCredentials",params = { "userName", "prnNumber" }, method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity<String> checkStudentWallet(@RequestParam( value="userName",  required=true ) String userName, 
-			@RequestParam( value="password",   required = true ) String password)  throws Exception {
+			@RequestParam( value="prnNumber",   required = true ) String prnNumber)  throws Exception {
 		//String item = null;
 		String resultText = "";
 		List<ErrorResponse> errorMap = new ArrayList<>();
@@ -43,10 +43,10 @@ public class CCPUserController {
 				flag = true;
 				System.out.println("userName cannot be null 2 ");
 				errorMap.add(new ErrorResponse("ERR-001", "userName  can not be Empty"));
-			}else if(Validator.nullCheck(password)|| Validator.emptyCheck(password)) {
+			}else if(Validator.nullCheck(prnNumber)|| Validator.emptyCheck(prnNumber)) {
 				flag = true;
-				System.out.println("Password cannot be null 3");
-				errorMap.add(new ErrorResponse("ERR-002", "Password  can not be Empty"));
+				System.out.println("prnNumber cannot be null 3");
+				errorMap.add(new ErrorResponse("ERR-002", "prnNumber  can not be Empty"));
  			}
 			 
 			if(flag) {
@@ -59,7 +59,7 @@ public class CCPUserController {
 			else{
 			System.out.println("Calling Validate User Service..... 5");	
 			
-		 resultText = userService.ValidateUser(userName, password);
+		 resultText = userService.ValidateUser(userName, prnNumber);
 			
 			System.out.println("Ended  Validate User Service..... 6");	
 			if (resultText.equals(null) || resultText.equals(""))
@@ -95,11 +95,13 @@ public class CCPUserController {
 		
 		try {
 			logger.info("Inside updateLoginUserDetails ");
+			System.out.println("  Inside updateLoginUserDetails 1" );
 			userService.updateUserDetails(loginUserDetails);
 			errorMap.add(new ErrorResponse("SAVE-001", "LoginUserDetails updated successfully."));
 			successjson = new ObjectMapper().writeValueAsString(errorMap);
 			logger.info("return from updateLoginUserDetails "+successjson);
 		} catch (Exception e) {
+			System.out.println("Exception Occured 7" + e);
 			logger.error("Exception Occured updateLoginUserDetails: " + e.getMessage());
 			logger.error("Error occured"+e);
 			errorMap.add(new ErrorResponse("EXEC-001", e.getMessage()));
@@ -112,4 +114,56 @@ public class CCPUserController {
 		return ResponseEntity.status(HttpStatus.OK).body(successjson);		
 	}
 
+	
+	@RequestMapping(value = "/validateOTP",params = { "otpNumber", "phoneNumber" }, method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResponseEntity<String> validateOTP(@RequestParam( value="otpNumber",  required=true ) String otpNumber, 
+			@RequestParam( value="phoneNumber",   required = true ) String phoneNumber){
+		//String item = null;
+		String resultText = "";
+		List<ErrorResponse> errorMap = new ArrayList<>();
+		try {
+			boolean flag = false;
+			logger.info("Inside recoverPassword");
+			System.out.println("Inside recoverPassword 1");
+			if(Validator.nullCheck(phoneNumber)|| Validator.emptyCheck(phoneNumber)) {
+				flag = true;
+				System.out.println("Phone Number cannot be null 2 ");
+				errorMap.add(new ErrorResponse("ERR-001", "Phone Number  can not be Empty"));
+			} 
+			
+			/*else if(Validator.nullCheck(password)|| Validator.emptyCheck(password)) {
+				flag = true;
+				System.out.println("Password cannot be null 3");
+				errorMap.add(new ErrorResponse("ERR-002", "Password  can not be Empty"));
+ 			}*/
+			 
+			if(flag) {
+				String errorjson = new ObjectMapper().writeValueAsString(errorMap);
+				//logger.info("Error "+errorjson);
+				logger.error(errorjson);
+				System.out.println("Validation Failed 4");
+ 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorjson);
+			}
+			else{
+			System.out.println("Calling Validate User Service..... 5");	
+			
+			resultText = userService.validateOTP(otpNumber,phoneNumber);
+			
+			System.out.println("Ended  Validate User Service..... 6");	
+			//resultText = "The Mobile Number Verified";
+			errorMap.add(new ErrorResponse("ERR-002", resultText));
+			String errorjson = new ObjectMapper().writeValueAsString(errorMap);
+			return ResponseEntity.status(HttpStatus.OK).body(errorjson);
+			 
+			
+			}
+			
+ 		} catch (Exception e) {
+			System.out.println("Exception Occured 8" + e);
+			logger.error("Exception Occured Validate User : " + e.getMessage());
+			logger.error("Error occured"+e);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(resultText);
+ 	}	
+	
 }

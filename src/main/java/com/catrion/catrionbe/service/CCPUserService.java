@@ -19,6 +19,15 @@ LoginRepository userDAO;
 	
 	@Transactional
 	public void updateUserDetails(Object LoginUserDetails) throws Exception {
+		System.out.println("  Inside updateLoginUserDetails 2" );
 		userDAO.updateUserDetails(LoginUserDetails);
 	}
+	
+	
+	@Transactional
+	public String validateOTP(String otpNumber, String phoneNumber) throws Exception {
+		return userDAO.validateOTP(otpNumber,phoneNumber);
+	} 
+	
+	
 }
