@@ -42,10 +42,9 @@ public class LoginRepository {
 		 
  	 //	if (passwordString != "" || passwordString !="null"  ) {
 		
-			System.out.println("passwordString  2 " + passwordString);
- 		Query query = session.createQuery("from LoginUserDetails as o where o.mobileNumber= :mobileNumber  and o.prnNumber=:prnNumber and o.isAprroved=:yesFlag");
+  		Query query = session.createQuery("from LoginUserDetails as o where o.mobileNumber= :mobileNumber  and o.prnNumber=:prnNumber and o.isAprroved=:yesFlag");
  		query.setString("mobileNumber",mobileNumber);
- 		query.setString("prnNumber",prnNumber);
+ 		query.setString("prnNumber",prnNumber); 
  		query.setString("yesFlag",yesFlag);
 		
 		List list = query.list();
@@ -257,7 +256,7 @@ public class LoginRepository {
 				query.executeUpdate();
 				
 				 
-				smsMessage="Successfully reset the password ";
+				smsMessage="Successfully reset the password "; 
 			 
 			
 
