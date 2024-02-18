@@ -65,7 +65,14 @@ public class LoginRepository {
 		 
 		List list11 = query11.list();
 		
-		this.sendEmail();
+		String emailAddress = getUserEmail(mobileNumber );
+		
+		if (emailAddress != "" && emailAddress != null) {
+		this.sendEmail(emailAddress);
+		}else {
+			throw new Exception("This Email not found in the record");  
+		}	
+		
 		System.out.println("userFound    next    "  );
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.writeValue(sw, list11);
@@ -83,7 +90,7 @@ public class LoginRepository {
 		logger.info("returning listUniversities with DATA " + sw.toString());	 
 			return sw.toString();		
 	}
-	public void sendEmail() {	 
+	public void sendEmail ( String emailId) {	 
 		Properties connectionProperties = new Properties();
 		connectionProperties.put("mail.smtp.host", "smtp.gmail.com");
 		connectionProperties.put("mail.smtp.auth", "true");
@@ -150,6 +157,36 @@ public class LoginRepository {
 
 		return userPassword;
 	}
+	
+	public String getUserEmail(String mobileNumber) throws Exception {
+		System.out.println("getUserPassword   -- " + mobileNumber);
+			Session session = this.sessionFactory.openSession();		
+			String emailId = "";
+		try {
+			String hql ="SELECT emailId  FROM LoginUserDetails u WHERE u.mobileNumber=:mobileNumber";
+	                 
+			Query query = session.createQuery(hql);
+			query.setString("mobileNumber",mobileNumber);
+			List list = query.list();
+			
+			if ((list != null) && (list.size() > 0)) {
+				emailId =  (String) query.list().get(0);
+				System.out.println(" Email  fetched  - -    "+emailId);
+	 		} 		 
+			else {
+				System.out.println(" Password fetched  - -     null  ");
+				emailId="null";
+			}
+			
+			} catch (Exception e) {
+				logger.error("getUserPassword Exception");
+			throw e;
+		}
+
+		return emailId;
+	}
+	
+	
 	public void updateUserDetails(Object   loginUserDetails) throws Exception {
 		logger.info("Inside updateUserDetails");
 		try {
