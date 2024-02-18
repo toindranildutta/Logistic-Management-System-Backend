@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -66,9 +67,10 @@ public class LoginRepository {
 		List list11 = query11.list();
 		
 		String emailAddress = getUserEmail(mobileNumber );
+		String OTPGenerated = generateSixDigitOTP();
 		
 		if (emailAddress != "" && emailAddress != null) {
-		this.sendEmail(emailAddress);
+		this.sendEmail(emailAddress , OTPGenerated);
 		}else {
 			throw new Exception("This Email not found in the record");  
 		}	
@@ -90,7 +92,11 @@ public class LoginRepository {
 		logger.info("returning listUniversities with DATA " + sw.toString());	 
 			return sw.toString();		
 	}
-	public void sendEmail ( String emailId) {	 
+	public String generateSixDigitOTP(){		
+	      String random = RandomStringUtils.randomNumeric(6);
+	      return random;
+	}
+	public void sendEmail ( String emailId  , String OTPGenerated) {	 
 		Properties connectionProperties = new Properties();
 		connectionProperties.put("mail.smtp.host", "smtp.gmail.com");
 		connectionProperties.put("mail.smtp.auth", "true");
@@ -117,7 +123,7 @@ public class LoginRepository {
 			// Set message subject
 			message.setSubject("Hello from Team  ");
 			// Set message text
-			message.setText("OTP  123456");
+			message.setText("OTP  "+OTPGenerated);
 			
 			System.out.print("Sending message...");
 			// Send the message
@@ -315,43 +321,5 @@ public class LoginRepository {
 		return generatedOTP;
 	}
 	
-	public String recoverPassword(String phoneNumber , String password) throws Exception {
-		String smsMessage= "New Passord :";
-		try {
-			System.out.println("1");
-
-			String gatewayUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS?";
-
-			String APIKey = "kfm8QUjyBk6GzEIhbIHGEA";
-
- 			String senderid = "TESTIN";
-
-			String channel = "2";
-
-			String DCS = "0";
-			
-			String flashsms = "0";
-			System.out.println("2");
-			 
-				 
-			 
-				
-				Session session = this.sessionFactory.getCurrentSession();
-				
-				Query query = session.createSQLQuery("update  SCHOOL_admission  set password ='"+password+"' where userName = '" + phoneNumber + "'");
-				query.executeUpdate();
-				
-				 
-				smsMessage="Successfully reset the password ";
-			 
-			
-
-		} catch(Exception ex) {
-
-		System.out.println(ex.getMessage());
-		smsMessage="reset password not happening";
-		}
-		return smsMessage;	
-	}
 	
 }
