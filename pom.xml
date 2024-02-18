@@ -11,7 +11,7 @@
     <groupId>com.catrion</groupId>
     <artifactId>catrion-be</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>catrion-be</name>
     <description>catrion-be</description>
     <properties>
