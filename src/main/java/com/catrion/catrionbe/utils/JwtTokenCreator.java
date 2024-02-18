@@ -33,7 +33,7 @@ public class JwtTokenCreator {
                     .setExpiration(new Date((new Date()).getTime() + 300000))
                     .setSubject("javainfinite_token")
                     .claim("username", username)
-                    .claim("authorities", getStudentRoles((List<GrantedAuthority>) authentication.getAuthorities()))
+                    .claim("authorities", getUserRoles((List<GrantedAuthority>) authentication.getAuthorities()))
                     .signWith(key)
                     .compact();
 
@@ -44,7 +44,7 @@ public class JwtTokenCreator {
                         .setExpiration(new Date((new Date()).getTime() + 3000000))
                         .setSubject("javainfinite_token")
                         .claim("username", username)
-                        .claim("authorities", getStudentRoles((List<GrantedAuthority>) authentication.getAuthorities()))
+                        .claim("authorities", getUserRoles((List<GrantedAuthority>) authentication.getAuthorities()))
                         .signWith(key)
                         .compact();
 
@@ -56,7 +56,7 @@ public class JwtTokenCreator {
         }
     }
 
-    private String getStudentRoles(List<GrantedAuthority> collection) {
+    private String getUserRoles(List<GrantedAuthority> collection) {
         Set<String> authoritiesSet = new HashSet<>();
         for (GrantedAuthority authority : collection) {
             authoritiesSet.add(authority.getAuthority());
