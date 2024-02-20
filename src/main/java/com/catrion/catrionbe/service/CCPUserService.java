@@ -32,7 +32,6 @@ LoginRepository userDAO;
 	
 	@Transactional
 	public CCPUserDetailsResponse  loadCCPUserDetails(String userName) throws Exception {
-		System.out.println("3---------------- ");
-		return userDAO.loadCCPUserDetails(userName);
+ 		return userDAO.loadCCPUserDetails(userName);
 	}
 }

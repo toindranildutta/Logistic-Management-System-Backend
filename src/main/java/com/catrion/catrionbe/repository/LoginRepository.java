@@ -401,8 +401,7 @@ public class LoginRepository {
 
 		} catch(Exception ex) {
 
-		//System.out.println(ex.getMessage());
-		smsMessage="reset password not happening";
+ 		smsMessage="reset password not happening";
 		}
 		return smsMessage;	
 	}
@@ -417,39 +416,13 @@ public class LoginRepository {
 		CCPUserDetailsResponse cCPUserDetailsResponseobj = new CCPUserDetailsResponse();
 	try {
 		Query query11 = session11.createQuery("from LoginUserDetails as o where o.mobileNumber=:mobileNumber");
-		//System.out.println("4----------------  " +mobileNumber);
-		query11.setString("mobileNumber",mobileNumber);
-		//System.out.println("5---------------- ");
-		List<CCPUserDetailsResponse> list   = (List<CCPUserDetailsResponse>)query11.list();		
-		//System.out.println(" 6 ----------------   "+list.size());
-		//System.out.println(list.get(0).getEmailId());
-		//cCPUserDetailsResponseobj.setFirstName(list.get(0).getFirstName());
-		
-		  
-		/*
-		 * cCPUserDetailsResponseobj.setFirstName(list.get(0).getFirstName());
-		 * cCPUserDetailsResponseobj.setLastName(list.get(0).getLastName());
-		 * cCPUserDetailsResponseobj.setEmailId(list.get(0).getEmailId());
-		 * cCPUserDetailsResponseobj.setPrnNumber(list.get(0).getPrnNumber());
-		 * cCPUserDetailsResponseobj.setPassword(list.get(0).getPassword());
-		 * cCPUserDetailsResponseobj.setConfPassword(list.get(0).getConfPassword());
-		 * cCPUserDetailsResponseobj.setOtpGenerated(list.get(0).getOtpGenerated());
-		 * cCPUserDetailsResponseobj.setOtpEntered(list.get(0).getOtpEntered());
-		 * cCPUserDetailsResponseobj.setFatherName(list.get(0).getFatherName());
-		 * cCPUserDetailsResponseobj.setGrandFatherName(list.get(0).getGrandFatherName()
-		 * );
-		 */
-		 // cCPUserDetailsResponseobj.setUserId(list.get(0).getUserId());
-		  //cCPUserDetailsResponseobj.setUserId(list.get(0).getUserId());
-		  
-		  
+ 		query11.setString("mobileNumber",mobileNumber);
+ 		List<CCPUserDetailsResponse> list   = (List<CCPUserDetailsResponse>)query11.list();		
+		 
 	 
-			//ObjectMapper mapper = new ObjectMapper();
-	//		mapper.writeValue(sw, list);
 			
 	} catch (Exception e) {
-	//	//System.out.println(" Exception in List ");
- 	//	e.printStackTrace();
+  	//	e.printStackTrace();
 	}
 		
 		
