@@ -6,6 +6,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -19,6 +20,11 @@ import com.catrion.catrionbe.dto.LoginResponseDTO;
 import com.catrion.catrionbe.entity.LoginUserDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
+
 @Repository
 public class LoginRepository {
 
@@ -31,7 +37,7 @@ public class LoginRepository {
 
 	
 	public String ValidateUser(String mobileNumber, String prnNumber) throws Exception {
-		logger.info("Inside ValidateUser");
+		logger.info("Inside listUniversities");
 		Session session = this.sessionFactory.openSession();	
 		StringWriter sw = new StringWriter();
 
@@ -41,17 +47,17 @@ public class LoginRepository {
 		String yesFlag = "Y";
 		String userFound = "false";
 		String passwordString ="";
-		String encPrn = passwordEncoder.encode(prnNumber);
-		System.out.println("encPrn   - - - - - - - - -     "+encPrn);		// emailIdAvailable =  (checkForUniqueemailId(emailId)) ;
+		// emailIdAvailable =  (checkForUniqueemailId(emailId)) ;
 		
 		// if (emailIdAvailable == "false") {
 	 //		 passwordString = getUserPassword(emailId);
 		 
  	 //	if (passwordString != "" || passwordString !="null"  ) {
 		
-  		Query query = session.createQuery("from LoginUserDetails as o where o.mobileNumber= :mobileNumber  and o.prnNumber=:prnNumber and o.isAprroved=:yesFlag");
+			System.out.println("passwordString  2 " + passwordString);
+ 		Query query = session.createQuery("from LoginUserDetails as o where o.mobileNumber= :mobileNumber  and o.prnNumber=:prnNumber and o.isAprroved=:yesFlag");
  		query.setString("mobileNumber",mobileNumber);
- 		query.setString("prnNumber",prnNumber); 
+ 		query.setString("prnNumber",prnNumber);
  		query.setString("yesFlag",yesFlag);
 		
 		List list = query.list();
@@ -64,6 +70,16 @@ public class LoginRepository {
 		query11.setString("mobileNumber",mobileNumber);
 		 
 		List list11 = query11.list();
+		
+		String emailAddress = getUserEmail(mobileNumber );
+		String OTPGenerated = generateSixDigitOTP();
+		
+		if (emailAddress != "" && emailAddress != null) {
+		this.sendEmail(emailAddress , OTPGenerated);
+		}else {
+			throw new Exception("This Email not found in the record");  
+		}	
+		
 		System.out.println("userFound    next    "  );
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.writeValue(sw, list11);
@@ -78,9 +94,85 @@ public class LoginRepository {
 			logger.error("Exception in listUniversities " + e.getMessage()); 
 		}
 		 
-		logger.info("returning   with DATA " + sw.toString());	 
+		logger.info("returning listUniversities with DATA " + sw.toString());	 
 			return sw.toString();		
 	}
+	public String generateSixDigitOTP(){		
+	      String random = RandomStringUtils.randomNumeric(6);
+	      return random;
+	}
+ 
+			 
+	public void sendEmail ( String emailId  , String OTPGenerated) {	 
+		Properties connectionProperties = new Properties();
+		connectionProperties.put("mail.smtp.host", "smtp.gmail.com");
+		connectionProperties.put("mail.smtp.auth", "true");
+		connectionProperties.put("mail.smtp.starttls.enable", "true");
+		connectionProperties.put("mail.smtp.socketFactory.port", "587");
+		connectionProperties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+		connectionProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		connectionProperties.put("mail.smtp.port", "587");		
+		System.out.print("Creating the session...");		
+		// Create the session
+		javax.mail.Session session = javax.mail.Session.getDefaultInstance(connectionProperties,
+				new javax.mail.Authenticator() {	// Define the authenticator
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication("support@smartxtech.co","Zaq12@wsX");
+					}
+				});		System.out.println("done!");
+				try {
+			// Create the message 
+			Message message = new MimeMessage(session);
+			// Set sender
+			message.setFrom(new InternetAddress("support@smartxtech.co"));
+			// Set the recipients
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("john.matthewdev@gmail.com"));
+			// Set message subject
+			message.setSubject("Hello from Team  ");
+			// Set message text
+			message.setText("OTP  "+OTPGenerated);
+			
+			System.out.print("Sending message...");
+			// Send the message
+			Transport.send(message);
+			
+			System.out.println("done!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	 
+	public String getUserEmail(String mobileNumber) throws Exception {
+		System.out.println("getUserPassword   -- " + mobileNumber);
+			Session session = this.sessionFactory.openSession();		
+			String emailId = "";
+		try {
+			String hql ="SELECT emailId  FROM LoginUserDetails u WHERE u.mobileNumber=:mobileNumber";
+	                 
+			Query query = session.createQuery(hql);
+			query.setString("mobileNumber",mobileNumber);
+			List list = query.list();
+			
+			if ((list != null) && (list.size() > 0)) {
+				emailId =  (String) query.list().get(0);
+				System.out.println(" Email  fetched  - -    "+emailId);
+	 		} 		 
+			else {
+				System.out.println(" Password fetched  - -     null  ");
+				emailId="null";
+			}
+			
+			} catch (Exception e) {
+				logger.error("getUserPassword Exception");
+			throw e;
+		}
+
+		return emailId;
+	}
+
 	public String getUserPassword(String emailId) throws Exception {
 		System.out.println("getUserPassword   -- " + emailId);
 			Session session = this.sessionFactory.openSession();		
@@ -235,7 +327,47 @@ public class LoginRepository {
 
 		return generatedOTP;
 	}
-	
+	public void sendEmail ( String emailId) {	 
+		Properties connectionProperties = new Properties();
+		connectionProperties.put("mail.smtp.host", "smtp.gmail.com");
+		connectionProperties.put("mail.smtp.auth", "true");
+		connectionProperties.put("mail.smtp.starttls.enable", "true");
+		connectionProperties.put("mail.smtp.socketFactory.port", "587");
+		connectionProperties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+		connectionProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		connectionProperties.put("mail.smtp.port", "587");		
+		System.out.print("Creating the session...");		
+		// Create the session
+		javax.mail.Session session = javax.mail.Session.getDefaultInstance(connectionProperties,
+				new javax.mail.Authenticator() {	// Define the authenticator
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication("support@smartxtech.co","Zaq12@wsX");
+					}
+				});		System.out.println("done!");
+				try {
+			// Create the message 
+			Message message = new MimeMessage(session);
+			// Set sender
+			message.setFrom(new InternetAddress("support@smartxtech.co"));
+			// Set the recipients
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("john.matthewdev@gmail.com"));
+			// Set message subject
+			message.setSubject("Hello from Team  ");
+			// Set message text
+			message.setText("OTP  123456");
+			
+			System.out.print("Sending message...");
+			// Send the message
+			Transport.send(message);
+			
+			System.out.println("done!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 	public String recoverPassword(String phoneNumber , String password) throws Exception {
 		String smsMessage= "New Passord :";
 		try {
