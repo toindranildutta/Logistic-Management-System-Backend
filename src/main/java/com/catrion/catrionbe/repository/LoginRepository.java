@@ -126,7 +126,7 @@ public class LoginRepository {
 			// Set sender
 			message.setFrom(new InternetAddress("support@smartxtech.co"));
 			// Set the recipients
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("john.matthewdev@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailId));
 			// Set message subject
 			message.setSubject("Hello from Team  ");
 			// Set message text
