@@ -104,23 +104,7 @@ public class AuthController {
     }
     
 
-    @PostMapping("/generateCCPToken")
-    public ResponseEntity<?> generateCCPToken(@Valid @RequestBody CCPLoginRequest loginRequest) {
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getMobileNumber(),
-                        loginRequest.getPrnNumber()
-                )
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getPrnNumber());
-
-        final String jwt = jwtUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
-    }
+    
     
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -156,4 +140,29 @@ public class AuthController {
         userRepository.save(jwtUser);
         return ResponseEntity.ok(new ApiResponse(true, "User registered successfully"));
     }
+    
+    
+    @PostMapping("/generateCCPToken")
+    public ResponseEntity<?> generateCCPToken(@Valid @RequestBody CCPLoginRequest loginRequest) {
+    	  System.out.println(" Step 1 gcc ");
+			/*
+			 * Authentication authentication = authenticationManager.authenticate( new
+			 * UsernamePasswordAuthenticationToken( loginRequest.getMobileNumber(),
+			 * loginRequest.getPrnNumber() ) );
+			 */
+        System.out.println(" Step 2 gcc ");
+       // SecurityContextHolder.getContext().setAuthentication(authentication);
+        CCPUserDetailsResponse userDetails = null;
+		try {
+			userDetails = cCPUserService.loadCCPUserDetails(loginRequest.getMobileNumber());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  System.out.println(" Step 2 gcc ");
+        final String jwt = jwtUtil.generateCCPToken(userDetails);
+
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+    }
+    
 }

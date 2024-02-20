@@ -54,7 +54,7 @@ public class LoginRepository {
 		 
  	 //	if (passwordString != "" || passwordString !="null"  ) {
 		
-			System.out.println("passwordString  2 " + passwordString);
+			//System.out.println("passwordString  2 " + passwordString);
  		Query query = session.createQuery("from LoginUserDetails as o where o.mobileNumber= :mobileNumber  and o.prnNumber=:prnNumber and o.isAprroved=:yesFlag");
  		query.setString("mobileNumber",mobileNumber);
  		query.setString("prnNumber",prnNumber);
@@ -65,7 +65,7 @@ public class LoginRepository {
 		if ((list != null) && (list.size() > 0)) {
 			Session session11 = this.sessionFactory.openSession();	
 			userFound= "true";
-			System.out.println("userFound    true   "  );
+			//System.out.println("userFound    true   "  );
 		Query query11 = session11.createQuery("from LoginUserDetails as o where o.mobileNumber=:mobileNumber");
 		query11.setString("mobileNumber",mobileNumber);
 		 
@@ -80,7 +80,7 @@ public class LoginRepository {
 			throw new Exception("This Email not found in the record");  
 		}	
 		
-		System.out.println("userFound    next    "  );
+		//System.out.println("userFound    next    "  );
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.writeValue(sw, list11);
 			} else {
@@ -112,14 +112,14 @@ public class LoginRepository {
 		connectionProperties.put("mail.smtp.ssl.protocols", "TLSv1.2");
 		connectionProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		connectionProperties.put("mail.smtp.port", "587");		
-		System.out.print("Creating the session...");		
+		//System.out.print("Creating the session...");		
 		// Create the session
 		javax.mail.Session session = javax.mail.Session.getDefaultInstance(connectionProperties,
 				new javax.mail.Authenticator() {	// Define the authenticator
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication("support@smartxtech.co","Zaq12@wsX");
 					}
-				});		System.out.println("done!");
+				});		//System.out.println("done!");
 				try {
 			// Create the message 
 			Message message = new MimeMessage(session);
@@ -132,11 +132,11 @@ public class LoginRepository {
 			// Set message text
 			message.setText("OTP  "+OTPGenerated);
 			
-			System.out.print("Sending message...");
+			//System.out.print("Sending message...");
 			// Send the message
 			Transport.send(message);
 			
-			System.out.println("done!");
+			//System.out.println("done!");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -146,7 +146,7 @@ public class LoginRepository {
 
 	 
 	public String getUserEmail(String mobileNumber) throws Exception {
-		System.out.println("getUserPassword   -- " + mobileNumber);
+		//System.out.println("getUserPassword   -- " + mobileNumber);
 			Session session = this.sessionFactory.openSession();		
 			String emailId = "";
 		try {
@@ -158,10 +158,10 @@ public class LoginRepository {
 			
 			if ((list != null) && (list.size() > 0)) {
 				emailId =  (String) query.list().get(0);
-				System.out.println(" Email  fetched  - -    "+emailId);
+				//System.out.println(" Email  fetched  - -    "+emailId);
 	 		} 		 
 			else {
-				System.out.println(" Password fetched  - -     null  ");
+				//System.out.println(" Password fetched  - -     null  ");
 				emailId="null";
 			}
 			
@@ -174,7 +174,7 @@ public class LoginRepository {
 	}
 
 	public String getUserPassword(String emailId) throws Exception {
-		System.out.println("getUserPassword   -- " + emailId);
+		//System.out.println("getUserPassword   -- " + emailId);
 			Session session = this.sessionFactory.openSession();		
 			String userPassword = "";
 		try {
@@ -186,10 +186,10 @@ public class LoginRepository {
 			
 			if ((list != null) && (list.size() > 0)) {
 				userPassword =  (String) query.list().get(0);
-				System.out.println(" Password fetched  - -    "+userPassword);
+				//System.out.println(" Password fetched  - -    "+userPassword);
 	 		} 		 
 			else {
-				System.out.println(" Password fetched  - -     null  ");
+				//System.out.println(" Password fetched  - -     null  ");
 				userPassword="null";
 			}
 			
@@ -203,17 +203,17 @@ public class LoginRepository {
 	public void updateUserDetails(Object   loginUserDetails) throws Exception {
 		logger.info("Inside updateUserDetails");
 		try {
-			System.out.println("  Inside updateLoginUserDetails 3" );
+			//System.out.println("  Inside updateLoginUserDetails 3" );
 			Session session = this.sessionFactory.openSession();
 			final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
 			LoginUserDetails pojo = mapper.convertValue(loginUserDetails, LoginUserDetails.class);
 			 
 		 
-			System.out.println("  Inside updateLoginUserDetails 4" );
+			//System.out.println("  Inside updateLoginUserDetails 4" );
  		 
 			session.update(pojo);
 		} catch (Exception e) {
-			System.out.println("Exception Occured 7" + e);
+			//System.out.println("Exception Occured 7" + e);
 			e.printStackTrace();
 			logger.error("Exception in updateUserDetails " + e.getMessage());
 			throw e;
@@ -225,7 +225,7 @@ public class LoginRepository {
 	public String validateOTP (String otpNumber, String phoneNumber) throws Exception {
 		String smsMessage= "Your Mobile Number Verified successfully.";
 		try {
-			System.out.println("1");
+			//System.out.println("1");
 
 			 
 			
@@ -235,7 +235,7 @@ public class LoginRepository {
 			int optpNum  = Integer.parseInt(otpNumber);
 			String otpGenerated = "";
  			  userNameAvailable =  (checkForValidOTP(optpNum , phoneNumber)) ;
-			System.out.println("2");
+			//System.out.println("2");
 			if (userNameAvailable == "false") {
 				smsMessage="Mobile Number not found";
 				 
@@ -248,10 +248,10 @@ public class LoginRepository {
 			 }
 			
 			
-			System.out.println("Generated OTP "+otpGenerated);
+			//System.out.println("Generated OTP "+otpGenerated);
 			
 			
-			System.out.println(" otpGenerated    "+otpGenerated); 
+			//System.out.println(" otpGenerated    "+otpGenerated); 
 			
 			if (otpGenerated == otpNumber && userNameAvailable == "true") {
 				 
@@ -268,7 +268,7 @@ public class LoginRepository {
 
 		} catch(Exception ex) {
 
-		System.out.println(ex.getMessage());
+		//System.out.println(ex.getMessage());
 
 		}
 		return smsMessage;	
@@ -276,7 +276,7 @@ public class LoginRepository {
 	
 	public String checkForValidOTP (int otpNumber, String phoneNumber) throws Exception{
 		logger.info("Inside checkForUniqueUsername");
-		System.out.println("Inside checkForUniqueUsername");
+		//System.out.println("Inside checkForUniqueUsername");
 		Session session = this.sessionFactory.getCurrentSession();	
 		String userFound = "false";
 
@@ -292,7 +292,7 @@ public class LoginRepository {
 			userFound= "true";
  		} 		 
 		} catch (Exception e) {
-			//System.out.println( " checkForUniqueUsername - User not found");
+			////System.out.println( " checkForUniqueUsername - User not found");
 			e.printStackTrace();
 			logger.error("Exception in listusers " + e.getMessage());
 			//throw e;
@@ -303,7 +303,7 @@ public class LoginRepository {
 	}
 	
 	public String getGeneratedOTP(String phoneNumber) throws Exception {
-		System.out.println("getUserPassword " + phoneNumber);
+		//System.out.println("getUserPassword " + phoneNumber);
  		Session session = this.sessionFactory.getCurrentSession();		
  		String generatedOTP =  "0000";
 		try {
@@ -336,14 +336,14 @@ public class LoginRepository {
 		connectionProperties.put("mail.smtp.ssl.protocols", "TLSv1.2");
 		connectionProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		connectionProperties.put("mail.smtp.port", "587");		
-		System.out.print("Creating the session...");		
+		//System.out.print("Creating the session...");		
 		// Create the session
 		javax.mail.Session session = javax.mail.Session.getDefaultInstance(connectionProperties,
 				new javax.mail.Authenticator() {	// Define the authenticator
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication("support@smartxtech.co","Zaq12@wsX");
 					}
-				});		System.out.println("done!");
+				});		//System.out.println("done!");
 				try {
 			// Create the message 
 			Message message = new MimeMessage(session);
@@ -356,11 +356,11 @@ public class LoginRepository {
 			// Set message text
 			message.setText("OTP  123456");
 			
-			System.out.print("Sending message...");
+			//System.out.print("Sending message...");
 			// Send the message
 			Transport.send(message);
 			
-			System.out.println("done!");
+			//System.out.println("done!");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -371,7 +371,7 @@ public class LoginRepository {
 	public String recoverPassword(String phoneNumber , String password) throws Exception {
 		String smsMessage= "New Passord :";
 		try {
-			System.out.println("1");
+			//System.out.println("1");
 
 			String gatewayUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS?";
 
@@ -384,7 +384,7 @@ public class LoginRepository {
 			String DCS = "0";
 			
 			String flashsms = "0";
-			System.out.println("2");
+			//System.out.println("2");
 			 
 				 
 			 
@@ -401,7 +401,7 @@ public class LoginRepository {
 
 		} catch(Exception ex) {
 
-		System.out.println(ex.getMessage());
+		//System.out.println(ex.getMessage());
 		smsMessage="reset password not happening";
 		}
 		return smsMessage;	
@@ -412,26 +412,49 @@ public class LoginRepository {
 		Session session = this.sessionFactory.openSession();	
 		StringWriter sw = new StringWriter();
 		Session session11 = this.sessionFactory.openSession();		 
-		System.out.println("userFound    true   "  );
-		List<CCPUserDetailsResponse> list = null;
+		//System.out.println("userFound    true   "  );
+	 
 		CCPUserDetailsResponse cCPUserDetailsResponseobj = new CCPUserDetailsResponse();
 	try {
 		Query query11 = session11.createQuery("from LoginUserDetails as o where o.mobileNumber=:mobileNumber");
+		//System.out.println("4----------------  " +mobileNumber);
 		query11.setString("mobileNumber",mobileNumber);
-		 
-		  list = (List<CCPUserDetailsResponse>) query11.list();			
-		System.out.println("userFound    next    "  );
-			ObjectMapper mapper = new ObjectMapper();
-			mapper.writeValue(sw, list);
+		//System.out.println("5---------------- ");
+		List<CCPUserDetailsResponse> list   = (List<CCPUserDetailsResponse>)query11.list();		
+		//System.out.println(" 6 ----------------   "+list.size());
+		//System.out.println(list.get(0).getEmailId());
+		//cCPUserDetailsResponseobj.setFirstName(list.get(0).getFirstName());
+		
+		  
+		/*
+		 * cCPUserDetailsResponseobj.setFirstName(list.get(0).getFirstName());
+		 * cCPUserDetailsResponseobj.setLastName(list.get(0).getLastName());
+		 * cCPUserDetailsResponseobj.setEmailId(list.get(0).getEmailId());
+		 * cCPUserDetailsResponseobj.setPrnNumber(list.get(0).getPrnNumber());
+		 * cCPUserDetailsResponseobj.setPassword(list.get(0).getPassword());
+		 * cCPUserDetailsResponseobj.setConfPassword(list.get(0).getConfPassword());
+		 * cCPUserDetailsResponseobj.setOtpGenerated(list.get(0).getOtpGenerated());
+		 * cCPUserDetailsResponseobj.setOtpEntered(list.get(0).getOtpEntered());
+		 * cCPUserDetailsResponseobj.setFatherName(list.get(0).getFatherName());
+		 * cCPUserDetailsResponseobj.setGrandFatherName(list.get(0).getGrandFatherName()
+		 * );
+		 */
+		 // cCPUserDetailsResponseobj.setUserId(list.get(0).getUserId());
+		  //cCPUserDetailsResponseobj.setUserId(list.get(0).getUserId());
+		  
+		  
+	 
+			//ObjectMapper mapper = new ObjectMapper();
+	//		mapper.writeValue(sw, list);
 			
-	} catch (IOException e) {
-		System.out.println(" Exception in List ");
- 		e.printStackTrace();
+	} catch (Exception e) {
+	//	//System.out.println(" Exception in List ");
+ 	//	e.printStackTrace();
 	}
 		
 		
 		logger.info("returning   with DATA " + sw.toString());	 
-		return (CCPUserDetailsResponse)list.get(0);		
+		return cCPUserDetailsResponseobj;		
 		
 	}
 	
