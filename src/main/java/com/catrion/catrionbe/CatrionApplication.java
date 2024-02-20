@@ -66,12 +66,10 @@ public class CatrionApplication   {
         return new ModelMapper();
     }
 
-    @Bean
-    BCryptPasswordEncoder passwordEncoder() {
-    	System.out.println(" Step 3 ");
-        return new BCryptPasswordEncoder();
-    }
-
+	/*
+	 * @Bean BCryptPasswordEncoder passwordEncoder() {
+	 * System.out.println(" Step 3 "); return new BCryptPasswordEncoder(); }
+	 */
      
     public Docket api() {
     	

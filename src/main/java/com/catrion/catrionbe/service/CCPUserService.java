@@ -3,8 +3,9 @@ package com.catrion.catrionbe.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
- 
- import com.catrion.catrionbe.repository.LoginRepository;
+
+import com.catrion.catrionbe.dto.CCPUserDetailsResponse;
+import com.catrion.catrionbe.repository.LoginRepository;
 @Service("CCPUserService")
 public class CCPUserService {
 
@@ -29,5 +30,9 @@ LoginRepository userDAO;
 		return userDAO.validateOTP(otpNumber,phoneNumber);
 	} 
 	
-	
+	@Transactional
+	public CCPUserDetailsResponse  loadCCPUserDetails(String userName) throws Exception {
+		System.out.println("3---------------- ");
+		return userDAO.loadCCPUserDetails(userName);
+	}
 }
