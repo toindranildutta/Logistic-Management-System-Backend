@@ -36,7 +36,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity security) throws Exception {
         security.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/authenticate", "/signin", "/signup","/checkUserCredentials","/authenticateCCPUser","/validateOTP").permitAll()
+                .antMatchers("/authenticate", "/signin", "/signup","/checkUserCredentials","/authenticateCCPUser","/validateOTP","/generateCCPToken").permitAll()
                 .anyRequest().authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         security.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
