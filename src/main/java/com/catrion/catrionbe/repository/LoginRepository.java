@@ -106,11 +106,13 @@ public class LoginRepository {
 		try {
 			System.out.println("OTP Updated");
 			Session session12 = this.sessionFactory.openSession();
+			session12.getTransaction().begin();
 			Query query12 = session12.createQuery(
 					"update  LoginUserDetails as o  set o.otpGenerated=:otpGenerated  where o.mobileNumber=:mobileNumber");
 			query12.setString("mobileNumber", mobileNumber);
 			query12.setInteger("otpGenerated", otpGenerated);
 			query12.executeUpdate();
+			session12.getTransaction().commit();
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
