@@ -242,31 +242,48 @@ public class LoginRepository {
 	public String validateOTP(String otpNumber, String phoneNumber) throws Exception {
 		String smsMessage = "Your Mobile Number Verified successfully.";
 		try {
-			// System.out.println("1");
+		 System.out.println("1");
 
-			String username = phoneNumber;
-			String userNameAvailable = "false";
+ 
 
-			int optpNum = Integer.parseInt(otpNumber);
-			String otpGenerated = "";
-			userNameAvailable = (checkForValidOTP(optpNum, phoneNumber));
-			// System.out.println("2");
-			if (userNameAvailable == "false") {
-				smsMessage = "Mobile Number not found";
+ 			int otpGenerated = 0;
+			Session session = this.sessionFactory.openSession();
+			 System.out.println("11");
+			int  generatedOTP =0;
+			try {
+				String hql = "SELECT u.otpGenerated  FROM LoginUserDetails u WHERE u.mobileNumber=: phoneNumber";
+				Query query = session.createQuery(hql);
+				query.setString("phoneNumber", phoneNumber);
+				List list = query.list();
+				 System.out.println("12");
+				if ((list != null) && (list.size() > 0)) {
+					generatedOTP = (Integer) query.list().get(0);
+					System.out.println(generatedOTP);
+				} else {
+					generatedOTP = 0;
+					System.out.println("0000");
+				}
 
-				// throw new Exception("Mobile Number not found");
-			} else {
-				otpGenerated = getGeneratedOTP(phoneNumber);
+			} catch (Exception e) {
+				 System.out.println("13 "+e);
+				//getUserPassword("getUserPassword Exception");
+			 
+			}
+			//userNameAvailable = (checkForValidOTP(optpNum, phoneNumber));
+			
+		  System.out.println("2");
+			 
+				//otpGenerated = getGeneratedOTP(phoneNumber);
 
 				// throw new Exception("Mobile Number already exists, please use different
 				// mobile number");
-			}
+			 
+		  
+		  System.out.println("Provided OTP "+otpNumber);
+			  System.out.println("Generated OTP "+generatedOTP);
 
-			// System.out.println("Generated OTP "+otpGenerated);
-
-			// System.out.println(" otpGenerated "+otpGenerated);
-
-			if (otpGenerated == otpNumber && userNameAvailable == "true") {
+ 
+			if (Integer.parseInt(otpNumber) ==   generatedOTP ) {
 
 				smsMessage = "OTP Verified";
 
@@ -278,32 +295,40 @@ public class LoginRepository {
 
 		} catch (Exception ex) {
 
-			// System.out.println(ex.getMessage());
+			 System.out.println(ex.getMessage());
 
 		}
 		return smsMessage;
 	}
 
 	public String checkForValidOTP(int otpNumber, String phoneNumber) throws Exception {
-		logger.info("Inside checkForUniqueUsername");
-		// System.out.println("Inside checkForUniqueUsername");
-		Session session = this.sessionFactory.getCurrentSession();
+		System.out.println("Inside checkForUniqueUsername  " + phoneNumber );
+		  System.out.println("Inside checkForUniqueUsername "+otpNumber );
+			Session session = this.sessionFactory.openSession();
 		String userFound = "false";
 
 		try {
-
+			System.out.println("Inside checkForUniqueUsername  00"   );
 			Query query = session
-					.createQuery("  from StudentAdmission as o where o.userName=? and o.OTPGenerated=?   ");
-			query.setParameter(0, phoneNumber);
-			query.setParameter(1, otpNumber);
-
+					.createQuery(" from LoginUserDetails as o where o.mobileNumber:=mobileNumber and o.otpGenerated:= otpGenerated");
+			query.setString("mobileNumber", phoneNumber);
+			query.setInteger("otpGenerated", otpNumber);
+			
+			System.out.println("Inside checkForUniqueUsername  0"   );
 			List list = query.list();
 
 			if ((list != null) && (list.size() > 0)) {
+				System.out.println("Inside checkForUniqueUsername  1 "   );
 				userFound = "true";
+				
+			}
+			else {
+				System.out.println("Inside checkForUniqueUsername 2 "   );
+				throw new Exception("This mobile number/PRN does not match in our records. Please Sign Up");
 			}
 		} catch (Exception e) {
-			//// System.out.println( " checkForUniqueUsername - User not found");
+		 System.out.println( " checkForUniqueUsername - User not found");
+			System.out.print("Wrong OTP");
 			e.printStackTrace();
 			logger.error("Exception in listusers " + e.getMessage());
 			// throw e;
@@ -314,25 +339,27 @@ public class LoginRepository {
 	}
 
 	public String getGeneratedOTP(String phoneNumber) throws Exception {
-		// System.out.println("getUserPassword " + phoneNumber);
-		Session session = this.sessionFactory.getCurrentSession();
+	 System.out.println("getUserPassword " + phoneNumber);
+		Session session = this.sessionFactory.openSession();
+		
 		String generatedOTP = "0000";
 		try {
-			String hql = "SELECT u.OTPGenerated  FROM StudentAdmission u WHERE u.userName=? ";
-
+			String hql = "SELECT u.OTPGenerated  FROM LoginUserDetails u WHERE u.mobileNumber=? ";
 			Query query = session.createQuery(hql);
 			query.setParameter(0, phoneNumber);
 			List list = query.list();
-
 			if ((list != null) && (list.size() > 0)) {
 				generatedOTP = (String) query.list().get(0);
+				System.out.println(generatedOTP);
 			} else {
 				generatedOTP = "0000";
+				System.out.println("0000");
 			}
 
 		} catch (Exception e) {
-			getUserPassword("getUserPassword Exception");
-			throw e;
+			throw new Exception("This mobile number/Last Name does not match in our records. Please Sign Up");
+			//getUserPassword("getUserPassword Exception");
+		 
 		}
 
 		return generatedOTP;
@@ -379,39 +406,6 @@ public class LoginRepository {
 
 	}
 
-	public String recoverPassword(String phoneNumber, String password) throws Exception {
-		String smsMessage = "New Passord :";
-		try {
-			// System.out.println("1");
-
-			String gatewayUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS?";
-
-			String APIKey = "kfm8QUjyBk6GzEIhbIHGEA";
-
-			String senderid = "TESTIN";
-
-			String channel = "2";
-
-			String DCS = "0";
-
-			String flashsms = "0";
-			// System.out.println("2");
-
-			Session session = this.sessionFactory.getCurrentSession();
-
-			Query query = session.createSQLQuery("update  SCHOOL_admission  set password ='" + password
-					+ "' where userName = '" + phoneNumber + "'");
-			query.executeUpdate();
-
-			smsMessage = "Successfully reset the password ";
-
-		} catch (Exception ex) {
-
-			// System.out.println(ex.getMessage());
-			smsMessage = "reset password not happening";
-		}
-		return smsMessage;
-	}
 
 	public CCPUserDetailsResponse loadCCPUserDetails(String mobileNumber) throws Exception {
 		logger.info("Inside loadCCPUserDetails");
