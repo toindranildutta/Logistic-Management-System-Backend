@@ -54,7 +54,7 @@ public class LoginRepository {
 
 			// if (passwordString != "" || passwordString !="null" ) {
 
-			// System.out.println("passwordString 2 " + passwordString);
+			//System.out.println("passwordString 2 " + passwordString);
 			Query query = session.createQuery(
 					"from LoginUserDetails as o where o.mobileNumber= :mobileNumber  and o.prnNumber=:prnNumber and o.isAprroved=:yesFlag");
 			query.setString("mobileNumber", mobileNumber);
@@ -66,7 +66,7 @@ public class LoginRepository {
 			if ((list != null) && (list.size() > 0)) {
 				Session session11 = this.sessionFactory.openSession();
 				userFound = "true";
-				// System.out.println("userFound true " );
+				//System.out.println("userFound true " );
 				Query query11 = session11.createQuery("from LoginUserDetails as o where o.mobileNumber=:mobileNumber");
 				query11.setString("mobileNumber", mobileNumber);
 
@@ -83,7 +83,7 @@ public class LoginRepository {
 					throw new Exception("This Email not found in the record");
 				}
 
-				// System.out.println("userFound next " );
+				//System.out.println("userFound next " );
 				ObjectMapper mapper = new ObjectMapper();
 				mapper.writeValue(sw, list11);
 			} else {
@@ -104,7 +104,7 @@ public class LoginRepository {
 	public void updateOTP(String mobileNumber, int otpGenerated) {
 
 		try {
-			System.out.println("OTP Updated");
+			//System.out.println("OTP Updated");
 			Session session12 = this.sessionFactory.openSession();
 			session12.getTransaction().begin();
 			Query query12 = session12.createQuery(
@@ -114,7 +114,7 @@ public class LoginRepository {
 			query12.executeUpdate();
 			session12.getTransaction().commit();
 		} catch (Exception e) {
-			System.out.println(e);
+			//System.out.println(e);
 			e.printStackTrace();
 		}
 	}
@@ -133,14 +133,14 @@ public class LoginRepository {
 		connectionProperties.put("mail.smtp.ssl.protocols", "TLSv1.2");
 		connectionProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		connectionProperties.put("mail.smtp.port", "587");
-		// System.out.print("Creating the session...");
+		//System.out.print("Creating the session...");
 		// Create the session
 		javax.mail.Session session = javax.mail.Session.getDefaultInstance(connectionProperties,
 				new javax.mail.Authenticator() { // Define the authenticator
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication("support@smartxtech.co", "Zaq12@wsX");
 					}
-				}); // System.out.println("done!");
+				}); //System.out.println("done!");
 		try {
 			// Create the message
 			Message message = new MimeMessage(session);
@@ -153,11 +153,11 @@ public class LoginRepository {
 			// Set message text
 			message.setText("OTP  " + OTPGenerated);
 
-			// System.out.print("Sending message...");
+			//System.out.print("Sending message...");
 			// Send the message
 			Transport.send(message);
 
-			// System.out.println("done!");
+			//System.out.println("done!");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -166,7 +166,7 @@ public class LoginRepository {
 	}
 
 	public String getUserEmail(String mobileNumber) throws Exception {
-		// System.out.println("getUserPassword -- " + mobileNumber);
+		//System.out.println("getUserPassword -- " + mobileNumber);
 		Session session = this.sessionFactory.openSession();
 		String emailId = "";
 		try {
@@ -178,9 +178,9 @@ public class LoginRepository {
 
 			if ((list != null) && (list.size() > 0)) {
 				emailId = (String) query.list().get(0);
-				// System.out.println(" Email fetched - - "+emailId);
+				//System.out.println(" Email fetched - - "+emailId);
 			} else {
-				// System.out.println(" Password fetched - - null ");
+				//System.out.println(" Password fetched - - null ");
 				emailId = "null";
 			}
 
@@ -193,7 +193,7 @@ public class LoginRepository {
 	}
 
 	public String getUserPassword(String emailId) throws Exception {
-		// System.out.println("getUserPassword -- " + emailId);
+		//System.out.println("getUserPassword -- " + emailId);
 		Session session = this.sessionFactory.openSession();
 		String userPassword = "";
 		try {
@@ -205,9 +205,9 @@ public class LoginRepository {
 
 			if ((list != null) && (list.size() > 0)) {
 				userPassword = (String) query.list().get(0);
-				// System.out.println(" Password fetched - - "+userPassword);
+				//System.out.println(" Password fetched - - "+userPassword);
 			} else {
-				// System.out.println(" Password fetched - - null ");
+				//System.out.println(" Password fetched - - null ");
 				userPassword = "null";
 			}
 
@@ -222,16 +222,17 @@ public class LoginRepository {
 	public void updateUserDetails(Object loginUserDetails) throws Exception {
 		logger.info("Inside updateUserDetails");
 		try {
-			// System.out.println(" Inside updateLoginUserDetails 3" );
-			Session session = this.sessionFactory.openSession();
+			//System.out.println(" Inside updateLoginUserDetails 3" );
+			Session session14 = this.sessionFactory.openSession();
+			session14.getTransaction().begin();
 			final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
 			LoginUserDetails pojo = mapper.convertValue(loginUserDetails, LoginUserDetails.class);
+			//System.out.println(" Inside updateLoginUserDetails 4" );
 
-			// System.out.println(" Inside updateLoginUserDetails 4" );
-
-			session.update(pojo);
+			session14.update(pojo);
+			session14.getTransaction().commit();
 		} catch (Exception e) {
-			// System.out.println("Exception Occured 7" + e);
+			//System.out.println("Exception Occured 7" + e);
 			e.printStackTrace();
 			logger.error("Exception in updateUserDetails " + e.getMessage());
 			throw e;
@@ -242,36 +243,36 @@ public class LoginRepository {
 	public String validateOTP(String otpNumber, String phoneNumber) throws Exception {
 		String smsMessage = "Your Mobile Number Verified successfully.";
 		try {
-		 System.out.println("1");
+		 //System.out.println("1");
 
  
 
  			int otpGenerated = 0;
 			Session session = this.sessionFactory.openSession();
-			 System.out.println("11");
+			 //System.out.println("11");
 			int  generatedOTP =0;
 			try {
 				String hql = "SELECT u.otpGenerated  FROM LoginUserDetails u WHERE u.mobileNumber=: phoneNumber";
 				Query query = session.createQuery(hql);
 				query.setString("phoneNumber", phoneNumber);
 				List list = query.list();
-				 System.out.println("12");
+				 //System.out.println("12");
 				if ((list != null) && (list.size() > 0)) {
 					generatedOTP = (Integer) query.list().get(0);
-					System.out.println(generatedOTP);
+					//System.out.println(generatedOTP);
 				} else {
 					generatedOTP = 0;
-					System.out.println("0000");
+					//System.out.println("0000");
 				}
 
 			} catch (Exception e) {
-				 System.out.println("13 "+e);
+				 //System.out.println("13 "+e);
 				//getUserPassword("getUserPassword Exception");
 			 
 			}
 			//userNameAvailable = (checkForValidOTP(optpNum, phoneNumber));
 			
-		  System.out.println("2");
+		  //System.out.println("2");
 			 
 				//otpGenerated = getGeneratedOTP(phoneNumber);
 
@@ -279,8 +280,8 @@ public class LoginRepository {
 				// mobile number");
 			 
 		  
-		  System.out.println("Provided OTP "+otpNumber);
-			  System.out.println("Generated OTP "+generatedOTP);
+		  //System.out.println("Provided OTP "+otpNumber);
+			  //System.out.println("Generated OTP "+generatedOTP);
 
  
 			if (Integer.parseInt(otpNumber) ==   generatedOTP ) {
@@ -295,40 +296,40 @@ public class LoginRepository {
 
 		} catch (Exception ex) {
 
-			 System.out.println(ex.getMessage());
+			 //System.out.println(ex.getMessage());
 
 		}
 		return smsMessage;
 	}
 
 	public String checkForValidOTP(int otpNumber, String phoneNumber) throws Exception {
-		System.out.println("Inside checkForUniqueUsername  " + phoneNumber );
-		  System.out.println("Inside checkForUniqueUsername "+otpNumber );
+		//System.out.println("Inside checkForUniqueUsername  " + phoneNumber );
+		  //System.out.println("Inside checkForUniqueUsername "+otpNumber );
 			Session session = this.sessionFactory.openSession();
 		String userFound = "false";
 
 		try {
-			System.out.println("Inside checkForUniqueUsername  00"   );
+			//System.out.println("Inside checkForUniqueUsername  00"   );
 			Query query = session
 					.createQuery(" from LoginUserDetails as o where o.mobileNumber:=mobileNumber and o.otpGenerated:= otpGenerated");
 			query.setString("mobileNumber", phoneNumber);
 			query.setInteger("otpGenerated", otpNumber);
 			
-			System.out.println("Inside checkForUniqueUsername  0"   );
+			//System.out.println("Inside checkForUniqueUsername  0"   );
 			List list = query.list();
 
 			if ((list != null) && (list.size() > 0)) {
-				System.out.println("Inside checkForUniqueUsername  1 "   );
+				//System.out.println("Inside checkForUniqueUsername  1 "   );
 				userFound = "true";
 				
 			}
 			else {
-				System.out.println("Inside checkForUniqueUsername 2 "   );
+				//System.out.println("Inside checkForUniqueUsername 2 "   );
 				throw new Exception("This mobile number/PRN does not match in our records. Please Sign Up");
 			}
 		} catch (Exception e) {
-		 System.out.println( " checkForUniqueUsername - User not found");
-			System.out.print("Wrong OTP");
+		 //System.out.println( " checkForUniqueUsername - User not found");
+			//System.out.print("Wrong OTP");
 			e.printStackTrace();
 			logger.error("Exception in listusers " + e.getMessage());
 			// throw e;
@@ -339,7 +340,7 @@ public class LoginRepository {
 	}
 
 	public String getGeneratedOTP(String phoneNumber) throws Exception {
-	 System.out.println("getUserPassword " + phoneNumber);
+	 //System.out.println("getUserPassword " + phoneNumber);
 		Session session = this.sessionFactory.openSession();
 		
 		String generatedOTP = "0000";
@@ -350,10 +351,10 @@ public class LoginRepository {
 			List list = query.list();
 			if ((list != null) && (list.size() > 0)) {
 				generatedOTP = (String) query.list().get(0);
-				System.out.println(generatedOTP);
+				//System.out.println(generatedOTP);
 			} else {
 				generatedOTP = "0000";
-				System.out.println("0000");
+				//System.out.println("0000");
 			}
 
 		} catch (Exception e) {
@@ -374,14 +375,14 @@ public class LoginRepository {
 		connectionProperties.put("mail.smtp.ssl.protocols", "TLSv1.2");
 		connectionProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		connectionProperties.put("mail.smtp.port", "587");
-		// System.out.print("Creating the session...");
+		//System.out.print("Creating the session...");
 		// Create the session
 		javax.mail.Session session = javax.mail.Session.getDefaultInstance(connectionProperties,
 				new javax.mail.Authenticator() { // Define the authenticator
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication("support@smartxtech.co", "Zaq12@wsX");
 					}
-				}); // System.out.println("done!");
+				}); //System.out.println("done!");
 		try {
 			// Create the message
 			Message message = new MimeMessage(session);
@@ -394,11 +395,11 @@ public class LoginRepository {
 			// Set message text
 			message.setText("OTP  123456");
 
-			// System.out.print("Sending message...");
+			//System.out.print("Sending message...");
 			// Send the message
 			Transport.send(message);
 
-			// System.out.println("done!");
+			//System.out.println("done!");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -412,17 +413,17 @@ public class LoginRepository {
 		Session session = this.sessionFactory.openSession();
 		StringWriter sw = new StringWriter();
 		Session session11 = this.sessionFactory.openSession();
-		// System.out.println("userFound true " );
+		//System.out.println("userFound true " );
 
 		CCPUserDetailsResponse cCPUserDetailsResponseobj = new CCPUserDetailsResponse();
 		try {
 			Query query11 = session11.createQuery("from LoginUserDetails as o where o.mobileNumber=:mobileNumber");
-			// System.out.println("4---------------- " +mobileNumber);
+			//System.out.println("4---------------- " +mobileNumber);
 			query11.setString("mobileNumber", mobileNumber);
-			// System.out.println("5---------------- ");
+			//System.out.println("5---------------- ");
 			List<CCPUserDetailsResponse> list = (List<CCPUserDetailsResponse>) query11.list();
-			// System.out.println(" 6 ---------------- "+list.size());
-			// System.out.println(list.get(0).getEmailId());
+			//System.out.println(" 6 ---------------- "+list.size());
+			//System.out.println(list.get(0).getEmailId());
 			// cCPUserDetailsResponseobj.setFirstName(list.get(0).getFirstName());
 
 			/*
@@ -445,7 +446,7 @@ public class LoginRepository {
 			// mapper.writeValue(sw, list);
 
 		} catch (Exception e) {
-			// //System.out.println(" Exception in List ");
+			//System.out.println(" Exception in List ");
 			// e.printStackTrace();
 		}
 

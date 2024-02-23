@@ -29,7 +29,7 @@ public class CCPUserController {
 	final Logger logger = Logger.getLogger(CCPUserController.class);
 	
 	
-	@RequestMapping(value = "/checkUserCredentials",params = { "userName", "prnNumber" }, method = RequestMethod.POST, headers = "Accept=application/json")
+	@RequestMapping(value = "/checkUserCredentials",params = { "userName", "prnNumber" }, method = RequestMethod.GET, headers = "Accept=application/json")
 	public ResponseEntity<String> checkStudentWallet(@RequestParam( value="userName",  required=true ) String userName, 
 			@RequestParam( value="prnNumber",   required = true ) String prnNumber)  throws Exception {
 		//String item = null;
@@ -145,16 +145,22 @@ public class CCPUserController {
  				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorjson);
 			}
 			else{
-			System.out.println("Calling Validate User Service..... 5");	
+			System.out.println("validateOTP  ..... 1");	
 			
 			resultText = userService.validateOTP(otpNumber,phoneNumber);
-			
-			System.out.println("Ended  Validate User Service..... 6");	
+			if  (resultText.equals("OTP not matched") ) {
+				logger.error("Validation Failed  ");
+				errorMap.add(new ErrorResponse("ERROR-001", "OTP not Matched "));
+				String errorjson = new ObjectMapper().writeValueAsString(errorMap);
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorjson);	
+			}
+			else {
+			System.out.println(" validateOTP    .......  4");	
 			//resultText = "The Mobile Number Verified";
 			errorMap.add(new ErrorResponse("ERR-002", resultText));
 			String errorjson = new ObjectMapper().writeValueAsString(errorMap);
 			return ResponseEntity.status(HttpStatus.OK).body(errorjson);
-			 
+			} 
 			
 			}
 			
