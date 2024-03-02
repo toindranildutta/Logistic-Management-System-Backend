@@ -4,6 +4,8 @@
 package com.catrion.configuration;
 
 
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 import javax.ws.rs.core.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,17 +56,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		httpSecurity.cors();
 		httpSecurity.csrf().disable()
 		.authorizeRequests().antMatchers("/api/auth/authenticate").permitAll()
-		.antMatchers("/**").permitAll()
-	 
-		.antMatchers(HttpHeaders.ALLOW).permitAll()
+		.antMatchers("/**").permitAll();
+		httpSecurity.csrf().disable();
+		httpSecurity.sessionManagement().sessionCreationPolicy(STATELESS);
+		httpSecurity.authorizeRequests().antMatchers("/**").permitAll()
+ 		.antMatchers(HttpHeaders.ALLOW).permitAll()
 		.anyRequest().authenticated()
 		.and()
 		.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
 		.and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		;
-		httpSecurity.cors().and().csrf().disable();
-		httpSecurity.addFilterBefore(jwtRequestFilter,UsernamePasswordAuthenticationFilter.class);
+ 		httpSecurity.addFilterBefore(jwtRequestFilter,UsernamePasswordAuthenticationFilter.class);
 	}
 	 
 	@Bean
