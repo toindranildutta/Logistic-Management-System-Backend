@@ -54,9 +54,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		httpSecurity.cors();
 		httpSecurity.csrf().disable()
 		.authorizeRequests().antMatchers("/api/auth/authenticate").permitAll()
-		.antMatchers("/catrionapi/user/register").permitAll()
-		.antMatchers("/api/user/register").permitAll()
-		.antMatchers("/catrionapi/api/user/register").permitAll()
+		.antMatchers("/**").permitAll()
+	 
 		.antMatchers(HttpHeaders.ALLOW).permitAll()
 		.anyRequest().authenticated()
 		.and()
@@ -67,7 +66,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		httpSecurity.cors().and().csrf().disable();
 		httpSecurity.addFilterBefore(jwtRequestFilter,UsernamePasswordAuthenticationFilter.class);
 	}
-	
+	 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
