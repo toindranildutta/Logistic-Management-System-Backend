@@ -6,6 +6,8 @@ package com.catrion.configuration;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+import java.util.Arrays;
+
 import javax.ws.rs.core.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 
 import com.catrion.service.JWTService;
 
@@ -49,7 +52,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	
- 
+
 	
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
