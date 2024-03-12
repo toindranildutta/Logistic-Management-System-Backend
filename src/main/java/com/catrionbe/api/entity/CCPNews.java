@@ -92,6 +92,9 @@ public class CCPNews {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
 	public int getModifiedBy() {
 		return modifiedBy;
 	}
