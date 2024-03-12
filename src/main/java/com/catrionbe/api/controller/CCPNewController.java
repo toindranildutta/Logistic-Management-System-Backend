@@ -32,4 +32,8 @@ public class CCPNewController {
     	
         return ResponseEntity.ok(objCCPNewsService.viewAllNews());
     }
+    
+    
+    
+    
 }
