@@ -12,7 +12,7 @@ public class ccputil {
 
 	public void sendEmail(String emailId, String OTPGenerated) {
 		Properties connectionProperties = new Properties();
-		connectionProperties.put("mail.smtp.host", "smtp.gmail.com");
+		connectionProperties.put("mail.smtp.host", "smtp.office365.com");
 		connectionProperties.put("mail.smtp.auth", "true");
 		connectionProperties.put("mail.smtp.starttls.enable", "true");
 		connectionProperties.put("mail.smtp.socketFactory.port", "587");
@@ -24,14 +24,14 @@ public class ccputil {
 		javax.mail.Session session = javax.mail.Session.getDefaultInstance(connectionProperties,
 				new javax.mail.Authenticator() { // Define the authenticator
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication("support@smartxtech.co", "Zaq12@wsX");
+						return new PasswordAuthentication("support@aptpath.in", "pfzrhzqpkljvpwvc");
 					}
 				}); //System.out.println("done!");
 		try {
 			// Create the message
 			Message message = new MimeMessage(session);
 			// Set sender
-			message.setFrom(new InternetAddress("support@smartxtech.co"));
+			message.setFrom(new InternetAddress("support@aptpath.in"));
 			// Set the recipients
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailId));
 			// Set message subject
