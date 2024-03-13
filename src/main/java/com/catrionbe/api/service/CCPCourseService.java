@@ -45,9 +45,14 @@ public class CCPCourseService {
 	 String screenId="0";
 	 int maxId=0;
 	 try {
+		 System.out.println(" fetchMaxScreenId");
 		 screenId = coursesRepository.getMaxId(userIdRequest.getUserId());
-		screenId = String.valueOf(maxId);
+		 System.out.println(" fetchMaxScreenId      "  +screenId);
+	  if(screenId=="" || screenId=="null"  || screenId.equals("null") ) {
+		  screenId = "0";
+	  }
 	} catch (Exception e) {
+		System.out.println(e);
 		screenId="0";
 	}
 	 
