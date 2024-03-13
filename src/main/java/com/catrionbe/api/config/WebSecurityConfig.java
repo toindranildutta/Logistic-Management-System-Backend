@@ -1,4 +1,4 @@
-package com.catrionbe.api.config;
+ package com.catrionbe.api.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

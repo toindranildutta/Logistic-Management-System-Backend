@@ -11,12 +11,10 @@ import com.catrionbe.api.entity.CCPCourses;
 @Repository
 public interface CCCoursesRepository extends CrudRepository<CCPCourses, Integer> {
  
-	
-	
-	  
 	@Query(value = "inset into ccpcoursecompletestatus values  userId=:userId ,  courseId=:courseId", nativeQuery = true)
 	void updateCourse( int userId, int courseId);
 	
-	@Query(value = "select max(screenId)  from ccpcoursecompletestatus where  userId=:userId ", nativeQuery = true)
-	int  findScreenIdByUserId( int userId);
+	@Query(value = "select  coalesce(max(screenId),0)  from ccpcoursecompletestatus where  userId=:userId ", nativeQuery = true)
+	String  getMaxId( int userId);
+	
 }

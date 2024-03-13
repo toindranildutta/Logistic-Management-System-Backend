@@ -7,6 +7,7 @@ import com.catrionbe.api.entity.CCPCourses;
 import com.catrionbe.api.entity.DAOUser;
 import com.catrionbe.api.model.CourseUpdateRequest;
 import com.catrionbe.api.model.UserDTO;
+import com.catrionbe.api.model.UserIdRequest;
 import com.catrionbe.api.repositories.CCCoursesRepository;
  
 @Service
@@ -39,9 +40,20 @@ public class CCPCourseService {
      return coursesRepository.save(newUser);
  }
  
- public  int fetchMaxScreenId(int userId)
+ public  String fetchMaxScreenId(UserIdRequest userIdRequest  )
  {
-	 return coursesRepository.findScreenIdByUserId(userId);
+	 String screenId="0";
+	 int maxId=0;
+	 try {
+		 screenId = coursesRepository.getMaxId(userIdRequest.getUserId());
+		screenId = String.valueOf(maxId);
+	} catch (Exception e) {
+		screenId="0";
+	}
+	 
+	 return screenId;
+			 
+	 
  }
  
 }
