@@ -29,4 +29,15 @@ public interface UserDao extends CrudRepository<DAOUser, Integer> {
     @Query(value = "SELECT *  FROM user WHERE  emailId=:emailId ", nativeQuery = true)
     DAOUser fetuserdetails (String emailId );
     
+    @Query(value = "SELECT count(*) from user", nativeQuery = true)
+   	String  totalCatrionUsers();
+    
+    @Query(value = "SELECT *  FROM user WHERE  emailId=:emailId ", nativeQuery = true)
+    String loginUsers() ;
+    
+    @Query(value = "SELECT *  FROM user WHERE  emailId=:emailId ", nativeQuery = true)
+    String commencedCyberBasic();
+    
+    
+    
 }

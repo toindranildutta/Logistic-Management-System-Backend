@@ -164,7 +164,22 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-	
+	 @RequestMapping(value = "/totalcatrionusers", method = RequestMethod.GET)
+	    public ResponseEntity<?> totalCatrionUsers( ) throws Exception {
+	    	 return ResponseEntity.ok(  (userDetailsService.totalCatrionUsers( )));
+	    }
+	  
+	  
+	  @RequestMapping(value = "/loginusers", method = RequestMethod.GET)
+	    public ResponseEntity<?> loginUsers( ) throws Exception {
+	    	 return ResponseEntity.ok(  (userDetailsService.loginUsers( )));
+	    }
+	  
+	  @RequestMapping(value = "/commencedcyberbasic", method = RequestMethod.GET)
+	    public ResponseEntity<?> commencedCyberBasic( ) throws Exception {
+	    	 return ResponseEntity.ok(  (userDetailsService.commencedCyberBasic( )));
+	    }
+	  
 	
     
 }

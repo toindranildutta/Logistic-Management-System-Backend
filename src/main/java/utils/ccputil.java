@@ -1,12 +1,21 @@
 package utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class ccputil {
 
@@ -28,16 +37,48 @@ public class ccputil {
 					}
 				}); //System.out.println("done!");
 		try {
+			MimeMessage message = new MimeMessage(session);
+			BodyPart messageBodyPart = new MimeBodyPart();
+			MimeMultipart multipart = new MimeMultipart("related");
 			// Create the message
-			Message message = new MimeMessage(session);
+		//	Message message = new MimeMessage(session);
 			// Set sender
 			message.setFrom(new InternetAddress("support@aptpath.in"));
 			// Set the recipients
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailId));
 			// Set message subject
-			message.setSubject("Hello from Team  ");
+			message.setSubject("CATRION Cybersecurity Portal Verification Code");
 			// Set message text
-			message.setText("OTP  " + OTPGenerated);
+			DateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Date currentDate = new Date();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			System.out.println(dateFormat.format(date));
+			
+			String msg = "<html><head></head><body>"
+					+"<p>It looks like you are trying to sign in to the CATRION Cybersecurity Portal:</p>"
+					+"<p>"+"Date : "+dateFormat.format(date)+"</p>"
+					+"<p>Enter the digits below on the sign in page to confirm your identity:</p>"
+					+"<h2>"+OTPGenerated+"</h2>"
+					+"<p>Yours securely,</p>"
+					+"<p>Cybersecurity Team</p>"
+					+"<p>CATRION</p>"
+					;
+					
+			//message.setText( "It looks like you are trying to sign in to the CATRION Cybersecurity Portal: ");
+			//message.setText("<br>");
+			//message.setText(msg);
+			messageBodyPart.setContent(msg, "text/html; charset=utf-8");
+			// add it
+			multipart.addBodyPart(messageBodyPart);
+			// second part (the image)
+			messageBodyPart = new MimeBodyPart();
+		 
+			// add image to the multipart
+			multipart.addBodyPart(messageBodyPart);
+			// put everything together
+			message.setContent(multipart);
+			message.setContent(msg, "text/html; charset=utf-8");
 
 			//System.out.print("Sending message...");
 			// Send the message

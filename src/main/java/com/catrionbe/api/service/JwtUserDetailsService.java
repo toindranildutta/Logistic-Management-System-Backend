@@ -90,4 +90,22 @@ public class JwtUserDetailsService implements UserDetailsService {
         
         return userDao.save(newUser);
     }
+    
+    
+   	public String  totalCatrionUsers() {
+   		
+   		return  userDao.totalCatrionUsers() ;
+   	}
+
+   	public String  loginUsers() {
+   		
+   		return  userDao.loginUsers() ;
+   	}
+   	public Object commencedCyberBasic() {
+   
+   		return userDao.commencedCyberBasic() ;
+   	}
+    
+     
+    
 }
