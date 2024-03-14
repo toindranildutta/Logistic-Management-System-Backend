@@ -16,5 +16,24 @@ public interface CCCoursesRepository extends CrudRepository<CCPCourses, Integer>
 	
 	@Query(value = "select max(screenId) from ccpcoursecompletestatus where  userId=:userId ", nativeQuery = true)
 	String  getMaxId( int userId);
+
+
+	@Query(value = "select count( * ) from ccpcoursecompletestatus  a , user b where  a.userId = b.userId AND a.screenId=21 AND b.emailId LIKE '%CATRION%'", nativeQuery = true)
+	String  getCountcompletedWithWorkEmail();
 	
+	@Query(value = "select count( * ) from ccpcoursecompletestatus  a , user b where  a.userId = b.userId AND a.screenId=21", nativeQuery = true)
+	String completedCCPBasic();
+	
+	@Query(value = "select count( * ) from ccpcoursecompletestatus  a , user b where  a.userId = b.userId AND a.screenId=21", nativeQuery = true)
+	String  getCountcompletedWithMobilePhone();
+
+		
+	@Query(value = "select count( * ) from ccpcoursecompletestatus   where    screenId < 21", nativeQuery = true)
+	  String  reminder();
+	
+	@Query(value = "select count( * ) from ccpcoursecompletestatus   where    screenId < 1", nativeQuery = true)
+	  String  loginButStarted() ;
+ 
+	@Query(value = "select count( * ) from ccpcoursecompletestatus   where    screenId < 20", nativeQuery = true)
+	  String  startedButNotCompleted(); 
 }

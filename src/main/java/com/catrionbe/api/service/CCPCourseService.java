@@ -61,4 +61,37 @@ public class CCPCourseService {
 	 
  }
  
+	
+	public String  completedWithWorkEmail() {
+		
+		return coursesRepository.getCountcompletedWithWorkEmail() ;
+	}
+
+	public String  completedCCPBasic() {
+		
+		return coursesRepository.completedCCPBasic();
+	}
+	
+	public String  completedWithMobilePhone() {
+	
+		return 	coursesRepository.getCountcompletedWithMobilePhone() ;
+	}
+	
+	public String  reminder() {
+	
+		return 	coursesRepository.reminder() ;
+	}
+	
+	public String  loginButStarted() {
+		
+		return coursesRepository.loginButStarted() ;
+	}
+	 
+	public String  startedButNotCompleted() {
+		
+		return  coursesRepository.startedButNotCompleted() ;
+	}
+	 
+	
+ 
 }
