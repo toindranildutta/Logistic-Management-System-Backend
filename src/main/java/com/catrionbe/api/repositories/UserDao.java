@@ -32,10 +32,10 @@ public interface UserDao extends CrudRepository<DAOUser, Integer> {
     @Query(value = "SELECT count(*) from user", nativeQuery = true)
    	String  totalCatrionUsers();
     
-    @Query(value = "SELECT *  FROM user WHERE  emailId=:emailId ", nativeQuery = true)
+    @Query(value = "select count(  distinct  userId ) from ccpcoursecompletestatus ", nativeQuery = true)
     String loginUsers() ;
     
-    @Query(value = "SELECT *  FROM user WHERE  emailId=:emailId ", nativeQuery = true)
+    @Query(value = "select count(  distinct  userId ) from ccpcoursecompletestatus ", nativeQuery = true)
     String commencedCyberBasic();
     
     
