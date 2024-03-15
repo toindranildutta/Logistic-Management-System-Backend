@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.catrionbe.api.model.CCPSigningRequest;
 import com.catrionbe.api.model.UserDTO;
+import com.catrionbe.api.model.UserIdRequest;
 import com.catrionbe.api.service.CCPQuizService;
 import com.catrionbe.api.service.CCPSigningService;
 
@@ -35,5 +36,19 @@ public class CCPSigningController {
 	        return ResponseEntity.ok(objCCPSigningService.acceptPolicy(signObj));
 	    }
 	 
+	 @RequestMapping(value = "/checkundertaking", method = RequestMethod.POST)
+	    public ResponseEntity<?> checkUndertaking(@RequestBody UserIdRequest userIdObj) throws Exception {
+	        return ResponseEntity.ok(objCCPSigningService.checkUndertaking(userIdObj));
+	    }
+	 
+	 @RequestMapping(value = "/checkdeclaration", method = RequestMethod.POST)
+	    public ResponseEntity<?> checkDeclaration(@RequestBody UserIdRequest userIdObj) throws Exception {
+	        return ResponseEntity.ok(objCCPSigningService.checkDeclaration(userIdObj));
+	    }
+	 
+	 @RequestMapping(value = "/checkpolicy", method = RequestMethod.POST)
+	    public ResponseEntity<?> checkPolicy(@RequestBody UserIdRequest userIdObj) throws Exception {
+	        return ResponseEntity.ok(objCCPSigningService.checkPolicy(userIdObj));
+	    }
 	 
 }

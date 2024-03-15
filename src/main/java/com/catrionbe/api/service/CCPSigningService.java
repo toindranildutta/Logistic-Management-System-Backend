@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.catrionbe.api.entity.CCPSigning;
 import com.catrionbe.api.model.CCPSigningRequest;
 import com.catrionbe.api.model.UserDTO;
+import com.catrionbe.api.model.UserIdRequest;
 import com.catrionbe.api.repositories.CCPSigningRepsitory;
 import com.catrionbe.api.repositories.UserDao;
 
@@ -103,4 +104,34 @@ public class CCPSigningService {
 		return objCCPSigning;
 	}
 
+	
+	public boolean checkUndertaking ( UserIdRequest userIdObj) {
+		int userId = userIdObj.getUserId();
+		boolean undertakeAccepted = false;
+        int count = objCCPSigningRepsitory.checkUndertaking( userId);
+		if (count > 0) {
+			undertakeAccepted = true;
+		}
+		return undertakeAccepted;
+	}
+
+	public Object checkDeclaration(UserIdRequest userIdObj) {
+		boolean declAccepted = false;
+		int userId = userIdObj.getUserId();
+        int count = objCCPSigningRepsitory.checkUndertaking( userId);
+		if (count > 0) {
+			declAccepted = true;
+		}
+		return declAccepted;
+	}
+
+	public Object checkPolicy(UserIdRequest userIdObj) {
+		boolean policyAccepted = false;
+		int userId = userIdObj.getUserId();
+        int count = objCCPSigningRepsitory.checkUndertaking( userId);
+		if (count > 0) {
+			policyAccepted = true;
+		}
+		return policyAccepted;
+	}
 }
