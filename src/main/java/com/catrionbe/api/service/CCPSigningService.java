@@ -1,0 +1,106 @@
+package com.catrionbe.api.service;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.catrionbe.api.entity.CCPSigning;
+import com.catrionbe.api.model.CCPSigningRequest;
+import com.catrionbe.api.model.UserDTO;
+import com.catrionbe.api.repositories.CCPSigningRepsitory;
+import com.catrionbe.api.repositories.UserDao;
+
+@Service
+public class CCPSigningService {
+
+	@Autowired
+    private CCPSigningRepsitory objCCPSigningRepsitory;
+	
+	@Autowired
+	private PasswordEncoder bcryptEncoder;
+	 
+	
+	public CCPSigning  acceptUndertaking(CCPSigningRequest  signObj) {
+		String username =  objCCPSigningRepsitory.fetchFirstandLastName ( signObj.getUserId());
+		System.out.println(" username  "+ username);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+		Date date = new Date();
+		
+		System.out.println(dateFormat.format(date));
+		
+		CCPSigning objCCPSigning = new CCPSigning();
+		objCCPSigning.setUserId(signObj.getUserId());
+		objCCPSigning.setStatusId(signObj.getStatusId());
+		objCCPSigning.setSigningItem("UNDERTAKING");
+		objCCPSigning.setTokenVal(bcryptEncoder.encode(username));
+		objCCPSigning.setDisplayDate((dateFormat.format(date)).toString()+" UTC");
+		objCCPSigning.setFullName( username);
+		objCCPSigning.setIsActive(signObj.getIsActive());
+		objCCPSigning.setIsAprroved(signObj.getIsAprroved());
+		objCCPSigning.setModifiedBy(signObj.getModifiedBy());
+		objCCPSigning.setModifiedDate(signObj.getModifiedDate());
+		objCCPSigning.setCreatedBy(signObj.getCreatedBy());
+		objCCPSigning.setCreatedDate(signObj.getCreatedDate());
+		objCCPSigningRepsitory.save(objCCPSigning);
+		return objCCPSigning;
+	}
+
+	public Object acceptDeclaration(CCPSigningRequest signObj) {
+		String username =  objCCPSigningRepsitory.fetchFirstandLastName ( signObj.getUserId());
+		System.out.println(" username  "+ username);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+		Date date = new Date();
+		
+		System.out.println(dateFormat.format(date));
+		
+		CCPSigning objCCPSigning = new CCPSigning();
+		objCCPSigning.setUserId(signObj.getUserId());
+		objCCPSigning.setStatusId(signObj.getStatusId());
+		objCCPSigning.setSigningItem("DECLARATION");
+		objCCPSigning.setTokenVal(bcryptEncoder.encode(username));
+		objCCPSigning.setDisplayDate((dateFormat.format(date)).toString()+" UTC");
+		objCCPSigning.setFullName( username);
+		objCCPSigning.setIsActive(signObj.getIsActive());
+		objCCPSigning.setIsAprroved(signObj.getIsAprroved());
+		objCCPSigning.setModifiedBy(signObj.getModifiedBy());
+		objCCPSigning.setModifiedDate(signObj.getModifiedDate());
+		objCCPSigning.setCreatedBy(signObj.getCreatedBy());
+		objCCPSigning.setCreatedDate(signObj.getCreatedDate());
+		objCCPSigningRepsitory.save(objCCPSigning);
+		return objCCPSigning;
+	}
+
+	public Object acceptPolicy(CCPSigningRequest signObj) {
+		String username =  objCCPSigningRepsitory.fetchFirstandLastName ( signObj.getUserId());
+		System.out.println(" username  "+ username);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+		Date date = new Date();
+		
+		System.out.println(dateFormat.format(date));
+		
+		CCPSigning objCCPSigning = new CCPSigning();
+		objCCPSigning.setUserId(signObj.getUserId());
+		objCCPSigning.setStatusId(signObj.getStatusId());
+		objCCPSigning.setSigningItem("POLICY");
+		objCCPSigning.setTokenVal(bcryptEncoder.encode(username));
+		objCCPSigning.setDisplayDate((dateFormat.format(date)).toString()+" UTC");
+		objCCPSigning.setFullName( username);
+		objCCPSigning.setIsActive(signObj.getIsActive());
+		objCCPSigning.setIsAprroved(signObj.getIsAprroved());
+		objCCPSigning.setModifiedBy(signObj.getModifiedBy());
+		objCCPSigning.setModifiedDate(signObj.getModifiedDate());
+		objCCPSigning.setCreatedBy(signObj.getCreatedBy());
+		objCCPSigning.setCreatedDate(signObj.getCreatedDate());
+		objCCPSigningRepsitory.save(objCCPSigning);
+		return objCCPSigning;
+	}
+
+}
