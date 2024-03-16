@@ -3,29 +3,76 @@ package com.catrionbe.api.service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.catrionbe.api.entity.CCPFeedback;
 import com.catrionbe.api.entity.CCPSigning;
+import com.catrionbe.api.model.CCPFeedbackRequest;
 import com.catrionbe.api.model.CCPSigningRequest;
+import com.catrionbe.api.model.CCPUpdateFeedbackReq;
 import com.catrionbe.api.model.UserDTO;
 import com.catrionbe.api.model.UserIdRequest;
+import com.catrionbe.api.repositories.CCPFeedbackRepsitory;
 import com.catrionbe.api.repositories.CCPSigningRepsitory;
 import com.catrionbe.api.repositories.UserDao;
 
 @Service
-public class CCPSigningService {
+public class CCPFeedbackService {
 
 	@Autowired
-    private CCPSigningRepsitory objCCPSigningRepsitory;
+    private CCPFeedbackRepsitory objCCPFeedbackRepsitory;
 	
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
 	 
 	
+	public CCPFeedback saveFeedback(CCPFeedbackRequest feedbackReq) {		
+		CCPFeedback objCCPFeedback = new CCPFeedback();
+		objCCPFeedback.setUserId(feedbackReq.getUserId());
+		objCCPFeedback.setFeedbackId(feedbackReq.getFeedbackId());
+		objCCPFeedback.setFeedbackType(feedbackReq.getFeedbackType());
+		objCCPFeedback.setFeedbackStatus(feedbackReq.getFeedbackStatus() );
+		objCCPFeedback.setDescription( feedbackReq.getDescription() );
+		objCCPFeedback.setIsActive(feedbackReq.getIsActive());
+		objCCPFeedback.setIsAprroved(feedbackReq.getIsAprroved());
+		objCCPFeedback.setModifiedBy(feedbackReq.getModifiedBy());
+		objCCPFeedback.setModifiedDate(feedbackReq.getModifiedDate());
+		objCCPFeedback.setCreatedBy(feedbackReq.getCreatedBy());
+		objCCPFeedback.setCreatedDate(feedbackReq.getCreatedDate());
+		objCCPFeedbackRepsitory.save(objCCPFeedback);
+		return objCCPFeedback;
+	}
+
+
+	public String updateFeedback(CCPUpdateFeedbackReq feedbackReq) throws Exception {
+		String message = "Feedback Status Updated";
+		
+		try {
+			objCCPFeedbackRepsitory.updateStatus(feedbackReq.getFeedbackId() , feedbackReq.getFeedbackStatus());
+		} catch (Exception e) {
+ 			 throw new  Exception("Unable to Update" );
+		}
+		 
+		return message;
+	}
+	
+	public List<CCPFeedback> findAllElements() {
+		  return (List<CCPFeedback>) objCCPFeedbackRepsitory.findAllActiveFeedbacks();
+		 }
+
+	public List<CCPFeedback> listallarchivedfeedback() {
+		  return (List<CCPFeedback>) objCCPFeedbackRepsitory.listallarchivedfeedback();
+		 }
+
+	 
+	
+	/*
 	public CCPSigning  acceptUndertaking(CCPSigningRequest  signObj) {
 		String username =  objCCPSigningRepsitory.fetchFirstandLastName ( signObj.getUserId());
 		System.out.println(" username  "+ username);
@@ -134,6 +181,5 @@ public class CCPSigningService {
 		}
 		return policyAccepted;
 	}
-
-	
+	*/
 }
