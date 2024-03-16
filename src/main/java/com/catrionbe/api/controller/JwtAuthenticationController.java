@@ -16,7 +16,9 @@ import com.catrionbe.api.model.JwtRequest;
 import com.catrionbe.api.model.JwtResponse;
 import com.catrionbe.api.model.JwtResponsewithEmail;
 import com.catrionbe.api.model.OtpRequest;
+import com.catrionbe.api.model.UpdateUserDTO;
 import com.catrionbe.api.model.UserDTO;
+import com.catrionbe.api.model.UserIdRequest;
 import com.catrionbe.api.service.JwtUserDetailsService;
 
 import utils.ccputil;
@@ -180,6 +182,27 @@ public class JwtAuthenticationController {
 	    	 return ResponseEntity.ok(  (userDetailsService.commencedCyberBasic( )));
 	    }
 	  
-	
+	  @RequestMapping(value = "/updateuser", method = RequestMethod.PUT)
+	    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDTO user) throws Exception {
+	        return ResponseEntity.ok(userDetailsService.update(user));
+	    }
     
+	  @RequestMapping(value = "/updateuserasarchived", method = RequestMethod.PUT)
+	    public ResponseEntity<?> updateuserasarchived(@RequestBody UserIdRequest userObj) throws Exception {
+	        return ResponseEntity.ok(userDetailsService.updateuserasarchived(userObj));
+	    }
+	  
+	  @RequestMapping(value = "/listallactiveusers", method = RequestMethod.GET)
+	    public ResponseEntity<?> listallactiveusers() throws Exception {
+	        return ResponseEntity.ok(userDetailsService.listallactiveusers());
+	    }
+	  
+	  @RequestMapping(value = "/listallnewusers", method = RequestMethod.GET)
+	    public ResponseEntity<?> listallnewusers() throws Exception {
+	        return ResponseEntity.ok(userDetailsService.listallnewusers());
+	    }
+	  @RequestMapping(value = "/listallarchivedusers", method = RequestMethod.GET)
+	    public ResponseEntity<?> listallarchivedusers() throws Exception {
+	        return ResponseEntity.ok(userDetailsService.listallarchivedusers());
+	    }
 }

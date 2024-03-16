@@ -2,6 +2,8 @@ package com.catrionbe.api.repositories;
 
 import com.catrionbe.api.entity.DAOUser;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -37,6 +39,20 @@ public interface UserDao extends CrudRepository<DAOUser, Integer> {
     
     @Query(value = "select count(  distinct  userId ) from ccpcoursecompletestatus ", nativeQuery = true)
     String commencedCyberBasic();
+
+    @Modifying
+    @Transactional
+    @Query(value = "update user set isAprroved=0  where   userId=:userId", nativeQuery = true)
+	int updateuserasarchived(int userId);
+
+    @Query(value = "SELECT *  FROM user WHERE  isAprroved='Y' ", nativeQuery = true)
+	List<DAOUser> listallactiveusers();
+
+    @Query(value = "SELECT *  FROM user WHERE  isAprroved='Y' ", nativeQuery = true)
+	List<DAOUser> listallnewusers();
+
+    @Query(value = "SELECT *  FROM user WHERE  isAprroved='N' ", nativeQuery = true)
+	List<DAOUser> listallarchivedusers();
     
     
     

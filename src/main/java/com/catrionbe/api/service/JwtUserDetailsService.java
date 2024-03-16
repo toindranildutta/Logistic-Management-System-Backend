@@ -1,9 +1,12 @@
 package com.catrionbe.api.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.catrionbe.api.entity.DAOUser;
+import com.catrionbe.api.model.UpdateUserDTO;
 import com.catrionbe.api.model.UserDTO;
+import com.catrionbe.api.model.UserIdRequest;
 import com.catrionbe.api.repositories.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -106,6 +109,45 @@ public class JwtUserDetailsService implements UserDetailsService {
    		return userDao.commencedCyberBasic() ;
    	}
     
-     
-    
+   	
+    public DAOUser update(UpdateUserDTO user) {
+        DAOUser newUser = new DAOUser();
+        newUser.setUserId(user.getUserId());
+        newUser.setUsername(user.getUsername());
+        //Encrypt Username for Password 
+        newUser.setPassword(bcryptEncoder.encode(user.getUsername()));
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        newUser.setEmailId(user.getEmailId());
+        newUser.setConfPassword(user.getConfPassword());
+        newUser.setFatherName(user.getFatherName());
+        newUser.setGrandFatherName(user.getGrandFatherName());
+        newUser.setOtpEntered(user.getOtpEntered());
+        newUser.setOtpGenerated(user.getOtpGenerated());
+        newUser.setUsername(user.getUsername());
+        newUser.setNationalId(user.getNationalId());
+        newUser.setPrnNumber(user.getPrnNumber());
+        newUser.setConfPassword(user.getConfPassword());
+        newUser.setIsActive(user.getIsActive());
+        newUser.setIsAprroved(user.getIsAprroved());
+        newUser.setModifiedBy(user.getModifiedBy());
+        newUser.setModifiedDate(user.getModifiedDate());        
+        return userDao.save(newUser);
+    }
+	public int updateuserasarchived(UserIdRequest user) {
+ 		userDao.updateuserasarchived(user.getUserId());
+		return  1;
+	}
+	public List<DAOUser> listallactiveusers() {
+  return		userDao.listallactiveusers(); 
+		
+	} 
+	public List<DAOUser> listallnewusers() {
+		  return		userDao.listallnewusers(); 
+				
+			} 
+	public List<DAOUser> listallarchivedusers() {
+				  return		userDao.listallarchivedusers(); 
+						
+					}  
 }
