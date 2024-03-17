@@ -22,4 +22,7 @@ public interface  CCPSigningRepsitory extends CrudRepository<CCPSigning, Integer
 	@Query(value = "select   count( *  ) from ccpsigning  where   userId =:userId AND  statusId=1 AND signingItem='POLICY' ", nativeQuery = true)
 	public int checkPolicy(int userId);
 
+	@Query(value = "select     *   from ccpcertificate   where   userId =:userId ", nativeQuery = true)
+	public String generatecertificatedata(int userId);
+
 }

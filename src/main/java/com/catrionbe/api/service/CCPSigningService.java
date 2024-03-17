@@ -5,14 +5,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.catrionbe.api.entity.CCPCertificate;
 import com.catrionbe.api.entity.CCPSigning;
 import com.catrionbe.api.model.CCPSigningRequest;
 import com.catrionbe.api.model.UserDTO;
 import com.catrionbe.api.model.UserIdRequest;
+import com.catrionbe.api.repositories.CCPCertificateRepsitory;
 import com.catrionbe.api.repositories.CCPSigningRepsitory;
 import com.catrionbe.api.repositories.UserDao;
 
@@ -21,6 +24,8 @@ public class CCPSigningService {
 
 	@Autowired
     private CCPSigningRepsitory objCCPSigningRepsitory;
+	@Autowired
+	private CCPCertificateRepsitory objCCPCertificateRepsitory;
 	
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
@@ -101,10 +106,27 @@ public class CCPSigningService {
 		objCCPSigning.setCreatedBy(signObj.getCreatedBy());
 		objCCPSigning.setCreatedDate(signObj.getCreatedDate());
 		objCCPSigningRepsitory.save(objCCPSigning);
+		
+		CCPCertificate objCCPCertificate = new CCPCertificate();
+		objCCPCertificate.setUserId(signObj.getUserId());
+		objCCPCertificate.setFullName(username);
+		int certum =  Integer.parseInt(this.generateCertificateNumber());
+		objCCPCertificate.setCertificateNumber(  certum );
+		objCCPCertificate.setIsActive(signObj.getIsActive());
+		objCCPCertificate.setIsAprroved(signObj.getIsAprroved());
+		objCCPCertificate.setModifiedBy(signObj.getModifiedBy());
+		objCCPCertificate.setModifiedDate(signObj.getModifiedDate());
+		objCCPCertificate.setCreatedBy(signObj.getCreatedBy());
+		objCCPCertificate.setCreatedDate(signObj.getCreatedDate());
+		objCCPCertificateRepsitory.save(objCCPCertificate);
 		return objCCPSigning;
 	}
 
-	
+	public String generateCertificateNumber() {
+		String random = RandomStringUtils.randomNumeric(10);
+		return random;
+	}
+
 	public boolean checkUndertaking ( UserIdRequest userIdObj) {
 		int userId = userIdObj.getUserId();
 		boolean undertakeAccepted = false;
@@ -135,9 +157,11 @@ public class CCPSigningService {
 		return policyAccepted;
 	}
 
-	public Object generatecertificatedata(CCPSigningRequest signObj) {
-		// TODO Auto-generated method stub
-		return null;
+	public String generatecertificatedata(UserIdRequest userIdObj  ) {
+		
+		
+		return objCCPSigningRepsitory.generatecertificatedata (userIdObj.getUserId()) ;
+		 
 	}
 
 	
