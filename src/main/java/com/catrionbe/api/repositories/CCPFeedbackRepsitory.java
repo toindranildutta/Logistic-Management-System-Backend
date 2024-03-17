@@ -38,4 +38,5 @@ public interface  CCPFeedbackRepsitory extends CrudRepository<CCPFeedback, Integ
     @Query(value = "select * from  ccpfeedback   where   feedbackStatus=1", nativeQuery = true)
 	public List<CCPFeedback> listallarchivedfeedback();
 
+	
 }

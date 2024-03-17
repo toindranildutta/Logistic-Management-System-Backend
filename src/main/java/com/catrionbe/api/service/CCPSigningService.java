@@ -135,5 +135,10 @@ public class CCPSigningService {
 		return policyAccepted;
 	}
 
+	public Object generatecertificatedata(CCPSigningRequest signObj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

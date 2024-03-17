@@ -1,7 +1,14 @@
 package com.catrionbe.api.service;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -11,6 +18,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.azure.storage.blob.BlobClient;
+import com.azure.storage.blob.BlobContainerClient;
+import com.azure.storage.blob.BlobServiceClient;
+import com.azure.storage.blob.BlobServiceClientBuilder;
+import com.azure.storage.blob.models.BlobAccessPolicy;
+import com.azure.storage.blob.models.BlobSignedIdentifier;
+import com.azure.storage.blob.models.PublicAccessType;
 import com.catrionbe.api.entity.CCPFeedback;
 import com.catrionbe.api.entity.CCPIncident;
 import com.catrionbe.api.entity.CCPSigning;
@@ -18,45 +32,43 @@ import com.catrionbe.api.model.CCPFeedbackRequest;
 import com.catrionbe.api.model.CCPIncidentRequest;
 import com.catrionbe.api.model.CCPSigningRequest;
 import com.catrionbe.api.model.CCPUpdateFeedbackReq;
+import com.catrionbe.api.model.IncidentUpdateRequest;
 import com.catrionbe.api.model.UserDTO;
 import com.catrionbe.api.model.UserIdRequest;
 import com.catrionbe.api.repositories.CCPFeedbackRepsitory;
+import com.catrionbe.api.repositories.CCPIncidentRepsitory;
 import com.catrionbe.api.repositories.CCPSigningRepsitory;
 import com.catrionbe.api.repositories.UserDao;
 
 @Service
-public class CCPFeedbackService {
+public class CCPIncidentService {
 
+	 private static final String connectionString = "AccountName=cyberportal;AccountKey=9fKUci4CZQEhTL8eISLWZgwWpq+wqEg93XGtu+DcHTqT7/O7cfmqooeeuTrDh/uAWsw/xQzuRVkD+AStwk+iOg==;EndpointSuffix=core.windows.net";
+	 private static final String containerName = "portal-image";  // Azure blob storage won't allow capital letters in container name
+	 private static final String blobName = "test.jpg";
+	 private static final String localFilePath = "D:\\Microservices\\logo.jpg";
+	 private static SecureRandom random = new SecureRandom();
+	 private static final String ALPHA_CAPS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	    private static final String ALPHA = "abcdefghijklmnopqrstuvwxyz";
+	    private static final String NUMERIC = "0123456789";
+	    private static final String SPECIAL_CHARS = "!@#$%^&*_=+-/";
+	    
+	    
+	    
 	@Autowired
-    private CCPFeedbackRepsitory objCCPFeedbackRepsitory;
+    private CCPIncidentRepsitory objCCPFeedbackRepsitory;
 	
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
 	 
-	
-	public CCPFeedback saveFeedback(CCPFeedbackRequest feedbackReq) {		
-		CCPFeedback objCCPFeedback = new CCPFeedback();
-		objCCPFeedback.setUserId(feedbackReq.getUserId());
-		objCCPFeedback.setFeedbackId(feedbackReq.getFeedbackId());
-		objCCPFeedback.setFeedbackType(feedbackReq.getFeedbackType());
-		objCCPFeedback.setFeedbackStatus(feedbackReq.getFeedbackStatus() );
-		objCCPFeedback.setDescription( feedbackReq.getDescription() );
-		objCCPFeedback.setIsActive(feedbackReq.getIsActive());
-		objCCPFeedback.setIsAprroved(feedbackReq.getIsAprroved());
-		objCCPFeedback.setModifiedBy(feedbackReq.getModifiedBy());
-		objCCPFeedback.setModifiedDate(feedbackReq.getModifiedDate());
-		objCCPFeedback.setCreatedBy(feedbackReq.getCreatedBy());
-		objCCPFeedback.setCreatedDate(feedbackReq.getCreatedDate());
-		objCCPFeedbackRepsitory.save(objCCPFeedback);
-		return objCCPFeedback;
-	}
+	 
 
 
 	public String updateFeedback(CCPUpdateFeedbackReq feedbackReq) throws Exception {
 		String message = "Feedback Status Updated";
 		
 		try {
-			objCCPFeedbackRepsitory.updateStatus(feedbackReq.getFeedbackId() , feedbackReq.getFeedbackStatus());
+			objCCPFeedbackRepsitory.updateIncidentStatus(feedbackReq.getFeedbackId() , feedbackReq.getFeedbackStatus());
 		} catch (Exception e) {
  			 throw new  Exception("Unable to Update" );
 		}
@@ -64,17 +76,85 @@ public class CCPFeedbackService {
 		return message;
 	}
 	
-	public List<CCPFeedback> findAllElements() {
-		  return (List<CCPFeedback>) objCCPFeedbackRepsitory.findAllActiveFeedbacks();
+	public List<CCPIncident> findAllElements() {
+		  return (List<CCPIncident>) objCCPFeedbackRepsitory.findAllActiveIncidents();
 		 }
 
-	public List<CCPFeedback> listallarchivedfeedback() {
-		  return (List<CCPFeedback>) objCCPFeedbackRepsitory.listallarchivedfeedback();
+	public List<CCPIncident> listallarchivedfeedback() {
+		  return (List<CCPIncident>) objCCPFeedbackRepsitory.listallarchivedfeedback();
 		 }
+	public static String generateFileNames() {
+	    String result = "";
+	    String dic =ALPHA_CAPS + ALPHA;
+	    int len = 10;
+	    for (int i = 0; i < len; i++) {
+	        int index = random.nextInt(dic.length());
+	        result += dic.charAt(index);
+	    }
+	    return result;
+	    }
+	public CCPIncident saveIncident(CCPIncidentRequest incidentReq) {
+		CCPIncident objCCPIncident = new CCPIncident();
+		objCCPIncident.setSeverityId(incidentReq.getSeverityId());
+		objCCPIncident.setUserId(incidentReq.getUserId());
+		objCCPIncident.setStatusId(incidentReq.getStatusId());
+		objCCPIncident.setDescription(incidentReq.getDescription());
+		String randomImageName =  this.generateFileNames();
+		String attachUrl = this.getAttachementUrl(incidentReq.getImage() ,  randomImageName);
+		System.out.println("attachUrl  - - - - -  >    "+attachUrl);
+		objCCPIncident.setAttachementUrl(null);
+		objCCPIncident.setIsActive(incidentReq.getIsActive());
+		objCCPIncident.setIsAprroved(incidentReq.getIsAprroved());
+		objCCPIncident.setModifiedBy(incidentReq.getModifiedBy());
+		objCCPIncident.setModifiedDate(incidentReq.getModifiedDate());
+		objCCPIncident.setCreatedBy(incidentReq.getCreatedBy());
+		objCCPIncident.setCreatedDate(incidentReq.getCreatedDate());
+		
+		
+		
+		
+		return null;
+	}
 
 
-	
-	 
+	private String  getAttachementUrl(byte[] image , String randomImageName) {
+		 BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(connectionString).buildClient();
+	      final BlobContainerClient devContainer = blobServiceClient.createBlobContainerIfNotExists(containerName);
+
+	        BlobSignedIdentifier accessPolicy = new BlobSignedIdentifier()
+	                .setId("policy1")  // Identifier for the policy
+	                .setAccessPolicy(new BlobAccessPolicy().setStartsOn(OffsetDateTime.now()).setExpiresOn(OffsetDateTime.now().plusDays(7)).setPermissions("r"));
+
+
+	        devContainer.setAccessPolicy(PublicAccessType.BLOB, List.of(accessPolicy));
+
+	        BlobClient blobClient = devContainer.getBlobClient(blobName);
+
+	        InputStream is = new ByteArrayInputStream(image);
+	        try (FileInputStream fileInputStream = new FileInputStream(localFilePath)) {
+	            blobClient.upload(is, new File(randomImageName).length(), true);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		
+		
+		return  "https://cyberportal.blob.core.windows.net/portal-image/"+randomImageName;		
+	}
+
+
+	public String updateIncident(IncidentUpdateRequest incidentUpdateReq) throws Exception {
+	String message = "Incident  Status Updated";
+		
+		try {
+			objCCPFeedbackRepsitory.updateIncidentStatus(incidentUpdateReq.getIncidentId() , incidentUpdateReq.getStatusId());
+		} catch (Exception e) {
+ 			 throw new  Exception("Unable to Update" );
+		}
+		 
+		return message;
+		
+	}
+
 	
 	/*
 	public CCPSigning  acceptUndertaking(CCPSigningRequest  signObj) {
