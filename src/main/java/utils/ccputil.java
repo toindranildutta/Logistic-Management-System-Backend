@@ -91,5 +91,81 @@ public class ccputil {
 		}
 
 	}
+
+	public static void sendWelcomeEmail(String emailId, String prnNumber) {
+		Properties connectionProperties = new Properties();
+		connectionProperties.put("mail.smtp.host", "smtp.office365.com");
+		connectionProperties.put("mail.smtp.auth", "true");
+		connectionProperties.put("mail.smtp.starttls.enable", "true");
+		connectionProperties.put("mail.smtp.socketFactory.port", "587");
+		connectionProperties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+		connectionProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		connectionProperties.put("mail.smtp.port", "587");
+		//System.out.print("Creating the session...");
+		// Create the session
+		javax.mail.Session session = javax.mail.Session.getDefaultInstance(connectionProperties,
+				new javax.mail.Authenticator() { // Define the authenticator
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication("support@aptpath.in", "pfzrhzqpkljvpwvc");
+					}
+				}); //System.out.println("done!");
+		try {
+			MimeMessage message = new MimeMessage(session);
+			BodyPart messageBodyPart = new MimeBodyPart();
+			MimeMultipart multipart = new MimeMultipart("related");
+			// Create the message
+		//	Message message = new MimeMessage(session);
+			// Set sender
+			message.setFrom(new InternetAddress("support@aptpath.in"));
+			// Set the recipients
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailId));
+			// Set message subject
+			message.setSubject("CATRION Cybersecurity Portal Welcome Kit");
+			// Set message text
+			DateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Date currentDate = new Date();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			System.out.println(dateFormat.format(date));
+			
+			String msg = "<html><head></head><body>"
+					+"<p>Hi There , Welcome to CATRION Cybersecurity Portal:</p>"
+					+"<p>"+"Date : "+dateFormat.format(date)+"</p>"
+					+"<p>Here is your PRN Number for reference. :</p>"
+					+"<h2>"+prnNumber+"</h2>"
+					+"<h3>Please Login to Our Portal with PRN and Mobile number...</h3>"
+					+"<h3>https://catrion-cyber-dev.spotlabs.in/login</h3>"
+					+"<p>Yours securely,</p>"
+					+"<p>Cybersecurity Team</p>"
+					+"<p>CATRION</p>"
+					;
+					
+			//message.setText( "It looks like you are trying to sign in to the CATRION Cybersecurity Portal: ");
+			//message.setText("<br>");
+			//message.setText(msg);
+			messageBodyPart.setContent(msg, "text/html; charset=utf-8");
+			// add it
+			multipart.addBodyPart(messageBodyPart);
+			// second part (the image)
+			messageBodyPart = new MimeBodyPart();
+		 
+			// add image to the multipart
+			multipart.addBodyPart(messageBodyPart);
+			// put everything together
+			message.setContent(multipart);
+			message.setContent(msg, "text/html; charset=utf-8");
+
+			//System.out.print("Sending message...");
+			// Send the message
+			Transport.send(message);
+
+			//System.out.println("done!");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+	}
     
 }
