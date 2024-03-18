@@ -4,6 +4,8 @@ import com.catrionbe.api.entity.DAOUser;
 
 import java.util.List;
 
+ import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -46,13 +48,13 @@ public interface UserDao extends CrudRepository<DAOUser, Integer> {
 	int updateuserasarchived(int userId);
 
     @Query(value = "SELECT *  FROM user WHERE  isAprroved='Y' ", nativeQuery = true)
-	List<DAOUser> listallactiveusers();
+    Page<DAOUser> listallactiveusers( final Pageable pageable);
 
     @Query(value = "SELECT *  FROM user WHERE  isAprroved='Y' ", nativeQuery = true)
-	List<DAOUser> listallnewusers();
+    Page<DAOUser> listallnewusers( final Pageable pageable);
 
     @Query(value = "SELECT *  FROM user WHERE  isAprroved='N' ", nativeQuery = true)
-	List<DAOUser> listallarchivedusers();
+    Page<DAOUser> listallarchivedusers( final Pageable pageable);
 
     @Query(value = "SELECT max(prnNumber)  FROM user", nativeQuery = true)
 	String getMaxPrnNumber();

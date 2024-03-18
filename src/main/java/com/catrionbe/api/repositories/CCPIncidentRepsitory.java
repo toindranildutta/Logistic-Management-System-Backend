@@ -2,6 +2,8 @@ package com.catrionbe.api.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -23,10 +25,10 @@ public interface  CCPIncidentRepsitory extends CrudRepository<CCPIncident, Integ
 	public void updateIncidentStatus(int incidentId, int statusId);
 
     @Query(value = "select * from  ccpincident   where   statusId=1", nativeQuery = true)
-	public List<CCPIncident> findAllActiveIncidents();
+	  Page<CCPIncident> listallactiveincidents(final Pageable pageable);
 
-    @Query(value = "select * from  ccpfeedback   where   feedbackStatus=1", nativeQuery = true)
-	public List<CCPIncident> listallarchivedfeedback();
+    @Query(value = "select * from  ccpincident   where   statusId=0", nativeQuery = true)
+	  Page<CCPIncident> listallarchivedfeedback(final Pageable pageable);
 
  
 	

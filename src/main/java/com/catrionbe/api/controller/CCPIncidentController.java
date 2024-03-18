@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.catrionbe.api.model.CCPFeedbackRequest;
@@ -38,8 +39,9 @@ public class CCPIncidentController {
 	    }
 	 
 	 @RequestMapping(value = "/listallactiveincidents", method = RequestMethod.GET)
-	    public ResponseEntity<?> listallactiveincidents() throws Exception {
-	        return ResponseEntity.ok(ccpIncidentService.findAllElements());
+	    public ResponseEntity<?> listallactiveincidents( @RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
+	        return ResponseEntity.ok(ccpIncidentService.listallactiveincidents(pageNumber ,size));
 	    }
 	 
 	 /*

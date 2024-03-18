@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /*
@@ -195,16 +196,22 @@ public class JwtAuthenticationController {
 	    }
 	  
 	  @RequestMapping(value = "/listallactiveusers", method = RequestMethod.GET)
-	    public ResponseEntity<?> listallactiveusers() throws Exception {
-	        return ResponseEntity.ok(userDetailsService.listallactiveusers());
+	    public ResponseEntity<?> listallactiveusers(
+	            @RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size )throws Exception {
+	        return ResponseEntity.ok(userDetailsService.listallactiveusers( pageNumber ,size ));
 	    }
 	  
 	  @RequestMapping(value = "/listallnewusers", method = RequestMethod.GET)
-	    public ResponseEntity<?> listallnewusers() throws Exception {
-	        return ResponseEntity.ok(userDetailsService.listallnewusers());
+	    public ResponseEntity<?> listallnewusers(
+	            @RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
+	        return ResponseEntity.ok(userDetailsService.listallnewusers(pageNumber ,size));
 	    }
 	  @RequestMapping(value = "/listallarchivedusers", method = RequestMethod.GET)
-	    public ResponseEntity<?> listallarchivedusers() throws Exception {
-	        return ResponseEntity.ok(userDetailsService.listallarchivedusers());
+	    public ResponseEntity<?> listallarchivedusers(
+	            @RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
+	        return ResponseEntity.ok(userDetailsService.listallarchivedusers(pageNumber ,size));
 	    }
 }

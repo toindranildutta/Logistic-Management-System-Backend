@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.catrionbe.api.model.CCPFeedbackRequest;
@@ -34,12 +35,14 @@ public class CCPFeedbackController {
 	    }
 	 
 	 @RequestMapping(value = "/listallactivefeedback", method = RequestMethod.GET)
-	    public ResponseEntity<?> listallfeedback() throws Exception {
-	        return ResponseEntity.ok(ccpFeedbackService.findAllElements());
+	    public ResponseEntity<?> listallfeedback( @RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
+	        return ResponseEntity.ok(ccpFeedbackService.findAllElements(pageNumber ,size));
 	    }
 	 @RequestMapping(value = "/listallarchivedfeedback", method = RequestMethod.GET)
-	    public ResponseEntity<?> listallarchivedfeedback() throws Exception {
-	        return ResponseEntity.ok(ccpFeedbackService.listallarchivedfeedback());
+	    public ResponseEntity<?> listallarchivedfeedback(@RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
+	        return ResponseEntity.ok(ccpFeedbackService.listallarchivedfeedback(pageNumber ,size));
 	    }
 	 /*
 	 @RequestMapping(value = "/acceptdeclaration", method = RequestMethod.POST)

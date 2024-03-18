@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -64,12 +67,14 @@ public class CCPFeedbackService {
 		return message;
 	}
 	
-	public List<CCPFeedback> findAllElements() {
-		  return (List<CCPFeedback>) objCCPFeedbackRepsitory.findAllActiveFeedbacks();
+	public Page<CCPFeedback> findAllElements(int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+		  return ( objCCPFeedbackRepsitory.findAllActiveFeedbacks(pageable));
 		 }
 
-	public List<CCPFeedback> listallarchivedfeedback() {
-		  return (List<CCPFeedback>) objCCPFeedbackRepsitory.listallarchivedfeedback();
+	public Page<CCPFeedback> listallarchivedfeedback(int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+		  return (  objCCPFeedbackRepsitory.listallarchivedfeedback(pageable));
 		 }
 
 

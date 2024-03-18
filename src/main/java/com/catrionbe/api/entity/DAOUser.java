@@ -186,7 +186,31 @@ public class DAOUser {
 	 @Column(name = "username", nullable = false)
 	 private String username;
 	 
-		
+	 @Column(name = "deptId", nullable = false)
+		private int deptId;
+	 @Column(name = "isAdmin", nullable = false)
+		private String isAdmin;
+	 @Column(name = "workEmail", nullable = false)
+		private String workEmail;
+
+	public int getDeptId() {
+		return deptId;
+	}
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
+	}
+	public String getIsAdmin() {
+		return isAdmin;
+	}
+	public void setIsAdmin(String isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	public String getWorkEmail() {
+		return workEmail;
+	}
+	public void setWorkEmail(String workEmail) {
+		this.workEmail = workEmail;
+	}
 	 
 	  
  

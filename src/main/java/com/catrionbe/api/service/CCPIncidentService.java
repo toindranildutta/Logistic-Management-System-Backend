@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -56,7 +59,7 @@ public class CCPIncidentService {
 	    
 	    
 	@Autowired
-    private CCPIncidentRepsitory objCCPFeedbackRepsitory;
+    private CCPIncidentRepsitory objCCPIncidentRepsitory;
 	
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
@@ -68,7 +71,7 @@ public class CCPIncidentService {
 		String message = "Feedback Status Updated";
 		
 		try {
-			objCCPFeedbackRepsitory.updateIncidentStatus(feedbackReq.getFeedbackId() , feedbackReq.getFeedbackStatus());
+			objCCPIncidentRepsitory.updateIncidentStatus(feedbackReq.getFeedbackId() , feedbackReq.getFeedbackStatus());
 		} catch (Exception e) {
  			 throw new  Exception("Unable to Update" );
 		}
@@ -76,12 +79,15 @@ public class CCPIncidentService {
 		return message;
 	}
 	
-	public List<CCPIncident> findAllElements() {
-		  return (List<CCPIncident>) objCCPFeedbackRepsitory.findAllActiveIncidents();
+	public Page<CCPIncident> listallactiveincidents(int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+		  return ( objCCPIncidentRepsitory.listallactiveincidents(pageable));
+		
 		 }
 
-	public List<CCPIncident> listallarchivedfeedback() {
-		  return (List<CCPIncident>) objCCPFeedbackRepsitory.listallarchivedfeedback();
+	public Page<CCPIncident> listallarchivedfeedback(int pageNumber,int size) {
+		Pageable pageable = PageRequest.of(pageNumber, size );
+		  return ( objCCPIncidentRepsitory.listallarchivedfeedback(pageable));
 		 }
 	public static String generateFileNames() {
 	    String result = "";
@@ -146,7 +152,7 @@ public class CCPIncidentService {
 	String message = "Incident  Status Updated";
 		
 		try {
-			objCCPFeedbackRepsitory.updateIncidentStatus(incidentUpdateReq.getIncidentId() , incidentUpdateReq.getStatusId());
+			objCCPIncidentRepsitory.updateIncidentStatus(incidentUpdateReq.getIncidentId() , incidentUpdateReq.getStatusId());
 		} catch (Exception e) {
  			 throw new  Exception("Unable to Update" );
 		}

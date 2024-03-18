@@ -2,6 +2,8 @@ package com.catrionbe.api.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -33,10 +35,10 @@ public interface  CCPFeedbackRepsitory extends CrudRepository<CCPFeedback, Integ
 	public void updateStatus(int feedbackId, int feedbackStatus);
 
     @Query(value = "select * from  ccpfeedback   where   feedbackStatus=0", nativeQuery = true)
-	public List<CCPFeedback> findAllActiveFeedbacks();
+	  Page<CCPFeedback> findAllActiveFeedbacks( final Pageable pageable);
 
     @Query(value = "select * from  ccpfeedback   where   feedbackStatus=1", nativeQuery = true)
-	public List<CCPFeedback> listallarchivedfeedback();
+	  Page<CCPFeedback> listallarchivedfeedback(final Pageable pageable);
 
 	
 }

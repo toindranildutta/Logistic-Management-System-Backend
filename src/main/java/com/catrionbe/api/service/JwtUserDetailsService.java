@@ -12,6 +12,9 @@ import com.catrionbe.api.repositories.UserDao;
 import utils.ccputil;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -146,16 +149,21 @@ public class JwtUserDetailsService implements UserDetailsService {
  		userDao.updateuserasarchived(user.getUserId());
 		return  1;
 	}
-	public List<DAOUser> listallactiveusers() {
-  return		userDao.listallactiveusers(); 
+	public Page<DAOUser> listallactiveusers( int pageNumber,int size) {
+	 
+        Pageable pageable = PageRequest.of(pageNumber, size );
+		
+  return		userDao.listallactiveusers(pageable); 
 		
 	} 
-	public List<DAOUser> listallnewusers() {
-		  return		userDao.listallnewusers(); 
+	public Page<DAOUser> listallnewusers( int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+		  return		userDao.listallnewusers(pageable); 
 				
 			} 
-	public List<DAOUser> listallarchivedusers() {
-				  return		userDao.listallarchivedusers(); 
+	public Page<DAOUser> listallarchivedusers(int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+				  return		userDao.listallarchivedusers(pageable); 
 						
 					}  
 }

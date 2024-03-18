@@ -48,14 +48,14 @@ System.out.println( " -- Servlet path "+request.getServletPath());
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
         	System.out.println(" Inside Filter Internal ----- >   1 ");
             jwtToken = requestTokenHeader.substring(7);
-            System.out.println(" Inside Filter Internal ----- >   1.1      "+jwtToken);
+           // System.out.println(" Inside Filter Internal ----- >   1.1      "+jwtToken);
             try {
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-                System.out.println(" Inside Filter Internal ----- >   1.2      "+username);
+               // System.out.println(" Inside Filter Internal ----- >   1.2      "+username);
             } catch (IllegalArgumentException e) {
-                System.out.println("Unable to get JWT Token");
+               // System.out.println("Unable to get JWT Token");
             } catch (ExpiredJwtException e) {
-                System.out.println("JWT Token has expired");
+               // System.out.println("JWT Token has expired");
                 throw new UnauthorizedException("JWT Token has expired");
             }
         } else {
@@ -88,7 +88,7 @@ System.out.println( " -- Servlet path "+request.getServletPath());
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
-        System.out.println(" Inside Filter Internal ----- >   14 ");
+       // System.out.println(" Inside Filter Internal ----- >   14 ");
         chain.doFilter(request, response);
     }
 
