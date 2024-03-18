@@ -8,6 +8,9 @@ import com.catrionbe.api.model.UpdateUserDTO;
 import com.catrionbe.api.model.UserDTO;
 import com.catrionbe.api.model.UserIdRequest;
 import com.catrionbe.api.repositories.UserDao;
+
+import utils.ccputil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -68,6 +71,11 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
     
     public DAOUser save(UserDTO user) {
+    	String maxId = userDao.getMaxPrnNumber();
+    	System.out.println(maxId);
+    	long maxIdnum  = Long.parseLong(maxId);
+    	long maxidnextnum = maxIdnum+1;
+    	String incrementedPrnNumber= String.valueOf(maxidnextnum);
         DAOUser newUser = new DAOUser();
         newUser.setUsername(user.getUsername());
         //Encrypt Username for Password 
@@ -82,14 +90,14 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setOtpGenerated(user.getOtpGenerated());
         newUser.setUsername(user.getUsername());
         newUser.setNationalId(user.getNationalId());
-        newUser.setPrnNumber(user.getPrnNumber());
+        newUser.setPrnNumber(incrementedPrnNumber);
         newUser.setConfPassword(user.getConfPassword());
         newUser.setIsActive(user.getIsActive());
         newUser.setIsAprroved(user.getIsAprroved());
         newUser.setModifiedBy(user.getModifiedBy());
         newUser.setModifiedDate(user.getModifiedDate());
         
-        
+        ccputil.sendWelcomeEmail(user.getEmailId(), incrementedPrnNumber);
         
         return userDao.save(newUser);
     }

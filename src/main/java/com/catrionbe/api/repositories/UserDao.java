@@ -53,6 +53,9 @@ public interface UserDao extends CrudRepository<DAOUser, Integer> {
 
     @Query(value = "SELECT *  FROM user WHERE  isAprroved='N' ", nativeQuery = true)
 	List<DAOUser> listallarchivedusers();
+
+    @Query(value = "SELECT max(prnNumber)  FROM user", nativeQuery = true)
+	String getMaxPrnNumber();
     
     
     
