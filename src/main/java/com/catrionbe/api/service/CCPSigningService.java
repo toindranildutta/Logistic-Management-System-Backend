@@ -127,28 +127,31 @@ public class CCPSigningService {
 		return random;
 	}
 
-	public String checkUndertaking ( UserIdRequest userIdObj) {
+	public CCPSigning checkUndertaking ( UserIdRequest userIdObj) {
 		int userId = userIdObj.getUserId();
+		CCPSigning objCCPSigning = new CCPSigning();
 		boolean undertakeAccepted = false;
-        String count = objCCPSigningRepsitory.checkUndertaking( userId);
+		objCCPSigning = objCCPSigningRepsitory.checkUndertaking( userId);
 	 
-		return count;
+		return objCCPSigning;
 	}
 
-	public String checkDeclaration(UserIdRequest userIdObj) {
+	public CCPSigning checkDeclaration(UserIdRequest userIdObj) {
 		boolean declAccepted = false;
 		int userId = userIdObj.getUserId();
-        String count = objCCPSigningRepsitory.checkUndertaking( userId);
+		CCPSigning objCCPSigning = new CCPSigning();
+		objCCPSigning   = objCCPSigningRepsitory.checkUndertaking( userId);
 		 
-		return count;
+		return objCCPSigning;
 	}
 
-	public String checkPolicy(UserIdRequest userIdObj) {
+	public CCPSigning checkPolicy(UserIdRequest userIdObj) {
 		boolean policyAccepted = false;
 		int userId = userIdObj.getUserId();
-		String count = objCCPSigningRepsitory.checkUndertaking( userId);
+		CCPSigning objCCPSigning = new CCPSigning();
+		  objCCPSigning = objCCPSigningRepsitory.checkUndertaking( userId);
 		 
-		return count;
+		return objCCPSigning;
 	}
 
 	public String generatecertificatedata(UserIdRequest userIdObj  ) {
