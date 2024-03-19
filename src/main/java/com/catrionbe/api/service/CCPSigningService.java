@@ -123,7 +123,7 @@ public class CCPSigningService {
 	}
 
 	public String generateCertificateNumber() {
-		String random = RandomStringUtils.randomNumeric(10);
+		String random = RandomStringUtils.randomNumeric(6);
 		return random;
 	}
 
