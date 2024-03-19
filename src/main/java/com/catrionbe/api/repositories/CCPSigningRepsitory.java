@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.catrionbe.api.entity.CCPCertificate;
 import com.catrionbe.api.entity.CCPCourses;
 import com.catrionbe.api.entity.CCPSigning;
 
@@ -22,7 +23,6 @@ public interface  CCPSigningRepsitory extends CrudRepository<CCPSigning, Integer
 	@Query(value = "select  *  from ccpsigning  where   userId =:userId AND  statusId=1 AND signingItem='POLICY'  ORDER BY userId DESC LIMIT 1", nativeQuery = true)
 	  CCPSigning checkPolicy(int userId);
 
-	@Query(value = "select     *   from ccpcertificate   where   userId =:userId ", nativeQuery = true)
-	public String generatecertificatedata(int userId);
+	
 
 }

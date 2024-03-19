@@ -154,10 +154,10 @@ public class CCPSigningService {
 		return objCCPSigning;
 	}
 
-	public String generatecertificatedata(UserIdRequest userIdObj  ) {
+	public CCPCertificate  generatecertificatedata(UserIdRequest userIdObj  ) {
 		
 		
-		return objCCPSigningRepsitory.generatecertificatedata (userIdObj.getUserId()) ;
+		return objCCPCertificateRepsitory.generatecertificatedata (userIdObj.getUserId()) ;
 		 
 	}
 
