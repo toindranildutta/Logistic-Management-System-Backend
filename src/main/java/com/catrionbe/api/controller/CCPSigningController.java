@@ -51,7 +51,7 @@ public class CCPSigningController {
 	        return ResponseEntity.ok(objCCPSigningService.checkPolicy(userIdObj));
 	    }
 	 
-	 @RequestMapping(value = "/generatecertificatedata", method = RequestMethod.GET)
+	 @RequestMapping(value = "/generatecertificatedata", method = RequestMethod.POST)
 	    public ResponseEntity<?> generatecertificatedata(@RequestBody UserIdRequest userIdObj) throws Exception {
 	        return ResponseEntity.ok(objCCPSigningService.generatecertificatedata(userIdObj));
 	    }
