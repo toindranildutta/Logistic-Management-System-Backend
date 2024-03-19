@@ -3,10 +3,13 @@ package com.catrionbe.api.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.catrionbe.api.entity.CCPUserActivity;
 import com.catrionbe.api.entity.DAOUser;
+import com.catrionbe.api.model.CCPUserActivityReq;
 import com.catrionbe.api.model.UpdateUserDTO;
 import com.catrionbe.api.model.UserDTO;
 import com.catrionbe.api.model.UserIdRequest;
+import com.catrionbe.api.repositories.CCPUserActRepository;
 import com.catrionbe.api.repositories.UserDao;
 
 import utils.ccputil;
@@ -31,7 +34,8 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
- 
+
+    
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         DAOUser user = userDao.findByUsername(username);
         if (user == null) {
@@ -99,6 +103,8 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setIsAprroved(user.getIsAprroved());
         newUser.setModifiedBy(user.getModifiedBy());
         newUser.setModifiedDate(user.getModifiedDate());
+        newUser.setCreatedBy(user.getCreatedBy());
+        newUser.setCreatedDate(user.getCreatedDate());
         
         ccputil.sendWelcomeEmail(user.getEmailId(), incrementedPrnNumber);
         
@@ -165,5 +171,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 		  Pageable pageable = PageRequest.of(pageNumber, size );
 				  return		userDao.listallarchivedusers(pageable); 
 						
-					}  
+					}
+	
 }

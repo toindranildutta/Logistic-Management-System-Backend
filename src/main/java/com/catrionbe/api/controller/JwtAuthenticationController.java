@@ -11,6 +11,7 @@ import javax.mail.internet.MimeMessage;
 
 import com.catrionbe.api.config.JwtTokenUtil;
 import com.catrionbe.api.entity.DAOUser;
+import com.catrionbe.api.model.CCPUserActivityReq;
 import com.catrionbe.api.model.EmailIdRequest;
 import com.catrionbe.api.model.JwtRequest;
 import com.catrionbe.api.model.JwtResponse;
@@ -19,6 +20,7 @@ import com.catrionbe.api.model.OtpRequest;
 import com.catrionbe.api.model.UpdateUserDTO;
 import com.catrionbe.api.model.UserDTO;
 import com.catrionbe.api.model.UserIdRequest;
+import com.catrionbe.api.repositories.CCPUserActRepository;
 import com.catrionbe.api.service.JwtUserDetailsService;
 
 import utils.ccputil;
@@ -57,6 +59,8 @@ public class JwtAuthenticationController {
 
     @Autowired
     private JwtUserDetailsService userDetailsService;
+    
+    
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
@@ -214,4 +218,7 @@ public class JwtAuthenticationController {
 	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
 	        return ResponseEntity.ok(userDetailsService.listallarchivedusers(pageNumber ,size));
 	    }
+	  
+	  
+	  
 }
