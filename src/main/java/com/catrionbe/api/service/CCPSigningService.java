@@ -140,7 +140,7 @@ public class CCPSigningService {
 		boolean declAccepted = false;
 		int userId = userIdObj.getUserId();
 		CCPSigning objCCPSigning = new CCPSigning();
-		objCCPSigning   = objCCPSigningRepsitory.checkUndertaking( userId);
+		objCCPSigning   = objCCPSigningRepsitory.checkDeclaration( userId);
 		 
 		return objCCPSigning;
 	}
