@@ -43,7 +43,16 @@ public class CCPCertificate {
 	@Column(name = "certificateNumber", nullable = false)
 	private int  certificateNumber;
 	
+	@Column(name = "displayDate", nullable = false)
+	private String displayDate;
   
+	public String getDisplayDate() {
+		return displayDate;
+	}
+	public void setDisplayDate(String displayDate) {
+		this.displayDate = displayDate;
+	}
+
 	@Column(name = "fullName", nullable = false)
 	private String fullName;
 	

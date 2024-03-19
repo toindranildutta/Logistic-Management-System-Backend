@@ -112,6 +112,7 @@ public class CCPSigningService {
 		objCCPCertificate.setFullName(username);
 		int certum =  Integer.parseInt(this.generateCertificateNumber());
 		objCCPCertificate.setCertificateNumber(  certum );
+		objCCPCertificate.setDisplayDate((dateFormat.format(date)).toString()+" UTC");
 		objCCPCertificate.setIsActive(signObj.getIsActive());
 		objCCPCertificate.setIsAprroved(signObj.getIsAprroved());
 		objCCPCertificate.setModifiedBy(signObj.getModifiedBy());
