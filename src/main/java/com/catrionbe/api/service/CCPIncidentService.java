@@ -107,7 +107,7 @@ public class CCPIncidentService {
 		objCCPIncident.setDescription(incidentReq.getDescription());
 		objCCPIncident.setIncidentSubject(incidentReq.getIncidentSubject());
 		String randomImageName =  this.generateFileNames();
-		if  (  incidentReq.getImage().equals("" )|| incidentReq.equals("null")) {
+		if  (  incidentReq.getImage().equals("" )|| incidentReq.getImage().equals("null")) {
 			objCCPIncident.setAttachementUrl("test.jpg");
 		}
 		else {
