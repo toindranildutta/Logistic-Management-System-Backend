@@ -107,14 +107,14 @@ public class CCPIncidentService {
 		objCCPIncident.setDescription(incidentReq.getDescription());
 		objCCPIncident.setIncidentSubject(incidentReq.getIncidentSubject());
 		String randomImageName =  this.generateFileNames();
-		if  (  incidentReq.getImage().equals("" )|| incidentReq.getImage().equals("null")) {
-			objCCPIncident.setAttachementUrl("test.jpg");
-		}
-		else {
-			String attachUrl = this.getAttachementUrl(incidentReq.getImage() ,  randomImageName);
-			System.out.println("attachUrl  - - - - -  >    "+attachUrl);
-			objCCPIncident.setAttachementUrl(attachUrl);
-		}
+		/*
+		 * if ( incidentReq.getImage().equals("" )||
+		 * incidentReq.getImage().equals("null")) {
+		 * objCCPIncident.setAttachementUrl("test.jpg"); } else { String attachUrl =
+		 * this.getAttachementUrl(incidentReq.getImage() , randomImageName);
+		 * System.out.println("attachUrl  - - - - -  >    "+attachUrl);
+		 * objCCPIncident.setAttachementUrl(attachUrl); }
+		 */
 		
 		objCCPIncident.setIsActive(incidentReq.getIsActive());
 		objCCPIncident.setIsAprroved(incidentReq.getIsAprroved());
@@ -123,14 +123,14 @@ public class CCPIncidentService {
 		objCCPIncident.setCreatedBy(incidentReq.getCreatedBy());
 		objCCPIncident.setCreatedDate(incidentReq.getCreatedDate());
 		
+		objCCPIncidentRepsitory.save(objCCPIncident);
 		
 		
-		
-		return null;
+		return objCCPIncident;
 	}
 
 
-	private String  getAttachementUrl(byte[] image , String randomImageName) {
+	/* private String  getAttachementUrl(byte[] image , String randomImageName) {
 		 BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(connectionString).buildClient();
 	      final BlobContainerClient devContainer = blobServiceClient.createBlobContainerIfNotExists(containerName);
 
@@ -153,7 +153,7 @@ public class CCPIncidentService {
 		
 		return  "https://cyberportal.blob.core.windows.net/portal-image/"+randomImageName;		
 	}
-
+*/
 
 	public String updateIncident(IncidentUpdateRequest incidentUpdateReq) throws Exception {
 	String message = "Incident  Status Updated";
