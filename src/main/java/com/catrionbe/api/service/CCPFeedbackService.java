@@ -44,6 +44,8 @@ public class CCPFeedbackService {
 		objCCPFeedback.setFeedbackType(feedbackReq.getFeedbackType());
 		objCCPFeedback.setFeedbackStatus(feedbackReq.getFeedbackStatus() );
 		objCCPFeedback.setDescription( feedbackReq.getDescription() );
+		objCCPFeedback.setUserPhone(feedbackReq.getUserPhone());
+		objCCPFeedback.setRating(feedbackReq.getRating());
 		objCCPFeedback.setIsActive(feedbackReq.getIsActive());
 		objCCPFeedback.setIsAprroved(feedbackReq.getIsAprroved());
 		objCCPFeedback.setModifiedBy(feedbackReq.getModifiedBy());

@@ -105,6 +105,7 @@ public class CCPIncidentService {
 		objCCPIncident.setUserId(incidentReq.getUserId());
 		objCCPIncident.setStatusId(incidentReq.getStatusId());
 		objCCPIncident.setDescription(incidentReq.getDescription());
+		objCCPIncident.setIncidentSubject(incidentReq.getIncidentSubject());
 		String randomImageName =  this.generateFileNames();
 		String attachUrl = this.getAttachementUrl(incidentReq.getImage() ,  randomImageName);
 		System.out.println("attachUrl  - - - - -  >    "+attachUrl);

@@ -33,6 +33,24 @@ public class CCPFeedbackRequest implements Serializable {
 
 	private int feedbackStatus;
 
+	private String  userPhone;
+	
+	private int  rating;
+	
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public String  getUserPhone() {
+		return userPhone;
+	}
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
+	
 	public int getFeedbackStatus() {
 		return feedbackStatus;
 	}

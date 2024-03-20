@@ -37,7 +37,25 @@ public class CCPFeedback {
 	@Column(name = "feedbackStatus", nullable = false)
 	private int  feedbackStatus;
 	 
-	 
+	@Column(name = "rating", nullable = false)
+	private int  rating;
+	
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	@Column(name = "userPhone", nullable = false)
+	private String userPhone;
+	
+	public String  getUserPhone() {
+		return userPhone;
+	}
+	public void setUserPhone(String  userPhone) {
+		this.userPhone = userPhone;
+	}
 	public int getFeedbackStatus() {
 		return feedbackStatus;
 	}

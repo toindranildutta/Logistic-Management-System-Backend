@@ -68,9 +68,18 @@ public class CCPIncident {
 	
 	@Column(name = "attachementUrl", nullable = false)
 	private String   attachementUrl;
+	
+	@Column(name = "incidentSubject", nullable = false)
+	private String incidentSubject;
 	 
-	 
-	 
+	public String getIncidentSubject() {
+		return incidentSubject;
+	}
+	public void setIncidentSubject(String incidentSubject) {
+		this.incidentSubject = incidentSubject;
+	}
+
+
 	@Column(name = "isActive", nullable = false)
 	private String isActive;
  @Column(name = "isApproved", nullable = false)

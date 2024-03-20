@@ -25,7 +25,8 @@ public class CCPIncidentRequest implements Serializable {
 	public void setStatusId(int statusId) {
 		this.statusId = statusId;
 	}
-
+	private String  incidentSubject;
+	
 	private String description;
 
 	private byte[]   image;
@@ -140,6 +141,14 @@ public class CCPIncidentRequest implements Serializable {
 
 	public void setImage(byte[] image) {
 		this.image = image;
+	}
+
+	public String getIncidentSubject() {
+		return incidentSubject;
+	}
+
+	public void setIncidentSubject(String incidentSubject) {
+		this.incidentSubject = incidentSubject;
 	}
 
 
