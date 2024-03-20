@@ -107,9 +107,15 @@ public class CCPIncidentService {
 		objCCPIncident.setDescription(incidentReq.getDescription());
 		objCCPIncident.setIncidentSubject(incidentReq.getIncidentSubject());
 		String randomImageName =  this.generateFileNames();
-		String attachUrl = this.getAttachementUrl(incidentReq.getImage() ,  randomImageName);
-		System.out.println("attachUrl  - - - - -  >    "+attachUrl);
-		objCCPIncident.setAttachementUrl(null);
+		if  (  incidentReq.getImage().equals("" )|| incidentReq.equals("null")) {
+			objCCPIncident.setAttachementUrl("test.jpg");
+		}
+		else {
+			String attachUrl = this.getAttachementUrl(incidentReq.getImage() ,  randomImageName);
+			System.out.println("attachUrl  - - - - -  >    "+attachUrl);
+			objCCPIncident.setAttachementUrl(attachUrl);
+		}
+		
 		objCCPIncident.setIsActive(incidentReq.getIsActive());
 		objCCPIncident.setIsAprroved(incidentReq.getIsAprroved());
 		objCCPIncident.setModifiedBy(incidentReq.getModifiedBy());
