@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        
+        <azure.version>2.2.0</azure.version>
     </properties>
 
     <dependencies>
@@ -28,6 +28,11 @@
 			<groupId>com.azure.spring</groupId>
 			<artifactId>spring-cloud-azure-starter-storage</artifactId>
 		</dependency> --> 
+<dependency>
+			<groupId>com.microsoft.azure</groupId>
+			<artifactId>azure-storage</artifactId>
+            <version>8.4.0</version>
+		</dependency>
 
  
 
@@ -94,7 +99,17 @@
 
 
     </dependencies>
- 
+ <dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.microsoft.azure</groupId>
+				<artifactId>azure-spring-boot-bom</artifactId>
+				<version>${azure.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
     <build>
         <plugins>

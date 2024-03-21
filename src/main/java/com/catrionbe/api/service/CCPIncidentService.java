@@ -3,6 +3,7 @@ package com.catrionbe.api.service;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.SecureRandom;
@@ -20,8 +21,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
- 
 import com.catrionbe.api.entity.CCPFeedback;
 import com.catrionbe.api.entity.CCPIncident;
 import com.catrionbe.api.entity.CCPSigning;
@@ -36,6 +37,11 @@ import com.catrionbe.api.repositories.CCPFeedbackRepsitory;
 import com.catrionbe.api.repositories.CCPIncidentRepsitory;
 import com.catrionbe.api.repositories.CCPSigningRepsitory;
 import com.catrionbe.api.repositories.UserDao;
+
+
+import com.microsoft.azure.storage.*;
+import com.microsoft.azure.storage.blob.*;
+
 
 @Service
 public class CCPIncidentService {
@@ -58,7 +64,8 @@ public class CCPIncidentService {
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
 	 
-	 
+	// @Autowired
+	   // private CloudBlobContainer container;
 
 
 	public String updateFeedback(CCPUpdateFeedbackReq feedbackReq) throws Exception {
@@ -148,6 +155,28 @@ public class CCPIncidentService {
 		return  "https://cyberportal.blob.core.windows.net/portal-image/"+randomImageName;		
 	}
 */
+
+	  public String uploadImage(byte[] image , String randomImageName){
+	        
+
+	        try{
+	        	
+	        	 
+	            // Get a blob reference for a text file.
+	          //  CloudBlockBlob blob = container.getBlockBlobReference(blobName);
+   // new FileOutputStream(randomImageName).write(image);
+	    
+	            // Upload some text into the blob.
+	          //  blob.upload(file.getInputStream(), file.getSize()); // Mani - Enable this to test file upload 
+    
+	        }catch (Exception e)
+	        {
+	            // Output the stack trace.
+	            e.printStackTrace();
+	        }
+	        return "Success";
+	    }
+	 
 
 	public String updateIncident(IncidentUpdateRequest incidentUpdateReq) throws Exception {
 	String message = "Incident  Status Updated";

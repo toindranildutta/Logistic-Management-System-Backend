@@ -218,7 +218,13 @@ public class JwtAuthenticationController {
 	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
 	        return ResponseEntity.ok(userDetailsService.listallarchivedusers(pageNumber ,size));
 	    }
-	  
+	  @RequestMapping(value = "/listsearchresult", method = RequestMethod.GET)
+	    public ResponseEntity<?> listsearchresult(
+	    		@RequestParam(defaultValue = "test") final String searchText,
+	            @RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
+	        return ResponseEntity.ok(userDetailsService.listsearchresult(searchText, pageNumber ,size));
+	    }
 	  
 	  
 }

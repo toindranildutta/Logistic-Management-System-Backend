@@ -59,6 +59,7 @@ public interface UserDao extends CrudRepository<DAOUser, Integer> {
     @Query(value = "SELECT max(prnNumber)  FROM user", nativeQuery = true)
 	String getMaxPrnNumber();
     
+    @Query(value = "SELECT *  FROM user WHERE  lower(firstName) LIKE  %:searchText% OR lower(lastName) LIKE  %:searchText% OR prnNumber LIKE %:searchText%", nativeQuery = true)
+    Page<DAOUser> listsearchresult( String searchText,  final Pageable pageable);
     
-    
-}
+    }

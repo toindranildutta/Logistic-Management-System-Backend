@@ -172,5 +172,13 @@ public class JwtUserDetailsService implements UserDetailsService {
 				  return		userDao.listallarchivedusers(pageable); 
 						
 					}
+	public Page<DAOUser> listsearchresult(String searchText ,int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+				  return		userDao.listsearchresult(searchText,pageable); 
+						
+					}
+	
+	
+	
 	
 }
