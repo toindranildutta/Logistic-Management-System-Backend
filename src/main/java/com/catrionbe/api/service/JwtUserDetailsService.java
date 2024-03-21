@@ -105,6 +105,9 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setModifiedDate(user.getModifiedDate());
         newUser.setCreatedBy(user.getCreatedBy());
         newUser.setCreatedDate(user.getCreatedDate());
+        newUser.setIsAdmin(user.getIsAdmin());
+        newUser.setWorkEmail(user.getWorkEmail());
+        newUser.setDeptId(user.getDeptId());
         
         ccputil.sendWelcomeEmail(user.getEmailId(), incrementedPrnNumber);
         

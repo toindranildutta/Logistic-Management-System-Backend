@@ -89,6 +89,9 @@ public void setNationalId(String nationalId) {
  	private String fatherName; 
  	private String grandFatherName; 
  	 private String nationalId;
+ 	 private String isAdmin;
+ 	 private String workEmail;
+ 	 private int deptId;
 	 
  	 
  		public String getIsActive() {
@@ -170,5 +173,29 @@ public void setNationalId(String nationalId) {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(String isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public String getWorkEmail() {
+		return workEmail;
+	}
+
+	public void setWorkEmail(String workEmail) {
+		this.workEmail = workEmail;
+	}
+
+	public int getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
 	}
 }
