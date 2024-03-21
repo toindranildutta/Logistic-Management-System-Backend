@@ -3,6 +3,8 @@ package com.catrionbe.api.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class CCPIncidentRequest implements Serializable {
 
 	private static final long serialVersionUID = 5926468583005150707L;
@@ -29,10 +31,18 @@ public class CCPIncidentRequest implements Serializable {
 	
 	private String description;
 
-	private byte[]   image;
+	//private byte[]   image;
+	MultipartFile image;
 	
 	
-	
+	public MultipartFile getImage() {
+		return image;
+	}
+
+	public void setImage(MultipartFile image) {
+		this.image = image;
+	}
+
 	private String isActive;
 
 	private String isAprroved;
@@ -134,7 +144,7 @@ public class CCPIncidentRequest implements Serializable {
 	public void setSeverityId(int severityId) {
 		this.severityId = severityId;
 	}
-
+/*
 	public byte[] getImage() {
 		return image;
 	}
@@ -142,7 +152,7 @@ public class CCPIncidentRequest implements Serializable {
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
-
+*/
 	public String getIncidentSubject() {
 		return incidentSubject;
 	}
