@@ -61,8 +61,7 @@ public class CCPIncidentService {
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
 
-	@Autowired
-	private CloudBlobContainer container;
+ 
 
 	public String updateFeedback(CCPUpdateFeedbackReq feedbackReq) throws Exception {
 		String message = "Feedback Status Updated";
@@ -159,10 +158,10 @@ public class CCPIncidentService {
 		try {
 			String blobName = generateFileNames();
 			// Get a blob reference for a text file.
-			CloudBlockBlob blob = container.getBlockBlobReference(blobName);
+			//CloudBlockBlob blob = container.getBlockBlobReference(blobName);
 			//new FileOutputStream(randomImageName).write(image);
 			// Upload some text into the blob.
-			blob.upload(image.getInputStream(), image.getSize()); // Mani - Enable this to test file upload
+		//	blob.upload(image.getInputStream(), image.getSize()); // Mani - Enable this to test file upload
 		} catch (Exception e) {
 			// Output the stack trace.
 			e.printStackTrace();
