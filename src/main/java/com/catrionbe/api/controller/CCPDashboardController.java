@@ -24,6 +24,18 @@ public class CCPDashboardController {
         return ResponseEntity.ok(objCCPDashboardService.saveuseractivity(objCCPUserActivityReq));
     }
 	
+	@RequestMapping(value = "/accessbydate", method = RequestMethod.GET)
+    public ResponseEntity<?> accessbydate(  ) throws Exception {
+        return ResponseEntity.ok(objCCPDashboardService.accessbydate( ));
+    }
+	
+	
+	@RequestMapping(value = "/accessbycertificate", method = RequestMethod.GET)
+    public ResponseEntity<?> accessbycertificate(  ) throws Exception {
+        return ResponseEntity.ok(objCCPDashboardService.accessbycertificate( ));
+    }
+	
+	
 	
 	
 	

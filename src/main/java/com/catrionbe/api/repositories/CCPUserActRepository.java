@@ -1,5 +1,6 @@
 package com.catrionbe.api.repositories;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -18,6 +19,9 @@ import com.catrionbe.api.entity.CCPUserActivity;
 
 @Repository
 public interface  CCPUserActRepository extends CrudRepository<CCPUserActivity, Integer> {
+
+	@Query(value = "select count(*) from ccpcertificate where createdDate=:formattedDate", nativeQuery = true)
+	int  accessbydate( String formattedDate);
 
 	 
  
