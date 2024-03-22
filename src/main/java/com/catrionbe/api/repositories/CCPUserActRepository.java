@@ -23,6 +23,9 @@ public interface  CCPUserActRepository extends CrudRepository<CCPUserActivity, I
 	@Query(value = "select count(*) from ccpcertificate where createdDate=:formattedDate", nativeQuery = true)
 	int  accessbydate( String formattedDate);
 
+	@Query(value = "select count(*) from ccpuseractivity where createdDate=:formattedDate", nativeQuery = true)
+	int accessbydate1(String result);
+
 	 
  
 	
