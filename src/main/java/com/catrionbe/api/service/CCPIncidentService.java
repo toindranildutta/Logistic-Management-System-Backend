@@ -12,9 +12,12 @@ import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +26,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.azure.storage.blob.BlobContainerClient;
+import com.azure.storage.blob.BlobServiceClient;
+import com.azure.storage.blob.BlobServiceClientBuilder;
+import com.azure.storage.blob.specialized.BlockBlobClient;
+import com.azure.storage.common.StorageSharedKeyCredential;
 import com.catrionbe.api.entity.CCPFeedback;
 import com.catrionbe.api.entity.CCPIncident;
 import com.catrionbe.api.entity.CCPSigning;
@@ -37,9 +45,16 @@ import com.catrionbe.api.repositories.CCPFeedbackRepsitory;
 import com.catrionbe.api.repositories.CCPIncidentRepsitory;
 import com.catrionbe.api.repositories.CCPSigningRepsitory;
 import com.catrionbe.api.repositories.UserDao;
+import com.azure.storage.blob.BlobContainerClient;
+
 
 import com.microsoft.azure.storage.*;
 import com.microsoft.azure.storage.blob.*;
+
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 @Service
 public class CCPIncidentService {
@@ -61,6 +76,19 @@ public class CCPIncidentService {
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
 
+	
+	 @Value("${azure.storage.account-name}")
+	    private String accountName;
+
+	    @Value("${azure.storage.account-key}")
+	    private String accountKey;
+
+	    @Value("${azure.storage.blob-endpoint}")
+	    private String url;
+
+	    @Value("${azure.storage.container-name}")
+	    private String container;
+	    
  
 
 	public String updateFeedback(CCPUpdateFeedbackReq feedbackReq) throws Exception {
@@ -105,11 +133,20 @@ public class CCPIncidentService {
 		objCCPIncident.setDescription(incidentReq.getDescription());
 		objCCPIncident.setIncidentSubject(incidentReq.getIncidentSubject());
 		String randomImageName = this.generateFileNames();
-	 
+	 System.out.println("Step 1 ");
 		if (incidentReq.getImage().equals("") || incidentReq.getImage().equals("null")) {
+			System.out.println("Step  -1  ");
 			objCCPIncident.setAttachementUrl("test.jpg");
+			
 		} else {
-			String attachUrl = this.uploadImage(incidentReq.getImage(), randomImageName);
+			System.out.println("Step 2 ");
+			String attachUrl = null;
+			try {
+				attachUrl = this.uploadBlob(incidentReq.getImage(), randomImageName);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.out.println("attachUrl  - - - - -  >    " + attachUrl);
 			objCCPIncident.setAttachementUrl(attachUrl);
 		}
@@ -126,33 +163,61 @@ public class CCPIncidentService {
 		return objCCPIncident;
 	}
 
-	/*
-	 * private String getAttachementUrl(byte[] image , String randomImageName) {
-	 * BlobServiceClient blobServiceClient = new
-	 * BlobServiceClientBuilder().connectionString(connectionString).buildClient();
-	 * final BlobContainerClient devContainer =
-	 * blobServiceClient.createBlobContainerIfNotExists(containerName);
-	 * 
-	 * BlobSignedIdentifier accessPolicy = new BlobSignedIdentifier()
-	 * .setId("policy1") // Identifier for the policy .setAccessPolicy(new
-	 * BlobAccessPolicy().setStartsOn(OffsetDateTime.now()).setExpiresOn(
-	 * OffsetDateTime.now().plusDays(7)).setPermissions("r"));
-	 * 
-	 * 
-	 * devContainer.setAccessPolicy(PublicAccessType.BLOB, List.of(accessPolicy));
-	 * 
-	 * BlobClient blobClient = devContainer.getBlobClient(blobName);
-	 * 
-	 * InputStream is = new ByteArrayInputStream(image); try (FileInputStream
-	 * fileInputStream = new FileInputStream(localFilePath)) { blobClient.upload(is,
-	 * new File(randomImageName).length(), true); } catch (IOException e) {
-	 * e.printStackTrace(); }
-	 * 
-	 * 
-	 * return
-	 * "https://cyberportal.blob.core.windows.net/portal-image/"+randomImageName; }
-	 */
+	 
 
+	
+	@Bean
+    public BlobContainerClient getBlobContainerClient(){
+
+        BlobContainerClient blobContainerClient = getBlobServiceClient().getBlobContainerClient(container);
+
+        return blobContainerClient;
+
+    }
+	
+	@Bean
+    public BlobServiceClient getBlobServiceClient() {
+
+    StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
+    String endpoint = String.format(Locale.ROOT, url, accountName);
+    BlobServiceClient storageClient = new BlobServiceClientBuilder().endpoint(endpoint).credential(credential).buildClient();
+    return storageClient;
+    }
+	
+    public String createBlobContainer (String blobContainerName) {
+
+        BlobContainerClient blobContainerClient = getBlobServiceClient().createBlobContainer(blobContainerName);
+
+        return  blobContainerClient.getBlobContainerUrl();
+    }
+
+    public String uploadBlob(MultipartFile file , String randomImageName) throws IOException {
+
+        BlockBlobClient blobClient = getBlobContainerClient().getBlobClient(file.getOriginalFilename()).getBlockBlobClient();
+
+        File fileData=convertMultiPartToFile(file );
+        InputStream dataStream = new ByteArrayInputStream(file.getBytes());
+
+        /*
+         * Create the blob with string (plain text) content.
+         */
+        blobClient.upload(dataStream, file.getSize());
+
+        dataStream.close();
+        
+        String response=url+container+"/"+file.getOriginalFilename();
+        return response;
+    }
+    
+    public File convertMultiPartToFile(MultipartFile file ) throws IOException
+    {
+        File convFile = new File( file.getOriginalFilename() );
+        FileOutputStream fos = new FileOutputStream( convFile );
+        fos.write( file.getBytes() );
+        fos.close();
+        return convFile;
+    }
+    
 	public String uploadImage(MultipartFile image, String randomImageName) {
 
 		try {
