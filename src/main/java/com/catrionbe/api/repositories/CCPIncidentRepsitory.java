@@ -30,6 +30,9 @@ public interface  CCPIncidentRepsitory extends CrudRepository<CCPIncident, Integ
     @Query(value = "select * from  ccpincident   where   statusId=0", nativeQuery = true)
 	  Page<CCPIncident> listallarchivedfeedback(final Pageable pageable);
 
+    @Query(value = "select * from  ccpincident   where   statusId=1", nativeQuery = true)
+	  Page<CCPIncident> listallarchivedincidents( final Pageable pageable);
+
  
 	
 }

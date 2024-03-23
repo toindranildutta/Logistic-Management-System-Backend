@@ -58,13 +58,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // We don't need CSRF for this example
         httpSecurity.csrf().disable()
                 // dont authenticate this particular request
-             .authorizeRequests().antMatchers("/accessbycertificate", "/accessbydate","/listsearchresult", "/saveuseractivity", "/generatecertificatedata", "/listallactiveincidents",   "/updateincidentstatus","/saveincident", "/listallarchivedusers",  "/listallnewusers",  "/listallactiveusers",  "/updateuserasarchived",  "/updateuser",  "/listallactivefeedback", "/listallarchivedfeedback","/updatefeedback","/savefeedback", "/checkpolicy", "/checkdeclaration",  "/checkundertaking", "/acceptpolicy",  "/acceptdeclaration","/acceptundertaking", "/commencedcyberbasic",  "/loginusers", "/totalcatrionusers", "/startedbutnotcompleted","/loginbutstarted","/remainder",  "/completedwithmobile", "/completedccbasic","/completedwithworkemail","/authenticate", "/register","/checkUserCredentials","/validateotp","/generateccptoken","/fetchuserdetails","/fetchnews","/markcoursecomplete","/fetchmaxscreenId","/markquizcomplete","/checkquizcomplete","/fetchnews","/savenews","/updatenews", "/deletenews").permitAll().
-        //.authorizeRequests().antMatchers("/authenticate").permitAll().
-                // all other requests need to be authenticated
-                        anyRequest().authenticated().and()
-                        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        
-        httpSecurity.cors();
+				.authorizeRequests()
+				.antMatchers("/listallarchivedincidents", "/onlystaffsegmentprogresschart",
+						"/allstaffsegmentprogresstable", "/allstaffsegmentprogresschart", "/accessbycertificate",
+						"/accessbydate", "/listsearchresult", "/saveuseractivity", "/generatecertificatedata",
+						"/listallactiveincidents", "/updateincidentstatus", "/saveincident", "/listallarchivedusers",
+						"/listallnewusers", "/listallactiveusers", "/updateuserasarchived", "/updateuser",
+						"/listallactivefeedback", "/listallarchivedfeedback", "/updatefeedback", "/savefeedback",
+						"/checkpolicy", "/checkdeclaration", "/checkundertaking", "/acceptpolicy", "/acceptdeclaration",
+						"/acceptundertaking", "/commencedcyberbasic", "/loginusers", "/totalcatrionusers",
+						"/startedbutnotcompleted", "/loginbutstarted", "/remainder", "/completedwithmobile",
+						"/completedccbasic", "/completedwithworkemail", "/authenticate", "/register",
+						"/checkUserCredentials", "/validateotp", "/generateccptoken", "/fetchuserdetails", "/fetchnews",
+						"/markcoursecomplete", "/fetchmaxscreenId", "/markquizcomplete", "/checkquizcomplete",
+						"/fetchnews", "/savenews", "/updatenews", "/deletenews")
+				.permitAll().
+				// .authorizeRequests().antMatchers("/authenticate").permitAll().
+				// all other requests need to be authenticated
+				anyRequest().authenticated().and()
+				.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
+		httpSecurity.cors();
                 // make sure we use stateless session; session won't be used to
                 // store user's state.
            //             exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()

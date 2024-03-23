@@ -248,6 +248,13 @@ public class CCPIncidentService {
 
 	}
 
+ 
+
+	public Page<CCPIncident> listallarchivedincidents(int pageNumber, int size) {
+		Pageable pageable = PageRequest.of(pageNumber, size);
+		return (objCCPIncidentRepsitory.listallarchivedincidents(pageable));
+
+	}
 	/*
 	 * public CCPSigning acceptUndertaking(CCPSigningRequest signObj) { String
 	 * username = objCCPSigningRepsitory.fetchFirstandLastName (

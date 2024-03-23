@@ -44,6 +44,12 @@ public class CCPIncidentController {
 	        return ResponseEntity.ok(ccpIncidentService.listallactiveincidents(pageNumber ,size));
 	    }
 	 
+	 @RequestMapping(value = "/listallarchivedincidents", method = RequestMethod.GET)
+	    public ResponseEntity<?> listallarchivedincidents( @RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
+	        return ResponseEntity.ok(ccpIncidentService.listallarchivedincidents(pageNumber ,size));
+	    }
+	 
 	 /*
 	  *  
 	 
