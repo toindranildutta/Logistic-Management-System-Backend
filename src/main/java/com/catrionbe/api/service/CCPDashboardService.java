@@ -124,9 +124,34 @@ public Object accessbydate() {
 	
 	
 	
+}
+ 
+
+public Object allstaffsegmentprogress() {
+	 
+	//For Dept Id 0 
+	int deptId = 0;
+	int satffCountDeptId0 =  objCCPUserActRepository.getTotalStaffsDept(deptId );
+	int staffCompleted0 = objCCPUserActRepository.getTotalStaffsCompleted(deptId );	
+	float allStaffCompletePer = (staffCompleted0 /  satffCountDeptId0) *100;
+	
+	
+	return null;
+}
+
+
+public Object allstaffsegmentprogresstable() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public Object onlystaffsegmentprogresschart() {
+	// TODO Auto-generated method stub
+	return null;
 }  
 
-
+ 
  
 
 }

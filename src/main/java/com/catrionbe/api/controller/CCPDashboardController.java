@@ -35,8 +35,19 @@ public class CCPDashboardController {
         return ResponseEntity.ok(objCCPDashboardService.accessbycertificate( ));
     }
 	
+	@RequestMapping(value = "/allstaffsegmentprogresschart", method = RequestMethod.GET)
+    public ResponseEntity<?> allstaffsegmentprogress(  ) throws Exception {
+        return ResponseEntity.ok(objCCPDashboardService.allstaffsegmentprogress( ));
+    }
 	
+	@RequestMapping(value = "/allstaffsegmentprogresstable", method = RequestMethod.GET)
+    public ResponseEntity<?> allstaffsegmentprogresstable(  ) throws Exception {
+        return ResponseEntity.ok(objCCPDashboardService.allstaffsegmentprogresstable( ));
+    }
 	
-	
+	@RequestMapping(value = "/onlystaffsegmentprogresschart", method = RequestMethod.GET)
+    public ResponseEntity<?> onlystaffsegmentprogresschart(  ) throws Exception {
+        return ResponseEntity.ok(objCCPDashboardService.onlystaffsegmentprogresschart( ));
+    }
 	
 }
