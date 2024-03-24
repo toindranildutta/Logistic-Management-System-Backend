@@ -1,6 +1,7 @@
 package com.catrionbe.api.service;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -134,15 +135,43 @@ public List allstaffsegmentprogress() {
 	List<allstaffsmap> allstaffsegprogressmap = new ArrayList<allstaffsmap> () ;
 	//For Dept Id 0
 	allstaffsmap allstaffsmapobj = new allstaffsmap();
+	
 	int deptId = 0;
-	int satffCountDeptId0 =  objCCPUserActRepository.getTotalStaffsDept(deptId );
-	int staffCompleted0 = objCCPUserActRepository.getTotalStaffsCompleted(deptId );	
+	float satffCountDeptId0 =  objCCPUserActRepository.getTotalStaffsDept(deptId );
+	System.out.println(satffCountDeptId0);
+	float staffCompleted0 = objCCPUserActRepository.getTotalStaffsCompleted(deptId );	
+	System.out.println(staffCompleted0);
 	float allStaffCompletePer = (staffCompleted0 /  satffCountDeptId0) *100;
+	System.out.println(allStaffCompletePer);
 	allstaffsmapobj.setDeptId(0);
-	allstaffsmapobj.setStaffCount(satffCountDeptId0);
-	allstaffsmapobj.setStaffCompleted(staffCompleted0);
-	allstaffsmapobj.setCompletePer(allStaffCompletePer);
-	allstaffsegprogressmap.add(allstaffsmapobj);
+	allstaffsmapobj.setStaffCount(Math.round(satffCountDeptId0));
+	allstaffsmapobj.setStaffCompleted(Math.round(staffCompleted0));
+	DecimalFormat decimalFormat = new DecimalFormat("#.#");
+	allstaffsmapobj.setCompletedPer(Float.valueOf(decimalFormat.format(allStaffCompletePer)));
+	allstaffsegprogressmap.add(0,allstaffsmapobj);
+	
+	
+	allstaffsmap allstaffsmapobj1 = new allstaffsmap();
+	int deptId1 = 1;
+	float allStaffCompletePer1 = 1.0f;
+	float satffCountDeptId1 =  objCCPUserActRepository.getTotalStaffsDept(deptId1);
+	System.out.println(satffCountDeptId1);
+	float staffCompleted1 = objCCPUserActRepository.getTotalStaffsCompleted(deptId1);	
+	System.out.println(staffCompleted1);
+	if (staffCompleted1==0) {
+		 allStaffCompletePer1 = (staffCompleted1 /  1) *100;
+		 
+	}else {
+		  allStaffCompletePer1 = (staffCompleted1 /  satffCountDeptId1) *100;
+	}
+ 	System.out.println(allStaffCompletePer1);
+ 	allstaffsmapobj1.setDeptId(1);
+ 	allstaffsmapobj1.setStaffCount(Math.round(satffCountDeptId1));
+ 	allstaffsmapobj1.setStaffCompleted(Math.round(staffCompleted1));
+	DecimalFormat decimalFormat1 = new DecimalFormat("#.#");
+	allstaffsmapobj1.setCompletedPer(Float.valueOf(decimalFormat1.format(allStaffCompletePer1)));
+     allstaffsegprogressmap.add(1,allstaffsmapobj1);
+	
 /*
 	float allStaffCompletePer1 = 1.0f;
 	int deptId1 = 1;
