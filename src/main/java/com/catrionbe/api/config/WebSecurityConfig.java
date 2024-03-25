@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 // dont authenticate this particular request
 				.authorizeRequests()
-				.antMatchers("/listallarchivedincidents", "/onlystaffsegmentprogresschart",
+				.antMatchers("/uploadImage","/listallarchivedincidents", "/onlystaffsegmentprogresschart",
 						"/allstaffsegmentprogresstable", "/allstaffsegmentprogresschart", "/accessbycertificate",
 						"/accessbydate", "/listsearchresult", "/saveuseractivity", "/generatecertificatedata",
 						"/listallactiveincidents", "/updateincidentstatus", "/saveincident", "/listallarchivedusers",

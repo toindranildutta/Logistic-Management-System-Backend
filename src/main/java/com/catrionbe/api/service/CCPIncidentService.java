@@ -210,7 +210,7 @@ public class CCPIncidentService {
 
         BlobContainerClient container = new BlobContainerClientBuilder()
                 .connectionString(constr)
-                .containerName("upload")
+                .containerName("portal-image")
                 .buildClient();
 
 
@@ -356,4 +356,25 @@ public class CCPIncidentService {
 	 * objCCPSigningRepsitory.checkUndertaking( userId); if (count > 0) {
 	 * policyAccepted = true; } return policyAccepted; }
 	 */
+
+	public Object uploadImage(MultipartFile file) throws IOException {
+		// TODO Auto-generated method stub
+		  String constr="DefaultEndpointsProtocol=https;AccountName=cyberportal;AccountKey=9fKUci4CZQEhTL8eISLWZgwWpq+wqEg93XGtu+DcHTqT7/O7cfmqooeeuTrDh/uAWsw/xQzuRVkD+AStwk+iOg==;EndpointSuffix=core.windows.net";
+
+
+	        BlobContainerClient container = new BlobContainerClientBuilder()
+	                .connectionString(constr)
+	                .containerName("portal-image")
+	                .buildClient();
+
+
+	        BlobClient blob=container.getBlobClient(file.getOriginalFilename());
+
+	        blob.upload(file.getInputStream(),file.getSize(),true);
+
+
+	        String response=url+container+"/"+file.getOriginalFilename();
+	        
+	        return response;
+	}
 }

@@ -1,5 +1,7 @@
 package com.catrionbe.api.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.catrionbe.api.model.CCPFeedbackRequest;
 import com.catrionbe.api.model.CCPIncidentRequest;
@@ -33,6 +36,13 @@ public class CCPIncidentController {
 	    public ResponseEntity<?> saveIncident(@RequestBody CCPIncidentRequest  incidentReq) throws Exception {
 	        return ResponseEntity.ok(ccpIncidentService.saveIncident(incidentReq));
 	    }
+	 
+	 @RequestMapping(value = "/uploadImage", method = RequestMethod.POST ,headers="Accept=application/json"  )  
+	 public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+		    
+	        return ResponseEntity.ok(ccpIncidentService.uploadImage(file));
+	    }
+	 
 	
 	 @RequestMapping(value = "/updateincidentstatus", method = RequestMethod.PUT)
 	    public ResponseEntity<?> updateIncident(@RequestBody IncidentUpdateRequest  incidentUpdateReq) throws Exception {
