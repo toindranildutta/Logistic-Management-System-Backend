@@ -137,7 +137,7 @@ public List allstaffsegmentprogress() {
 	allstaffsmap allstaffsmapobj = new allstaffsmap();
 	
  
-	int deptId = 0;float allStaffCompletePer = 1.0f;
+	int deptId = 1;float allStaffCompletePer = 1.0f;
  
  
  	float satffCountDeptId0 =  objCCPUserActRepository.getTotalStaffsDept(deptId );
@@ -162,7 +162,7 @@ public List allstaffsegmentprogress() {
 	
 	
 	allstaffsmap allstaffsmapobj1 = new allstaffsmap();
-	int deptId1 = 1;
+	int deptId1 = 2;
 	float allStaffCompletePer1 = 1.0f;
 	float satffCountDeptId1 =  objCCPUserActRepository.getTotalStaffsDept(deptId1);
 	System.out.println(satffCountDeptId1);
@@ -184,7 +184,7 @@ public List allstaffsegmentprogress() {
 	
  
     allstaffsmap allstaffsmapobj2 = new allstaffsmap();
- 	int deptId2 = 2;
+ 	int deptId2 = 3;
  	float allStaffCompletePer2 = 1.0f;
  	float satffCountDeptId2 =  objCCPUserActRepository.getTotalStaffsDept(deptId2);
  	System.out.println(satffCountDeptId2);
@@ -206,7 +206,7 @@ public List allstaffsegmentprogress() {
      
      
       allstaffsmap allstaffsmapobj3 = new allstaffsmap();
-   	int deptId3 = 3;
+   	int deptId3 = 4;
    	float allStaffCompletePer3 = 1.0f;
    	float satffCountDeptId3 =  objCCPUserActRepository.getTotalStaffsDept(deptId3);
    	System.out.println(satffCountDeptId3);
@@ -228,7 +228,7 @@ public List allstaffsegmentprogress() {
      
      
         allstaffsmap allstaffsmapobj4 = new allstaffsmap();
-     	int deptId4 = 4;
+     	int deptId4 = 5;
      	float allStaffCompletePer4 = 1.0f;
      	float satffCountDeptId4 =  objCCPUserActRepository.getTotalStaffsDept(deptId4);
      	System.out.println(satffCountDeptId4);
@@ -249,7 +249,7 @@ public List allstaffsegmentprogress() {
         allstaffsegprogressmap.add(4,allstaffsmapobj4);
         
         allstaffsmap allstaffsmapobj5 = new allstaffsmap();
-     	int deptId5 = 5;
+     	int deptId5 = 6;
      	float allStaffCompletePer5 = 1.0f;
      	float satffCountDeptId5 =  objCCPUserActRepository.getTotalStaffsDept(deptId5);
      	System.out.println(satffCountDeptId5);
@@ -270,7 +270,7 @@ public List allstaffsegmentprogress() {
         allstaffsegprogressmap.add(5,allstaffsmapobj5);
         
         allstaffsmap allstaffsmapobj6 = new allstaffsmap();
-     	int deptId6 = 6;
+     	int deptId6 = 7;
      	float allStaffCompletePer6 = 1.0f;
      	float satffCountDeptId6 =  objCCPUserActRepository.getTotalStaffsDept(deptId6);
      	System.out.println(satffCountDeptId6);
@@ -291,7 +291,7 @@ public List allstaffsegmentprogress() {
         allstaffsegprogressmap.add(6,allstaffsmapobj6);
         
         allstaffsmap allstaffsmapobj7 = new allstaffsmap();
-     	int deptId7 = 7;
+     	int deptId7 = 8;
      	float allStaffCompletePer7 = 1.0f;
      	float satffCountDeptId7 =  objCCPUserActRepository.getTotalStaffsDept(deptId7);
      	System.out.println(satffCountDeptId7);
@@ -312,7 +312,7 @@ public List allstaffsegmentprogress() {
         allstaffsegprogressmap.add(7,allstaffsmapobj7);
         
         allstaffsmap allstaffsmapobj8 = new allstaffsmap();
-     	int deptId8 = 8;
+     	int deptId8 = 9;
      	float allStaffCompletePer8 = 1.0f;
      	float satffCountDeptId8 =  objCCPUserActRepository.getTotalStaffsDept(deptId8);
      	System.out.println(satffCountDeptId8);
@@ -334,7 +334,7 @@ public List allstaffsegmentprogress() {
         
         
         allstaffsmap allstaffsmapobj9 = new allstaffsmap();
-     	int deptId9 = 9;
+     	int deptId9 = 10;
      	float allStaffCompletePer9 = 1.0f;
      	float satffCountDeptId9 =  objCCPUserActRepository.getTotalStaffsDept(deptId9);
      	System.out.println(satffCountDeptId9);
@@ -355,7 +355,7 @@ public List allstaffsegmentprogress() {
         allstaffsegprogressmap.add(9,allstaffsmapobj9);
         
         allstaffsmap allstaffsmapobj10 = new allstaffsmap();
-     	int deptId10 = 10;
+     	int deptId10 = 11;
      	float allStaffCompletePer10 = 1.0f;
      	float satffCountDeptId10 =  objCCPUserActRepository.getTotalStaffsDept(deptId10);
      	System.out.println(satffCountDeptId10);
@@ -377,7 +377,7 @@ public List allstaffsegmentprogress() {
      
         
         allstaffsmap allstaffsmapobj11 = new allstaffsmap();
-     	int deptId11 = 11;
+     	int deptId11 = 12;
      	float allStaffCompletePer11 = 1.0f;
      	float satffCountDeptId11 =  objCCPUserActRepository.getTotalStaffsDept(deptId11);
      	System.out.println(satffCountDeptId11);
@@ -399,7 +399,7 @@ public List allstaffsegmentprogress() {
         
 
         allstaffsmap allstaffsmapobj12 = new allstaffsmap();
-       	int deptId12 = 12;
+       	int deptId12 = 13;
        	float allStaffCompletePer12 = 1.0f;
        	float satffCountDeptId12 =  objCCPUserActRepository.getTotalStaffsDept(deptId12);
        	System.out.println(satffCountDeptId12);

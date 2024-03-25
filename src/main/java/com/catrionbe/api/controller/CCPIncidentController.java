@@ -29,7 +29,7 @@ public class CCPIncidentController {
 	  @Autowired
 	    private CCPIncidentService  ccpIncidentService;
 	  
-	 @RequestMapping(value = "/saveincident", method = RequestMethod.POST  ,    consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)  
+	 @RequestMapping(value = "/saveincident", method = RequestMethod.POST  )  
 	    public ResponseEntity<?> saveIncident(@RequestBody CCPIncidentRequest  incidentReq) throws Exception {
 	        return ResponseEntity.ok(ccpIncidentService.saveIncident(incidentReq));
 	    }
