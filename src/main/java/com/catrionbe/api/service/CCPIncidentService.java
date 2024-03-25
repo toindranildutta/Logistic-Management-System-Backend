@@ -26,7 +26,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
+import com.azure.storage.blob.BlobContainerClientBuilder;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.blob.specialized.BlockBlobClient;
@@ -193,19 +195,32 @@ public class CCPIncidentService {
 
     public String uploadBlob(MultipartFile file , String randomImageName) throws IOException {
 
-        BlockBlobClient blobClient = getBlobContainerClient().getBlobClient(file.getOriginalFilename()).getBlockBlobClient();
+      /*  BlockBlobClient blobClient = getBlobContainerClient().getBlobClient(file.getOriginalFilename()).getBlockBlobClient();
 
         File fileData=convertMultiPartToFile(file );
         InputStream dataStream = new ByteArrayInputStream(file.getBytes());
 
-        /*
-         * Create the blob with string (plain text) content.
-         */
+         
         blobClient.upload(dataStream, file.getSize());
 
         dataStream.close();
-        
+        */
+        String constr="";
+
+
+        BlobContainerClient container = new BlobContainerClientBuilder()
+                .connectionString(constr)
+                .containerName("upload")
+                .buildClient();
+
+
+        BlobClient blob=container.getBlobClient(file.getOriginalFilename());
+
+        blob.upload(file.getInputStream(),file.getSize(),true);
+
+
         String response=url+container+"/"+file.getOriginalFilename();
+        
         return response;
     }
     

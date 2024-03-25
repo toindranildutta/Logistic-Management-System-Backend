@@ -1,6 +1,7 @@
 package com.catrionbe.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,7 @@ public class CCPIncidentController {
 	  @Autowired
 	    private CCPIncidentService  ccpIncidentService;
 	  
-	 @RequestMapping(value = "/saveincident", method = RequestMethod.POST )
+	 @RequestMapping(value = "/saveincident", method = RequestMethod.POST  ,    consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)  
 	    public ResponseEntity<?> saveIncident(@RequestBody CCPIncidentRequest  incidentReq) throws Exception {
 	        return ResponseEntity.ok(ccpIncidentService.saveIncident(incidentReq));
 	    }
