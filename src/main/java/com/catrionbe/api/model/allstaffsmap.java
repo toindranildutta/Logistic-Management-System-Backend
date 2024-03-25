@@ -18,11 +18,11 @@ public class allstaffsmap {
 	public void setStaffCompleted(int staffCompleted) {
 		this.staffCompleted = staffCompleted;
 	}
-	public float getCompletePer() {
-		return completePer;
+	public float getCompletedPer() {
+		return completedPer;
 	}
-	public void setCompletePer(float completePer) {
-		this.completePer = completePer;
+	public void setCompletedPer(float completedPer) {
+		this.completedPer = completedPer;
 	}
 	
 	public int getDeptId() {
@@ -32,13 +32,13 @@ public class allstaffsmap {
 		this.deptId = deptId;
 	}
 
-	private int deptId;
+	private int deptId;;
 	
 	private int staffCount;
 
 	private int staffCompleted;
 	
-	private float completePer;
+	private float completedPer;
 	
  
 	
