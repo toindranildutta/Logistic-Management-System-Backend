@@ -92,7 +92,7 @@ public class ccputil {
 
 	}
 
-	public static void sendWelcomeEmail(String emailId, String prnNumber) {
+	public static void sendWelcomeEmail(String emailId, String prnNumber, String fn, String un) {
 		Properties connectionProperties = new Properties();
 		connectionProperties.put("mail.smtp.host", "smtp.office365.com");
 		connectionProperties.put("mail.smtp.auth", "true");
@@ -129,15 +129,19 @@ public class ccputil {
 			System.out.println(dateFormat.format(date));
 			
 			String msg = "<html><head></head><body>"
-					+"<p>Hi There , Welcome to CATRION Cybersecurity Portal:</p>"
-					+"<p>"+"Date : "+dateFormat.format(date)+"</p>"
-					+"<p>Here is your PRN Number for reference. :</p>"
-					+"<h2>"+prnNumber+"</h2>"
-					+"<h3>Please Login to Our Portal with PRN and Mobile number...</h3>"
+					+"<h2> Hello "+fn+"</h2>"
+					+"<p>Welcome to the CATRION Cybersecurity Portal! </p>"
+					+"<p>Your account has been created with the following credentials. </p>"
+					
+					+"<p>PRN Number : </p><h2>"+prnNumber+"</h2>"
+					+"<p>Mobile NUmber : </p><h2>"+un+"</h2>"
+					+"<p>You will need this information to login to our portal. You are requested to complete the Course on Cybersecurity as well as take the assessment from our Cybersecurity Portal. </p>"
+					+"<p>Here is the link to the CATRION Cybersecurity Portal. </p>"
 					+"<h3>https://catrion-cyber-dev.spotlabs.in/login</h3>"
 					+"<p>Yours securely,</p>"
 					+"<p>Cybersecurity Team</p>"
 					+"<p>CATRION</p>"
+					+"<p>"+"Date : "+dateFormat.format(date)+"</p>"
 					;
 					
 			//message.setText( "It looks like you are trying to sign in to the CATRION Cybersecurity Portal: ");

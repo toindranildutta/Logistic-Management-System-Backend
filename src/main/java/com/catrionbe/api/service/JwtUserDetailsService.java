@@ -109,7 +109,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setWorkEmail(user.getWorkEmail());
         newUser.setDeptId(user.getDeptId());
         
-        ccputil.sendWelcomeEmail(user.getEmailId(), incrementedPrnNumber);
+        ccputil.sendWelcomeEmail(user.getEmailId(), incrementedPrnNumber, user.getFirstName(), user.getUsername());
         
         return userDao.save(newUser);
     }
