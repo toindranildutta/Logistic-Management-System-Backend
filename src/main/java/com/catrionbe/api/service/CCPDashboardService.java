@@ -136,17 +136,25 @@ public List allstaffsegmentprogress() {
 	//For Dept Id 0
 	allstaffsmap allstaffsmapobj = new allstaffsmap();
 	
+<<<<<<< HEAD
 	int deptId = 0;float allStaffCompletePer = 1.0f;
+=======
+	int deptId = 0;
+>>>>>>> 54a0b7db1857c0e00b647bff54b04424d1a7b917
 	float satffCountDeptId0 =  objCCPUserActRepository.getTotalStaffsDept(deptId );
 	System.out.println(satffCountDeptId0);
 	float staffCompleted0 = objCCPUserActRepository.getTotalStaffsCompleted(deptId );	
 	System.out.println(staffCompleted0);
+<<<<<<< HEAD
 	if (staffCompleted0==0) {
 		 allStaffCompletePer = (staffCompleted0 /  1) *100;
 		 
 	}else {
 		  allStaffCompletePer = (staffCompleted0 /  satffCountDeptId0) *100;
 	}
+=======
+	float allStaffCompletePer = (staffCompleted0 /  satffCountDeptId0) *100;
+>>>>>>> 54a0b7db1857c0e00b647bff54b04424d1a7b917
 	System.out.println(allStaffCompletePer);
 	allstaffsmapobj.setDeptId(0);
 	allstaffsmapobj.setStaffCount(Math.round(satffCountDeptId0));
@@ -177,6 +185,7 @@ public List allstaffsegmentprogress() {
 	allstaffsmapobj1.setCompletedPer(Float.valueOf(decimalFormat1.format(allStaffCompletePer1)));
      allstaffsegprogressmap.add(1,allstaffsmapobj1);
 	
+<<<<<<< HEAD
     allstaffsmap allstaffsmapobj2 = new allstaffsmap();
  	int deptId2 = 2;
  	float allStaffCompletePer2 = 1.0f;
@@ -413,6 +422,7 @@ public List allstaffsegmentprogress() {
        	allstaffsmapobj12.setCompletedPer(Float.valueOf(decimalFormat12.format(allStaffCompletePer12)));
           allstaffsegprogressmap.add(12,allstaffsmapobj12);
           
+ 
 /*
 	float allStaffCompletePer1 = 1.0f;
 	int deptId1 = 1;
