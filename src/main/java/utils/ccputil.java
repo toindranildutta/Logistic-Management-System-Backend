@@ -133,8 +133,8 @@ public class ccputil {
 					+"<p>Welcome to the CATRION Cybersecurity Portal! </p>"
 					+"<p>Your account has been created with the following credentials. </p>"
 					
-					+"<p>PRN Number : </p><h2>"+prnNumber+"</h2>"
-					+"<p>Mobile NUmber : </p><h2>"+un+"</h2>"
+					+"<h2>PRN Number :  "+prnNumber+"</h2>"
+					+"<h2>Mobile Number :  "+un+"</h2>"
 					+"<p>You will need this information to login to our portal. You are requested to complete the Course on Cybersecurity as well as take the assessment from our Cybersecurity Portal. </p>"
 					+"<p>Here is the link to the CATRION Cybersecurity Portal. </p>"
 					+"<h3>https://catrion-cyber-dev.spotlabs.in/login</h3>"
