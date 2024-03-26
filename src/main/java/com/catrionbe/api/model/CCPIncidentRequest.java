@@ -32,16 +32,14 @@ public class CCPIncidentRequest implements Serializable {
 	private String description;
 
 	//private byte[]   image;
-	MultipartFile image;
+	private String  image;
 	
 	
-	public MultipartFile getImage() {
-		return image;
-	}
-
-	public void setImage(MultipartFile image) {
-		this.image = image;
-	}
+	/*
+	 * public MultipartFile getImage() { return image; }
+	 * 
+	 * public void setImage(MultipartFile image) { this.image = image; }
+	 */
 
 	private String isActive;
 
@@ -159,6 +157,14 @@ public class CCPIncidentRequest implements Serializable {
 
 	public void setIncidentSubject(String incidentSubject) {
 		this.incidentSubject = incidentSubject;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 
