@@ -175,7 +175,7 @@ public List allstaffsegmentprogress() {
 		  allStaffCompletePer1 = (staffCompleted1 /  satffCountDeptId1) *100;
 	}
  	System.out.println(allStaffCompletePer1);
- 	allstaffsmapobj1.setDeptId(1);
+ 	allstaffsmapobj1.setDeptId(2);
  	allstaffsmapobj1.setStaffCount(Math.round(satffCountDeptId1));
  	allstaffsmapobj1.setStaffCompleted(Math.round(staffCompleted1));
 	DecimalFormat decimalFormat1 = new DecimalFormat("#.#");
@@ -197,7 +197,7 @@ public List allstaffsegmentprogress() {
  		  allStaffCompletePer2 = (staffCompleted2 /  satffCountDeptId2) *100;
  	}
   	System.out.println(allStaffCompletePer2);
-  	allstaffsmapobj2.setDeptId(2);
+  	allstaffsmapobj2.setDeptId(3);
   	allstaffsmapobj2.setStaffCount(Math.round(satffCountDeptId2));
   	allstaffsmapobj2.setStaffCompleted(Math.round(staffCompleted2));
  	DecimalFormat decimalFormat2 = new DecimalFormat("#.#");
@@ -219,7 +219,7 @@ public List allstaffsegmentprogress() {
    		  allStaffCompletePer3 = (staffCompleted3 /  satffCountDeptId3) *100;
    	}
     	System.out.println(allStaffCompletePer3);
-    	allstaffsmapobj3.setDeptId(3);
+    	allstaffsmapobj3.setDeptId(4);
     	allstaffsmapobj3.setStaffCount(Math.round(satffCountDeptId3));
     	allstaffsmapobj3.setStaffCompleted(Math.round(staffCompleted3));
    	DecimalFormat decimalFormat3 = new DecimalFormat("#.#");
@@ -241,7 +241,7 @@ public List allstaffsegmentprogress() {
      		  allStaffCompletePer4 = (staffCompleted4 /  satffCountDeptId4) *100;
      	}
       	System.out.println(allStaffCompletePer4);
-      	allstaffsmapobj4.setDeptId(4);
+      	allstaffsmapobj4.setDeptId(5);
       	allstaffsmapobj4.setStaffCount(Math.round(satffCountDeptId4));
       	allstaffsmapobj4.setStaffCompleted(Math.round(staffCompleted4));
      	DecimalFormat decimalFormat4 = new DecimalFormat("#.#");
@@ -262,7 +262,7 @@ public List allstaffsegmentprogress() {
      		  allStaffCompletePer5 = (staffCompleted5 /  satffCountDeptId5) *100;
      	}
       	System.out.println(allStaffCompletePer5);
-      	allstaffsmapobj5.setDeptId(5);
+      	allstaffsmapobj5.setDeptId(6);
       	allstaffsmapobj5.setStaffCount(Math.round(satffCountDeptId5));
       	allstaffsmapobj5.setStaffCompleted(Math.round(staffCompleted5));
      	DecimalFormat decimalFormat5 = new DecimalFormat("#.#");
@@ -283,7 +283,7 @@ public List allstaffsegmentprogress() {
      		  allStaffCompletePer6 = (staffCompleted6 /  satffCountDeptId6) *100;
      	}
       	System.out.println(allStaffCompletePer6);
-      	allstaffsmapobj6.setDeptId(6);
+      	allstaffsmapobj6.setDeptId(7);
       	allstaffsmapobj6.setStaffCount(Math.round(satffCountDeptId6));
       	allstaffsmapobj6.setStaffCompleted(Math.round(staffCompleted6));
      	DecimalFormat decimalFormat6 = new DecimalFormat("#.#");
@@ -304,7 +304,7 @@ public List allstaffsegmentprogress() {
      		  allStaffCompletePer7 = (staffCompleted7 /  satffCountDeptId7) *100;
      	}
       	System.out.println(allStaffCompletePer7);
-      	allstaffsmapobj7.setDeptId(7);
+      	allstaffsmapobj7.setDeptId(8);
       	allstaffsmapobj7.setStaffCount(Math.round(satffCountDeptId7));
       	allstaffsmapobj7.setStaffCompleted(Math.round(staffCompleted7));
      	DecimalFormat decimalFormat7 = new DecimalFormat("#.#");
@@ -325,7 +325,7 @@ public List allstaffsegmentprogress() {
      		  allStaffCompletePer8 = (staffCompleted8 /  satffCountDeptId8) *100;
      	}
       	System.out.println(allStaffCompletePer8);
-      	allstaffsmapobj8.setDeptId(8);
+      	allstaffsmapobj8.setDeptId(9);
       	allstaffsmapobj8.setStaffCount(Math.round(satffCountDeptId8));
       	allstaffsmapobj8.setStaffCompleted(Math.round(staffCompleted8));
      	DecimalFormat decimalFormat8 = new DecimalFormat("#.#");
@@ -347,7 +347,7 @@ public List allstaffsegmentprogress() {
      		  allStaffCompletePer9 = (staffCompleted9 /  satffCountDeptId9) *100;
      	}
       	System.out.println(allStaffCompletePer9);
-      	allstaffsmapobj9.setDeptId(9);
+      	allstaffsmapobj9.setDeptId(10);
       	allstaffsmapobj9.setStaffCount(Math.round(satffCountDeptId9));
       	allstaffsmapobj9.setStaffCompleted(Math.round(staffCompleted9));
      	DecimalFormat decimalFormat9 = new DecimalFormat("#.#");
@@ -368,7 +368,7 @@ public List allstaffsegmentprogress() {
      		  allStaffCompletePer10 = (staffCompleted10 /  satffCountDeptId10) *100;
      	}
       	System.out.println(allStaffCompletePer10);
-      	allstaffsmapobj10.setDeptId(10);
+      	allstaffsmapobj10.setDeptId(11);
       	allstaffsmapobj10.setStaffCount(Math.round(satffCountDeptId10));
       	allstaffsmapobj10.setStaffCompleted(Math.round(staffCompleted10));
      	DecimalFormat decimalFormat10 = new DecimalFormat("#.#");
@@ -390,7 +390,7 @@ public List allstaffsegmentprogress() {
      		  allStaffCompletePer11 = (staffCompleted11 /  satffCountDeptId11) *110;
      	}
       	System.out.println(allStaffCompletePer11);
-      	allstaffsmapobj11.setDeptId(11);
+      	allstaffsmapobj11.setDeptId(12);
       	allstaffsmapobj11.setStaffCount(Math.round(satffCountDeptId11));
       	allstaffsmapobj11.setStaffCompleted(Math.round(staffCompleted11));
      	DecimalFormat decimalFormat11 = new DecimalFormat("#.#");
@@ -412,7 +412,7 @@ public List allstaffsegmentprogress() {
        		  allStaffCompletePer12 = (staffCompleted12 /  satffCountDeptId12) *120;
        	}
         	System.out.println(allStaffCompletePer12);
-        	allstaffsmapobj12.setDeptId(12);
+        	allstaffsmapobj12.setDeptId(13);
         	allstaffsmapobj12.setStaffCount(Math.round(satffCountDeptId12));
         	allstaffsmapobj12.setStaffCompleted(Math.round(staffCompleted12));
        	DecimalFormat decimalFormat12 = new DecimalFormat("#.#");
