@@ -19,6 +19,7 @@ import com.catrionbe.api.entity.CCPUserActivity;
 import com.catrionbe.api.model.CCPUserActivityReq;
 import com.catrionbe.api.model.allstaffsmap;
 import com.catrionbe.api.model.allstaffsmaploc;
+import com.catrionbe.api.model.allstaffsmapprogtable;
 import com.catrionbe.api.repositories.CCPUserActRepository;
 
 @Service
@@ -496,7 +497,274 @@ public List allstaffsegmentprogress() {
 
 
 public Object allstaffsegmentprogresstable() {
-	List<allstaffsmaploc> allstaffsegprogresstable = new ArrayList<allstaffsmaploc> () ;
+	List<allstaffsmapprogtable> allstaffsegprogresstable = new ArrayList<allstaffsmapprogtable> () ;
+	
+	allstaffsmapprogtable allstaffsmapobj1 = new allstaffsmapprogtable();	 
+	int deptId1 = 1;float allStaffCompletePer = 1.0f; 
+ 	int  satffCountDeptId1=  objCCPUserActRepository.getTotalStaffsDept(deptId1 );
+	System.out.println(satffCountDeptId1);
+	int  staffCompleted1 = objCCPUserActRepository.getTotalStaffsCompleted(deptId1 );	
+	//System.out.println(staffCompleted1); 
+   int curWeekProg1 =  objCCPUserActRepository.getCurrentWeekPer(deptId1 );
+   //System.out.println(" curWeekProg  "+curWeekProg1);
+   allstaffsmapobj1.setCurWeekProgress(curWeekProg1);
+   int prevWeekProg1 =  objCCPUserActRepository.getPrevWeekPer(deptId1 );
+   //System.out.println( " prevWeekProg  "+prevWeekProg1);
+   allstaffsmapobj1.setImprovement(curWeekProg1 - prevWeekProg1);
+   allstaffsmapobj1.setPrevWeekProgress(prevWeekProg1);
+	//System.out.println(allStaffCompletePer1);
+	allstaffsmapobj1.setDeptId(1);
+	allstaffsmapobj1.setStaffCount(satffCountDeptId1);
+	allstaffsmapobj1.setStaffCompleted  (staffCompleted1);
+	allstaffsmapobj1.setRemainingStaffs(  satffCountDeptId1- staffCompleted1);
+	allstaffsegprogresstable.add(0,allstaffsmapobj1);
+	
+	 
+	 allstaffsmapprogtable allstaffsmapobj2 = new allstaffsmapprogtable();	 
+		int deptId2 = 2;float allStaffCompletePer2 = 2.0f; 
+	 	int  satffCountDeptId2=  objCCPUserActRepository.getTotalStaffsDept(deptId2 );
+		System.out.println(satffCountDeptId2);
+		int  staffCompleted2 = objCCPUserActRepository.getTotalStaffsCompleted(deptId2 );	
+		//System.out.println(staffCompleted2); 
+	   int curWeekProg2 =  objCCPUserActRepository.getCurrentWeekPer(deptId2 );
+	   //System.out.println(" curWeekProg  "+curWeekProg2);
+	   allstaffsmapobj2.setCurWeekProgress(curWeekProg2);
+	   int prevWeekProg2 =  objCCPUserActRepository.getPrevWeekPer(deptId2 );
+	   //System.out.println( " prevWeekProg  "+prevWeekProg2);
+	   allstaffsmapobj2.setImprovement(curWeekProg2 - prevWeekProg2);
+	   allstaffsmapobj2.setPrevWeekProgress(prevWeekProg2);
+		//System.out.println(allStaffCompletePer2);
+		allstaffsmapobj2.setDeptId(2);
+		allstaffsmapobj2.setStaffCount(satffCountDeptId2);
+		allstaffsmapobj2.setStaffCompleted  (staffCompleted2);
+		allstaffsmapobj2.setRemainingStaffs(  satffCountDeptId2- staffCompleted2);
+		allstaffsegprogresstable.add(1,allstaffsmapobj2);
+	
+		 allstaffsmapprogtable allstaffsmapobj3 = new allstaffsmapprogtable();	 
+			int deptId3 = 3;float allStaffCompletePer3 = 3.0f; 
+		 	int  satffCountDeptId3=  objCCPUserActRepository.getTotalStaffsDept(deptId3 );
+			System.out.println(satffCountDeptId3);
+			int  staffCompleted3 = objCCPUserActRepository.getTotalStaffsCompleted(deptId3 );	
+			//System.out.println(staffCompleted3); 
+		   int curWeekProg3 =  objCCPUserActRepository.getCurrentWeekPer(deptId3 );
+		   //System.out.println(" curWeekProg  "+curWeekProg3);
+		   allstaffsmapobj3.setCurWeekProgress(curWeekProg3);
+		   int prevWeekProg3 =  objCCPUserActRepository.getPrevWeekPer(deptId3 );
+		   //System.out.println( " prevWeekProg  "+prevWeekProg3);
+		   allstaffsmapobj3.setImprovement(curWeekProg3 - prevWeekProg3);
+		   allstaffsmapobj3.setPrevWeekProgress(prevWeekProg3);
+			//System.out.println(allStaffCompletePer3);
+			allstaffsmapobj3.setDeptId(3);
+			allstaffsmapobj3.setStaffCount(satffCountDeptId3);
+			allstaffsmapobj3.setStaffCompleted  (staffCompleted3);
+			allstaffsmapobj3.setRemainingStaffs(  satffCountDeptId3- staffCompleted3);
+			allstaffsegprogresstable.add(2,allstaffsmapobj3);
+			
+			 allstaffsmapprogtable allstaffsmapobj4 = new allstaffsmapprogtable();	 
+				int deptId4 = 4;float allStaffCompletePer4 = 4.0f; 
+			 	int  satffCountDeptId4=  objCCPUserActRepository.getTotalStaffsDept(deptId4 );
+				System.out.println(satffCountDeptId4);
+				int  staffCompleted4 = objCCPUserActRepository.getTotalStaffsCompleted(deptId4 );	
+				//System.out.println(staffCompleted4); 
+			   int curWeekProg4 =  objCCPUserActRepository.getCurrentWeekPer(deptId4 );
+			   //System.out.println(" curWeekProg  "+curWeekProg4);
+			   allstaffsmapobj4.setCurWeekProgress(curWeekProg4);
+			   int prevWeekProg4 =  objCCPUserActRepository.getPrevWeekPer(deptId4 );
+			   //System.out.println( " prevWeekProg  "+prevWeekProg4);
+			   allstaffsmapobj4.setImprovement(curWeekProg4 - prevWeekProg4);
+			   allstaffsmapobj4.setPrevWeekProgress(prevWeekProg4);
+				//System.out.println(allStaffCompletePer4);
+				allstaffsmapobj4.setDeptId(4);
+				allstaffsmapobj4.setStaffCount(satffCountDeptId4);
+				allstaffsmapobj4.setStaffCompleted  (staffCompleted4);
+				allstaffsmapobj4.setRemainingStaffs(  satffCountDeptId4- staffCompleted4);
+				allstaffsegprogresstable.add(3,allstaffsmapobj4);
+				
+				 allstaffsmapprogtable allstaffsmapobj5 = new allstaffsmapprogtable();	 
+					int deptId5 = 5;float allStaffCompletePer5 = 5.0f; 
+				 	int  satffCountDeptId5=  objCCPUserActRepository.getTotalStaffsDept(deptId5 );
+					System.out.println(satffCountDeptId5);
+					int  staffCompleted5 = objCCPUserActRepository.getTotalStaffsCompleted(deptId5 );	
+					//System.out.println(staffCompleted5); 
+				   int curWeekProg5 =  objCCPUserActRepository.getCurrentWeekPer(deptId5 );
+				   //System.out.println(" curWeekProg  "+curWeekProg5);
+				   allstaffsmapobj5.setCurWeekProgress(curWeekProg5);
+				   int prevWeekProg5 =  objCCPUserActRepository.getPrevWeekPer(deptId5 );
+				   //System.out.println( " prevWeekProg  "+prevWeekProg5);
+				   allstaffsmapobj5.setImprovement(curWeekProg5 - prevWeekProg5);
+				   allstaffsmapobj5.setPrevWeekProgress(prevWeekProg5);
+					//System.out.println(allStaffCompletePer5);
+					allstaffsmapobj5.setDeptId(5);
+					allstaffsmapobj5.setStaffCount(satffCountDeptId5);
+					allstaffsmapobj5.setStaffCompleted  (staffCompleted5);
+					allstaffsmapobj5.setRemainingStaffs(  satffCountDeptId5- staffCompleted5);
+					allstaffsegprogresstable.add(4,allstaffsmapobj5);
+					
+					 allstaffsmapprogtable allstaffsmapobj6 = new allstaffsmapprogtable();	 
+						int deptId6 = 6;float allStaffCompletePer6 = 6.0f; 
+					 	int  satffCountDeptId6=  objCCPUserActRepository.getTotalStaffsDept(deptId6 );
+						System.out.println(satffCountDeptId6);
+						int  staffCompleted6 = objCCPUserActRepository.getTotalStaffsCompleted(deptId6 );	
+						//System.out.println(staffCompleted6); 
+					   int curWeekProg6 =  objCCPUserActRepository.getCurrentWeekPer(deptId6 );
+					   //System.out.println(" curWeekProg  "+curWeekProg6);
+					   allstaffsmapobj6.setCurWeekProgress(curWeekProg6);
+					   int prevWeekProg6 =  objCCPUserActRepository.getPrevWeekPer(deptId6 );
+					   //System.out.println( " prevWeekProg  "+prevWeekProg6);
+					   allstaffsmapobj6.setImprovement(curWeekProg6 - prevWeekProg6);
+					   allstaffsmapobj6.setPrevWeekProgress(prevWeekProg6);
+						//System.out.println(allStaffCompletePer6);
+						allstaffsmapobj6.setDeptId(6);
+						allstaffsmapobj6.setStaffCount(satffCountDeptId6);
+						allstaffsmapobj6.setStaffCompleted  (staffCompleted6);
+						allstaffsmapobj6.setRemainingStaffs(  satffCountDeptId6- staffCompleted6);
+						allstaffsegprogresstable.add(5,allstaffsmapobj6);
+
+						
+						 allstaffsmapprogtable allstaffsmapobj7 = new allstaffsmapprogtable();	 
+							int deptId7 = 7;float allStaffCompletePer7 = 7.0f; 
+						 	int  satffCountDeptId7=  objCCPUserActRepository.getTotalStaffsDept(deptId7 );
+							System.out.println(satffCountDeptId7);
+							int  staffCompleted7 = objCCPUserActRepository.getTotalStaffsCompleted(deptId7 );	
+							//System.out.println(staffCompleted7); 
+						   int curWeekProg7 =  objCCPUserActRepository.getCurrentWeekPer(deptId7 );
+						   //System.out.println(" curWeekProg  "+curWeekProg7);
+						   allstaffsmapobj7.setCurWeekProgress(curWeekProg7);
+						   int prevWeekProg7 =  objCCPUserActRepository.getPrevWeekPer(deptId7 );
+						   //System.out.println( " prevWeekProg  "+prevWeekProg7);
+						   allstaffsmapobj7.setImprovement(curWeekProg7 - prevWeekProg7);
+						   allstaffsmapobj7.setPrevWeekProgress(prevWeekProg7);
+							//System.out.println(allStaffCompletePer7);
+							allstaffsmapobj7.setDeptId(7);
+							allstaffsmapobj7.setStaffCount(satffCountDeptId7);
+							allstaffsmapobj7.setStaffCompleted  (staffCompleted7);
+							allstaffsmapobj7.setRemainingStaffs(  satffCountDeptId7- staffCompleted7);
+							allstaffsegprogresstable.add(6,allstaffsmapobj7);
+							
+							 allstaffsmapprogtable allstaffsmapobj8 = new allstaffsmapprogtable();	 
+								int deptId8 = 8;float allStaffCompletePer8 = 8.0f; 
+							 	int  satffCountDeptId8=  objCCPUserActRepository.getTotalStaffsDept(deptId8 );
+								System.out.println(satffCountDeptId8);
+								int  staffCompleted8 = objCCPUserActRepository.getTotalStaffsCompleted(deptId8 );	
+								//System.out.println(staffCompleted8); 
+							   int curWeekProg8 =  objCCPUserActRepository.getCurrentWeekPer(deptId8 );
+							   //System.out.println(" curWeekProg  "+curWeekProg8);
+							   allstaffsmapobj8.setCurWeekProgress(curWeekProg8);
+							   int prevWeekProg8 =  objCCPUserActRepository.getPrevWeekPer(deptId8 );
+							   //System.out.println( " prevWeekProg  "+prevWeekProg8);
+							   allstaffsmapobj8.setImprovement(curWeekProg8 - prevWeekProg8);
+							   allstaffsmapobj8.setPrevWeekProgress(prevWeekProg8);
+								//System.out.println(allStaffCompletePer8);
+								allstaffsmapobj8.setDeptId(8);
+								allstaffsmapobj8.setStaffCount(satffCountDeptId8);
+								allstaffsmapobj8.setStaffCompleted  (staffCompleted8);
+								allstaffsmapobj8.setRemainingStaffs(  satffCountDeptId8- staffCompleted8);
+								allstaffsegprogresstable.add(7,allstaffsmapobj8);
+
+								 allstaffsmapprogtable allstaffsmapobj9 = new allstaffsmapprogtable();	 
+									int deptId9 = 9;float allStaffCompletePer9 = 9.0f; 
+								 	int  satffCountDeptId9=  objCCPUserActRepository.getTotalStaffsDept(deptId9 );
+									System.out.println(satffCountDeptId9);
+									int  staffCompleted9 = objCCPUserActRepository.getTotalStaffsCompleted(deptId9 );	
+									//System.out.println(staffCompleted9); 
+								   int curWeekProg9 =  objCCPUserActRepository.getCurrentWeekPer(deptId9 );
+								   //System.out.println(" curWeekProg  "+curWeekProg9);
+								   allstaffsmapobj9.setCurWeekProgress(curWeekProg9);
+								   int prevWeekProg9 =  objCCPUserActRepository.getPrevWeekPer(deptId9 );
+								   //System.out.println( " prevWeekProg  "+prevWeekProg9);
+								   allstaffsmapobj9.setImprovement(curWeekProg9 - prevWeekProg9);
+								   allstaffsmapobj9.setPrevWeekProgress(prevWeekProg9);
+									//System.out.println(allStaffCompletePer9);
+									allstaffsmapobj9.setDeptId(9);
+									allstaffsmapobj9.setStaffCount(satffCountDeptId9);
+									allstaffsmapobj9.setStaffCompleted  (staffCompleted9);
+									allstaffsmapobj9.setRemainingStaffs(  satffCountDeptId9- staffCompleted9);
+									allstaffsegprogresstable.add(8,allstaffsmapobj9);
+									
+									 allstaffsmapprogtable allstaffsmapobj10 = new allstaffsmapprogtable();	 
+										int deptId10 = 10;float allStaffCompletePer10 = 10.0f; 
+									 	int  satffCountDeptId10=  objCCPUserActRepository.getTotalStaffsDept(deptId10 );
+										System.out.println(satffCountDeptId10);
+										int  staffCompleted10 = objCCPUserActRepository.getTotalStaffsCompleted(deptId10 );	
+										//System.out.println(staffCompleted10); 
+									   int curWeekProg10 =  objCCPUserActRepository.getCurrentWeekPer(deptId10 );
+									   //System.out.println(" curWeekProg  "+curWeekProg10);
+									   allstaffsmapobj10.setCurWeekProgress(curWeekProg10);
+									   int prevWeekProg10 =  objCCPUserActRepository.getPrevWeekPer(deptId10 );
+									   //System.out.println( " prevWeekProg  "+prevWeekProg10);
+									   allstaffsmapobj10.setImprovement(curWeekProg10 - prevWeekProg10);
+									   allstaffsmapobj10.setPrevWeekProgress(prevWeekProg10);
+										//System.out.println(allStaffCompletePer10);
+										allstaffsmapobj10.setDeptId(10);
+										allstaffsmapobj10.setStaffCount(satffCountDeptId10);
+										allstaffsmapobj10.setStaffCompleted  (staffCompleted10);
+										allstaffsmapobj10.setRemainingStaffs(  satffCountDeptId10- staffCompleted10);
+										allstaffsegprogresstable.add(9,allstaffsmapobj10);
+
+										
+										 allstaffsmapprogtable allstaffsmapobj11 = new allstaffsmapprogtable();	 
+											int deptId11 = 11;float allStaffCompletePer11 = 11.0f; 
+										 	int  satffCountDeptId11=  objCCPUserActRepository.getTotalStaffsDept(deptId11 );
+											System.out.println(satffCountDeptId11);
+											int  staffCompleted11 = objCCPUserActRepository.getTotalStaffsCompleted(deptId11 );	
+											//System.out.println(staffCompleted11); 
+										   int curWeekProg11 =  objCCPUserActRepository.getCurrentWeekPer(deptId11 );
+										   //System.out.println(" curWeekProg  "+curWeekProg11);
+										   allstaffsmapobj11.setCurWeekProgress(curWeekProg11);
+										   int prevWeekProg11 =  objCCPUserActRepository.getPrevWeekPer(deptId11 );
+										   //System.out.println( " prevWeekProg  "+prevWeekProg11);
+										   allstaffsmapobj11.setImprovement(curWeekProg11 - prevWeekProg11);
+										   allstaffsmapobj11.setPrevWeekProgress(prevWeekProg11);
+											//System.out.println(allStaffCompletePer11);
+											allstaffsmapobj11.setDeptId(11);
+											allstaffsmapobj11.setStaffCount(satffCountDeptId11);
+											allstaffsmapobj11.setStaffCompleted  (staffCompleted11);
+											allstaffsmapobj11.setRemainingStaffs(  satffCountDeptId11- staffCompleted11);
+											allstaffsegprogresstable.add(10,allstaffsmapobj11);
+
+											
+											 allstaffsmapprogtable allstaffsmapobj12 = new allstaffsmapprogtable();	 
+												int deptId12 = 12;float allStaffCompletePer12 = 12.0f; 
+											 	int  satffCountDeptId12=  objCCPUserActRepository.getTotalStaffsDept(deptId12 );
+												System.out.println(satffCountDeptId12);
+												int  staffCompleted12 = objCCPUserActRepository.getTotalStaffsCompleted(deptId12 );	
+												//System.out.println(staffCompleted12); 
+											   int curWeekProg12 =  objCCPUserActRepository.getCurrentWeekPer(deptId12 );
+											   //System.out.println(" curWeekProg  "+curWeekProg12);
+											   allstaffsmapobj12.setCurWeekProgress(curWeekProg12);
+											   int prevWeekProg12 =  objCCPUserActRepository.getPrevWeekPer(deptId12 );
+											   //System.out.println( " prevWeekProg  "+prevWeekProg12);
+											   allstaffsmapobj12.setImprovement(curWeekProg12 - prevWeekProg12);
+											   allstaffsmapobj12.setPrevWeekProgress(prevWeekProg12);
+												//System.out.println(allStaffCompletePer12);
+												allstaffsmapobj12.setDeptId(12);
+												allstaffsmapobj12.setStaffCount(satffCountDeptId12);
+												allstaffsmapobj12.setStaffCompleted  (staffCompleted12);
+												allstaffsmapobj12.setRemainingStaffs(  satffCountDeptId12- staffCompleted12);
+												allstaffsegprogresstable.add(11,allstaffsmapobj12);
+
+												 allstaffsmapprogtable allstaffsmapobj13 = new allstaffsmapprogtable();	 
+													int deptId13 = 13;float allStaffCompletePer13 = 13.0f; 
+												 	int  satffCountDeptId13=  objCCPUserActRepository.getTotalStaffsDept(deptId13 );
+													System.out.println(satffCountDeptId13);
+													int  staffCompleted13 = objCCPUserActRepository.getTotalStaffsCompleted(deptId13 );	
+													//System.out.println(staffCompleted13); 
+												   int curWeekProg13 =  objCCPUserActRepository.getCurrentWeekPer(deptId13 );
+												   //System.out.println(" curWeekProg  "+curWeekProg13);
+												   allstaffsmapobj13.setCurWeekProgress(curWeekProg13);
+												   int prevWeekProg13 =  objCCPUserActRepository.getPrevWeekPer(deptId13 );
+												   //System.out.println( " prevWeekProg  "+prevWeekProg13);
+												   allstaffsmapobj13.setImprovement(curWeekProg13 - prevWeekProg13);
+												   allstaffsmapobj13.setPrevWeekProgress(prevWeekProg13);
+													//System.out.println(allStaffCompletePer13);
+													allstaffsmapobj13.setDeptId(13);
+													allstaffsmapobj13.setStaffCount(satffCountDeptId13);
+													allstaffsmapobj13.setStaffCompleted  (staffCompleted13);
+													allstaffsmapobj13.setRemainingStaffs(  satffCountDeptId13- staffCompleted13);
+													allstaffsegprogresstable.add(12,allstaffsmapobj13);
+												
+	 
+	
 	
 	
 	// TODO Auto-generated method stub

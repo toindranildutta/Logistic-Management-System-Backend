@@ -29,7 +29,7 @@ public interface  CCPUserActRepository extends CrudRepository<CCPUserActivity, I
 	@Query(value = "select count(* ) FROM  user b  where    b.deptId=:deptId", nativeQuery = true)
 	int getTotalStaffsDept(int deptId);
 
-	@Query(value = "select count(* ) FROM ccpcertificate a , user b  where a.userId = b.userId AND b.deptId=:deptId", nativeQuery = true)
+	@Query(value = "select count(* ) FROM ccpcertificate a , user b  where a.userId = b.userId AND b.deptId=:deptId ", nativeQuery = true)
 	int getTotalStaffsCompleted(int deptId);
 
 	@Query(value = "select count(* ) FROM  user b  where    b.locationId=:locationId AND b.emailId LIKE '%CATRION%'", nativeQuery = true)
@@ -38,6 +38,14 @@ public interface  CCPUserActRepository extends CrudRepository<CCPUserActivity, I
 	@Query(value = "select count(* ) FROM ccpcertificate a , user b  where a.userId = b.userId AND b.emailId LIKE '%CATRION%'", nativeQuery = true)
 	int getTotalStaffsCompletedloc(int locationId);
 
- 
+	@Query(value = "select count(* ) FROM ccpcertificate a , user b  where a.userId = b.userId AND b.deptId=:deptId  AND  YEARWEEK(a.createdDate, 1) = YEARWEEK(CURDATE(), 1)", nativeQuery = true)
+	int getCurrentWeekPer(int deptId);
+	
+	@Query(value = "select count(* ) FROM ccpcertificate a , user b  where a.userId = b.userId AND b.deptId=:deptId  AND  YEARWEEK(a.createdDate) = YEARWEEK(NOW() - INTERVAL  1 WEEK)", nativeQuery = true)
+	int getPrevWeekPer(int deptId);
+
+	
+	
+	
 	
 }
