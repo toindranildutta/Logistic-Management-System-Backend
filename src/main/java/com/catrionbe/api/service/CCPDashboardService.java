@@ -496,8 +496,11 @@ public List allstaffsegmentprogress() {
 
 
 public Object allstaffsegmentprogresstable() {
+	List<allstaffsmaploc> allstaffsegprogresstable = new ArrayList<allstaffsmaploc> () ;
+	
+	
 	// TODO Auto-generated method stub
-	return null;
+	return allstaffsegprogresstable;
 }
 
 
