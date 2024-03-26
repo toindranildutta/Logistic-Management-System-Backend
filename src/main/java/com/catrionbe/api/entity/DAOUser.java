@@ -193,6 +193,15 @@ public class DAOUser {
 	 @Column(name = "workEmail", nullable = false)
 		private String workEmail;
 
+	 @Column(name = "locationId", nullable = false)
+		private int locationId;
+	 
+	public int getLocationId() {
+		return locationId;
+	}
+	public void setLocationId(int locationId) {
+		this.locationId = locationId;
+	}
 	public int getDeptId() {
 		return deptId;
 	}

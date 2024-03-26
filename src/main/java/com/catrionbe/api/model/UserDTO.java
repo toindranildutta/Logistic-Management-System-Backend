@@ -92,7 +92,14 @@ public void setNationalId(String nationalId) {
  	 private String isAdmin;
  	 private String workEmail;
  	 private int deptId;
+ 	private int locationId;
 	 
+ 	public int getLocationId() {
+ 		return locationId;
+ 	}
+ 	public void setLocationId(int locationId) {
+ 		this.locationId = locationId;
+ 	}
  	 
  		public String getIsActive() {
 		return isActive;

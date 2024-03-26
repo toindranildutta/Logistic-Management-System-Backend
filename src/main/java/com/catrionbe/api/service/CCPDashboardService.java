@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.catrionbe.api.entity.CCPUserActivity;
 import com.catrionbe.api.model.CCPUserActivityReq;
 import com.catrionbe.api.model.allstaffsmap;
+import com.catrionbe.api.model.allstaffsmaploc;
 import com.catrionbe.api.repositories.CCPUserActRepository;
 
 @Service
@@ -500,9 +501,207 @@ public Object allstaffsegmentprogresstable() {
 }
 
 
-public Object onlystaffsegmentprogresschart() {
-	// TODO Auto-generated method stub
-	return null;
+public List onlystaffsegmentprogresschart() {
+	List<allstaffsmaploc> allstaffsegprogressmap = new ArrayList<allstaffsmaploc> () ;
+	//For Dept Id 0
+	allstaffsmaploc allstaffsmapobj = new allstaffsmaploc();
+	
+ 
+	int deptId = 1;float allStaffCompletePer = 1.0f;
+ 
+ 
+ 	float satffCountDeptId0 =  objCCPUserActRepository.getTotalStaffloc(deptId );
+	System.out.println(satffCountDeptId0);
+	float staffCompleted0 = objCCPUserActRepository.getTotalStaffsCompletedloc(deptId );	
+	System.out.println(staffCompleted0);
+ 	if (staffCompleted0==0) {
+		 allStaffCompletePer = (staffCompleted0 /  1) *100;
+		 
+	}else {
+		  allStaffCompletePer = (staffCompleted0 /  satffCountDeptId0) *100;
+	}
+ 
+  
+	System.out.println(allStaffCompletePer);
+	allstaffsmapobj.setLocationId(1);
+	allstaffsmapobj.setStaffCount(Math.round(satffCountDeptId0));
+	allstaffsmapobj.setStaffCompleted(Math.round(staffCompleted0));
+	DecimalFormat decimalFormat = new DecimalFormat("#.#");
+	allstaffsmapobj.setCompletedPer(Float.valueOf(decimalFormat.format(allStaffCompletePer)));
+	allstaffsegprogressmap.add(0,allstaffsmapobj);
+	
+	
+	allstaffsmaploc allstaffsmapobj1 = new allstaffsmaploc();
+	int deptId1 = 2;
+	float allStaffCompletePer1 = 1.0f;
+	float satffCountDeptId1 =  objCCPUserActRepository.getTotalStaffloc(deptId1);
+	System.out.println(satffCountDeptId1);
+	float staffCompleted1 = objCCPUserActRepository.getTotalStaffsCompletedloc(deptId1);	
+	System.out.println(staffCompleted1);
+	if (staffCompleted1==0) {
+		 allStaffCompletePer1 = (staffCompleted1 /  1) *100;
+		 
+	}else {
+		  allStaffCompletePer1 = (staffCompleted1 /  satffCountDeptId1) *100;
+	}
+ 	System.out.println(allStaffCompletePer1);
+ 	allstaffsmapobj1.setLocationId(2);
+ 	allstaffsmapobj1.setStaffCount(Math.round(satffCountDeptId1));
+ 	allstaffsmapobj1.setStaffCompleted(Math.round(staffCompleted1));
+	DecimalFormat decimalFormat1 = new DecimalFormat("#.#");
+	allstaffsmapobj1.setCompletedPer(Float.valueOf(decimalFormat1.format(allStaffCompletePer1)));
+     allstaffsegprogressmap.add(1,allstaffsmapobj1);
+	
+ 
+     allstaffsmaploc allstaffsmapobj2 = new allstaffsmaploc();
+ 	int deptId2 = 3;
+ 	float allStaffCompletePer2 = 1.0f;
+ 	float satffCountDeptId2 =  objCCPUserActRepository.getTotalStaffloc(deptId2);
+ 	System.out.println(satffCountDeptId2);
+ 	float staffCompleted2 = objCCPUserActRepository.getTotalStaffsCompletedloc(deptId2);	
+ 	System.out.println(staffCompleted2);
+ 	if (staffCompleted2==0) {
+ 		 allStaffCompletePer2 = (staffCompleted2 /  1) *100;
+ 		 
+ 	}else {
+ 		  allStaffCompletePer2 = (staffCompleted2 /  satffCountDeptId2) *100;
+ 	}
+  	System.out.println(allStaffCompletePer2);
+  	allstaffsmapobj2.setLocationId(3);
+  	allstaffsmapobj2.setStaffCount(Math.round(satffCountDeptId2));
+  	allstaffsmapobj2.setStaffCompleted(Math.round(staffCompleted2));
+ 	DecimalFormat decimalFormat2 = new DecimalFormat("#.#");
+ 	allstaffsmapobj2.setCompletedPer(Float.valueOf(decimalFormat2.format(allStaffCompletePer2)));
+      allstaffsegprogressmap.add(2,allstaffsmapobj2);
+     
+     
+      allstaffsmaploc allstaffsmapobj3 = new allstaffsmaploc();
+   	int deptId3 = 4;
+   	float allStaffCompletePer3 = 1.0f;
+   	float satffCountDeptId3 =  objCCPUserActRepository.getTotalStaffloc(deptId3);
+   	System.out.println(satffCountDeptId3);
+   	float staffCompleted3 = objCCPUserActRepository.getTotalStaffsCompletedloc(deptId3);	
+   	System.out.println(staffCompleted3);
+   	if (staffCompleted3==0) {
+   		 allStaffCompletePer3 = (staffCompleted3 /  1) *100;
+   		 
+   	}else {
+   		  allStaffCompletePer3 = (staffCompleted3 /  satffCountDeptId3) *100;
+   	}
+    	System.out.println(allStaffCompletePer3);
+    	allstaffsmapobj3.setLocationId(4);
+    	allstaffsmapobj3.setStaffCount(Math.round(satffCountDeptId3));
+    	allstaffsmapobj3.setStaffCompleted(Math.round(staffCompleted3));
+   	DecimalFormat decimalFormat3 = new DecimalFormat("#.#");
+   	allstaffsmapobj3.setCompletedPer(Float.valueOf(decimalFormat3.format(allStaffCompletePer3)));
+        allstaffsegprogressmap.add(3,allstaffsmapobj3);
+     
+     
+        allstaffsmaploc allstaffsmapobj4 = new allstaffsmaploc();
+     	int deptId4 = 5;
+     	float allStaffCompletePer4 = 1.0f;
+     	float satffCountDeptId4 =  objCCPUserActRepository.getTotalStaffloc(deptId4);
+     	System.out.println(satffCountDeptId4);
+     	float staffCompleted4 = objCCPUserActRepository.getTotalStaffsCompletedloc(deptId4);	
+     	System.out.println(staffCompleted4);
+     	if (staffCompleted4==0) {
+     		 allStaffCompletePer4 = (staffCompleted4 /  1) *100;
+     		 
+     	}else {
+     		  allStaffCompletePer4 = (staffCompleted4 /  satffCountDeptId4) *100;
+     	}
+      	System.out.println(allStaffCompletePer4);
+      	allstaffsmapobj4.setLocationId(5);
+      	allstaffsmapobj4.setStaffCount(Math.round(satffCountDeptId4));
+      	allstaffsmapobj4.setStaffCompleted(Math.round(staffCompleted4));
+     	DecimalFormat decimalFormat4 = new DecimalFormat("#.#");
+     	allstaffsmapobj4.setCompletedPer(Float.valueOf(decimalFormat4.format(allStaffCompletePer4)));
+        allstaffsegprogressmap.add(4,allstaffsmapobj4);
+        
+        allstaffsmaploc allstaffsmapobj5 = new allstaffsmaploc();
+     	int deptId5 = 6;
+     	float allStaffCompletePer5 = 1.0f;
+     	float satffCountDeptId5 =  objCCPUserActRepository.getTotalStaffloc(deptId5);
+     	System.out.println(satffCountDeptId5);
+     	float staffCompleted5 = objCCPUserActRepository.getTotalStaffsCompletedloc(deptId5);	
+     	System.out.println(staffCompleted5);
+     	if (staffCompleted5==0) {
+     		 allStaffCompletePer5 = (staffCompleted5 /  1) *100;
+     		 
+     	}else {
+     		  allStaffCompletePer5 = (staffCompleted5 /  satffCountDeptId5) *100;
+     	}
+      	System.out.println(allStaffCompletePer5);
+      	allstaffsmapobj5.setLocationId(6);
+      	allstaffsmapobj5.setStaffCount(Math.round(satffCountDeptId5));
+      	allstaffsmapobj5.setStaffCompleted(Math.round(staffCompleted5));
+     	DecimalFormat decimalFormat5 = new DecimalFormat("#.#");
+     	allstaffsmapobj5.setCompletedPer(Float.valueOf(decimalFormat5.format(allStaffCompletePer5)));
+        allstaffsegprogressmap.add(5,allstaffsmapobj5);
+        
+        allstaffsmaploc allstaffsmapobj6 = new allstaffsmaploc();
+     	int deptId6 = 7;
+     	float allStaffCompletePer6 = 1.0f;
+     	float satffCountDeptId6 =  objCCPUserActRepository.getTotalStaffloc(deptId6);
+     	System.out.println(satffCountDeptId6);
+     	float staffCompleted6 = objCCPUserActRepository.getTotalStaffsCompletedloc(deptId6);	
+     	System.out.println(staffCompleted6);
+     	if (staffCompleted6==0) {
+     		 allStaffCompletePer6 = (staffCompleted6 /  1) *100;
+     		 
+     	}else {
+     		  allStaffCompletePer6 = (staffCompleted6 /  satffCountDeptId6) *100;
+     	}
+      	System.out.println(allStaffCompletePer6);
+      	allstaffsmapobj6.setLocationId(7);
+      	allstaffsmapobj6.setStaffCount(Math.round(satffCountDeptId6));
+      	allstaffsmapobj6.setStaffCompleted(Math.round(staffCompleted6));
+     	DecimalFormat decimalFormat6 = new DecimalFormat("#.#");
+     	allstaffsmapobj6.setCompletedPer(Float.valueOf(decimalFormat6.format(allStaffCompletePer6)));
+        allstaffsegprogressmap.add(6,allstaffsmapobj6);
+        
+        allstaffsmaploc allstaffsmapobj7 = new allstaffsmaploc();
+     	int deptId7 = 8;
+     	float allStaffCompletePer7 = 1.0f;
+     	float satffCountDeptId7 =  objCCPUserActRepository.getTotalStaffloc(deptId7);
+     	System.out.println(satffCountDeptId7);
+     	float staffCompleted7 = objCCPUserActRepository.getTotalStaffsCompletedloc(deptId7);	
+     	System.out.println(staffCompleted7);
+     	if (staffCompleted7==0) {
+     		 allStaffCompletePer7 = (staffCompleted7 /  1) *100;
+     		 
+     	}else {
+     		  allStaffCompletePer7 = (staffCompleted7 /  satffCountDeptId7) *100;
+     	}
+      	System.out.println(allStaffCompletePer7);
+      	allstaffsmapobj7.setLocationId(8);
+      	allstaffsmapobj7.setStaffCount(Math.round(satffCountDeptId7));
+      	allstaffsmapobj7.setStaffCompleted(Math.round(staffCompleted7));
+     	DecimalFormat decimalFormat7 = new DecimalFormat("#.#");
+     	allstaffsmapobj7.setCompletedPer(Float.valueOf(decimalFormat7.format(allStaffCompletePer7)));
+        allstaffsegprogressmap.add(7,allstaffsmapobj7);
+        
+        allstaffsmaploc allstaffsmapobj8 = new allstaffsmaploc();
+     	int deptId8 = 9;
+     	float allStaffCompletePer8 = 1.0f;
+     	float satffCountDeptId8 =  objCCPUserActRepository.getTotalStaffloc(deptId8);
+     	System.out.println(satffCountDeptId8);
+     	float staffCompleted8 = objCCPUserActRepository.getTotalStaffsCompletedloc(deptId8);	
+     	System.out.println(staffCompleted8);
+     	if (staffCompleted8==0) {
+     		 allStaffCompletePer8 = (staffCompleted8 /  1) *100;
+     		 
+     	}else {
+     		  allStaffCompletePer8 = (staffCompleted8 /  satffCountDeptId8) *100;
+     	}
+      	System.out.println(allStaffCompletePer8);
+      	allstaffsmapobj8.setLocationId(9);
+      	allstaffsmapobj8.setStaffCount(Math.round(satffCountDeptId8));
+      	allstaffsmapobj8.setStaffCompleted(Math.round(staffCompleted8));
+     	DecimalFormat decimalFormat8 = new DecimalFormat("#.#");
+     	allstaffsmapobj8.setCompletedPer(Float.valueOf(decimalFormat8.format(allStaffCompletePer8)));
+        allstaffsegprogressmap.add(8,allstaffsmapobj8);
+	return allstaffsegprogressmap;
 }  
 
  

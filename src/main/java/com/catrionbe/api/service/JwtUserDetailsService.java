@@ -108,6 +108,8 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setIsAdmin(user.getIsAdmin());
         newUser.setWorkEmail(user.getWorkEmail());
         newUser.setDeptId(user.getDeptId());
+        newUser.setLocationId(user.getLocationId());
+        
         
         ccputil.sendWelcomeEmail(user.getEmailId(), incrementedPrnNumber, user.getFirstName(), user.getUsername());
         
