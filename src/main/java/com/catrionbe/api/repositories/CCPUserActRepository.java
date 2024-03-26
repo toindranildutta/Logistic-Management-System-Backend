@@ -44,6 +44,12 @@ public interface  CCPUserActRepository extends CrudRepository<CCPUserActivity, I
 	@Query(value = "select count(* ) FROM ccpcertificate a , user b  where a.userId = b.userId AND b.deptId=:deptId  AND  YEARWEEK(a.createdDate) = YEARWEEK(NOW() - INTERVAL  1 WEEK)", nativeQuery = true)
 	int getPrevWeekPer(int deptId);
 
+	@Query(value = "select count(* ) FROM ccpcertificate a , user b  where a.userId = b.userId AND b.deptId=:deptId  AND  YEARWEEK(a.createdDate, 1) = YEARWEEK(CURDATE(), 1) AND b.emailId LIKE '%CATRION%'", nativeQuery = true)
+	int getCurrentWeekPerEmp(int deptId);
+
+	@Query(value = "select count(* ) FROM ccpcertificate a , user b  where a.userId = b.userId AND b.deptId=:deptId  AND  YEARWEEK(a.createdDate) = YEARWEEK(NOW() - INTERVAL  1 WEEK AND b.emailId LIKE '%CATRION%')", nativeQuery = true)
+	int getPrevWeekPerEmp(int deptId);
+
 	
 	
 	
