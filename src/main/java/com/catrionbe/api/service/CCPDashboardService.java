@@ -153,7 +153,7 @@ public List allstaffsegmentprogress() {
  
   
 	System.out.println(allStaffCompletePer);
-	allstaffsmapobj.setDeptId(0);
+	allstaffsmapobj.setDeptId(1);
 	allstaffsmapobj.setStaffCount(Math.round(satffCountDeptId0));
 	allstaffsmapobj.setStaffCompleted(Math.round(staffCompleted0));
 	DecimalFormat decimalFormat = new DecimalFormat("#.#");
