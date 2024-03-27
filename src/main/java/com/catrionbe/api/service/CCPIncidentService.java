@@ -10,6 +10,7 @@ import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -41,9 +42,11 @@ import com.catrionbe.api.model.CCPFeedbackRequest;
 import com.catrionbe.api.model.CCPIncidentRequest;
 import com.catrionbe.api.model.CCPSigningRequest;
 import com.catrionbe.api.model.CCPUpdateFeedbackReq;
+import com.catrionbe.api.model.ImageIdResponse;
 import com.catrionbe.api.model.IncidentUpdateRequest;
 import com.catrionbe.api.model.UserDTO;
 import com.catrionbe.api.model.UserIdRequest;
+import com.catrionbe.api.model.allstaffsmap;
 import com.catrionbe.api.repositories.CCPFeedbackRepsitory;
 import com.catrionbe.api.repositories.CCPIncidentRepsitory;
 import com.catrionbe.api.repositories.CCPSigningRepsitory;
@@ -360,7 +363,7 @@ public class CCPIncidentService {
 	 * policyAccepted = true; } return policyAccepted; }
 	 */
 
-	public Object uploadImage(MultipartFile file) throws IOException {
+	public List<ImageIdResponse> uploadImage(MultipartFile file) throws IOException {
 		// TODO Auto-generated method stub
 		  String constr="DefaultEndpointsProtocol=https;AccountName=cyberportal;AccountKey=9fKUci4CZQEhTL8eISLWZgwWpq+wqEg93XGtu+DcHTqT7/O7cfmqooeeuTrDh/uAWsw/xQzuRVkD+AStwk+iOg==;EndpointSuffix=core.windows.net";
 
@@ -375,10 +378,13 @@ public class CCPIncidentService {
 
 	        blob.upload(file.getInputStream(),file.getSize(),true);
 
-
-	        String response=url+container+"/"+file.getOriginalFilename();
-	        
-	        return response;
+	        List<ImageIdResponse> imagemap = new ArrayList<ImageIdResponse> () ;
+	        ImageIdResponse ImageIdResponseobj= new ImageIdResponse();
+	        String imageName=url+container+"/"+file.getOriginalFilename();
+	        ImageIdResponseobj.setImageName(imageName);
+	        //List<ImageIdResponse> response=url+container+"/"+file.getOriginalFilename();
+	        imagemap.add(0,ImageIdResponseobj);
+	        return imagemap;
 	}
 
  
