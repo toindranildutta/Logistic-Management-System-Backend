@@ -44,6 +44,15 @@ public class CCPFeedbackController {
 	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
 	        return ResponseEntity.ok(ccpFeedbackService.listallarchivedfeedback(pageNumber ,size));
 	    }
+	 
+	 @RequestMapping(value = "/listsearchfeedback", method = RequestMethod.GET)
+	    public ResponseEntity<?> listsearchincident(
+	    		@RequestParam(defaultValue = "test") final String searchText,
+	            @RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
+	        return ResponseEntity.ok(ccpFeedbackService.listsearchfeedback(searchText, pageNumber ,size));
+	    }
+	 
 	 /*
 	 @RequestMapping(value = "/acceptdeclaration", method = RequestMethod.POST)
 	    public ResponseEntity<?> acceptDeclaration(@RequestBody CCPSigningRequest signObj) throws Exception {

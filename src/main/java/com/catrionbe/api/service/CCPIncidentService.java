@@ -36,6 +36,7 @@ import com.azure.storage.common.StorageSharedKeyCredential;
 import com.catrionbe.api.entity.CCPFeedback;
 import com.catrionbe.api.entity.CCPIncident;
 import com.catrionbe.api.entity.CCPSigning;
+import com.catrionbe.api.entity.DAOUser;
 import com.catrionbe.api.model.CCPFeedbackRequest;
 import com.catrionbe.api.model.CCPIncidentRequest;
 import com.catrionbe.api.model.CCPSigningRequest;
@@ -378,5 +379,12 @@ public class CCPIncidentService {
 	        String response=url+container+"/"+file.getOriginalFilename();
 	        
 	        return response;
+	}
+
+ 
+	public Page<CCPIncident> listsearchincident(String searchText, Integer pageNumber, Integer size) {
+		// TODO Auto-generated method stub
+		Pageable pageable = PageRequest.of(pageNumber, size );
+		  return		objCCPIncidentRepsitory.listsearchincident(searchText,pageable); 
 	}
 }

@@ -79,6 +79,12 @@ public class CCPFeedbackService {
 		  return (  objCCPFeedbackRepsitory.listallarchivedfeedback(pageable));
 		 }
 
+ 
+	public Page<CCPFeedback> listsearchfeedback(String searchText, Integer pageNumber, Integer size) {
+		// TODO Auto-generated method stub
+		Pageable pageable = PageRequest.of(pageNumber, size );
+		  return		objCCPFeedbackRepsitory.listsearchincident(searchText,pageable); 
+	}
 
 	
 	 
