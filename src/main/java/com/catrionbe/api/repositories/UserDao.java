@@ -50,7 +50,7 @@ public interface UserDao extends CrudRepository<DAOUser, Integer> {
     @Query(value = "SELECT *  FROM user WHERE  isAprroved='Y' ", nativeQuery = true)
     Page<DAOUser> listallactiveusers( final Pageable pageable);
 
-    @Query(value = "SELECT *  FROM user WHERE  isAprroved='Y' ", nativeQuery = true)
+    @Query(value = "SELECT *  FROM user    WHERE createdDate >= (NOW() - INTERVAL 1 MONTH) ", nativeQuery = true)
     Page<DAOUser> listallnewusers( final Pageable pageable);
 
     @Query(value = "SELECT *  FROM user WHERE  isAprroved='N' ", nativeQuery = true)
