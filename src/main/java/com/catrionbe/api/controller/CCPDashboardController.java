@@ -56,5 +56,15 @@ public class CCPDashboardController {
         return ResponseEntity.ok(objCCPDashboardService.onlystaffsegmentprogresstable( ));
     }
 	
+	@RequestMapping(value = "/nonstaffsegmentprogresschart", method = RequestMethod.GET)
+    public ResponseEntity<?> nonstaffsegmentprogresschart(  ) throws Exception {
+        return ResponseEntity.ok(objCCPDashboardService.nonstaffsegmentprogresschart( ));
+    }
+	
+	
+	@RequestMapping(value = "/nonstaffsegmentprogresstable", method = RequestMethod.GET)
+    public ResponseEntity<?> nonstaffsegmentprogresstable(  ) throws Exception {
+        return ResponseEntity.ok(objCCPDashboardService.nonstaffsegmentprogresstable( ));
+    }
 	
 }

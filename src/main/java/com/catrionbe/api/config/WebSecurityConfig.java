@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/completedccbasic", "/completedwithworkemail", "/authenticate", "/register",
 						"/checkUserCredentials", "/validateotp", "/generateccptoken", "/fetchuserdetails", "/fetchnews",
 						"/markcoursecomplete", "/fetchmaxscreenId", "/markquizcomplete", "/checkquizcomplete",
-						"/fetchnews", "/savenews", "/updatenews", "/deletenews")
+						"/fetchnews", "/savenews", "/updatenews", "/deletenews","/nonstaffsegmentprogresschart", "/nonstaffsegmentprogresstable")
 				.permitAll().
 				// .authorizeRequests().antMatchers("/authenticate").permitAll().
 				// all other requests need to be authenticated

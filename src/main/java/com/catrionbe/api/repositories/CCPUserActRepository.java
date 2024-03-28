@@ -50,6 +50,12 @@ public interface  CCPUserActRepository extends CrudRepository<CCPUserActivity, I
 	@Query(value = "select count(* ) FROM ccpcertificate a , user b  where a.userId = b.userId AND b.deptId=:deptId  AND  YEARWEEK(a.createdDate) = YEARWEEK(NOW() - INTERVAL  1 WEEK AND b.emailId LIKE '%CATRION%')", nativeQuery = true)
 	int getPrevWeekPerEmp(int deptId);
 
+	@Query(value = "select count(* ) FROM  user b  where   b.deptId=:deptId AND   b.emailId NOT  LIKE '%CATRION%'", nativeQuery = true)
+	float getTotalNonStaffloc(int deptId);
+
+	@Query(value = "select count(* ) FROM ccpcertificate a , user b  where a.userId = b.userId AND   b.deptId=:deptId AND  b.emailId NOT LIKE '%CATRION%'", nativeQuery = true)
+	float getTotalNonStaffsCompletedloc(int deptId);
+
 	
 	
 	
