@@ -308,17 +308,22 @@ public class CCPIncidentService {
 		  return		objCCPIncidentRepsitory.listsearchincident(searchText,pageable); 
 	}
  
-	public Page<CCPIncident> searchallactiveincidents(int pageNumber, int size) {
-		Pageable pageable = PageRequest.of(pageNumber, size);
-		return (objCCPIncidentRepsitory.searchallactiveincidents(pageable));
-
+	 
+	
+	public Page<CCPIncident> searchallarchivedincidents(String searchText, Integer pageNumber, Integer size) {
+		// TODO Auto-generated method stub
+		Pageable pageable = PageRequest.of(pageNumber, size );
+		  return		objCCPIncidentRepsitory.listsearchincident(searchText,pageable); 
 	}
 	
-	public Page<CCPIncident> searchallarchivedincidents(int pageNumber, int size) {
-		Pageable pageable = PageRequest.of(pageNumber, size);
-		return (objCCPIncidentRepsitory.searchallarchivedincidents(pageable));
-
+	
+	public Page<CCPIncident> searchallactiveincidents(String searchText, Integer pageNumber, Integer size) {
+		// TODO Auto-generated method stub
+		Pageable pageable = PageRequest.of(pageNumber, size );
+		  return		objCCPIncidentRepsitory.listsearchincident(searchText,pageable); 
 	}
+	
+	 
 	
 	
 }

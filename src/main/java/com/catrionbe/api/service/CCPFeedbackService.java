@@ -86,17 +86,21 @@ public class CCPFeedbackService {
 		  return		objCCPFeedbackRepsitory.listsearchincident(searchText,pageable); 
 	}
  
+  
  
-	public Page<CCPFeedback> searchallactivefeedback(int pageNumber,int size) {
-		  Pageable pageable = PageRequest.of(pageNumber, size );
-		  return ( objCCPFeedbackRepsitory.searchallactivefeedback(pageable));
-		 }
-
-	public Page<CCPFeedback> searchallarchivedfeedback(int pageNumber,int size) {
-		  Pageable pageable = PageRequest.of(pageNumber, size );
-		  return (  objCCPFeedbackRepsitory.searchallarchivedfeedback(pageable));
-		 }
 	 
+	public Page<CCPFeedback> searchallactivefeedback(String searchText, Integer pageNumber, Integer size) {
+		// TODO Auto-generated method stub
+		Pageable pageable = PageRequest.of(pageNumber, size );
+		  return		objCCPFeedbackRepsitory.searchallactivefeedback(searchText,pageable); 
+	}
+	
+	public Page<CCPFeedback> searchallarchivedfeedback(String searchText, Integer pageNumber, Integer size) {
+		// TODO Auto-generated method stub
+		Pageable pageable = PageRequest.of(pageNumber, size );
+		  return		objCCPFeedbackRepsitory.searchallarchivedfeedback(searchText,pageable); 
+	}
+	
 	
 	 
 }

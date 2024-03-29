@@ -43,11 +43,13 @@ public interface  CCPFeedbackRepsitory extends CrudRepository<CCPFeedback, Integ
     @Query(value = "SELECT *  FROM ccpfeedback  WHERE  lower(description) LIKE  %:searchText% ", nativeQuery = true)
 	public Page<CCPFeedback> listsearchincident(String searchText, Pageable pageable);
 
+ 
+
     @Query(value = "select * from  ccpfeedback   where   feedbackStatus=0  AND  lower(description) LIKE  %:searchText% ", nativeQuery = true)
-	public Page<CCPFeedback> searchallactivefeedback(Pageable pageable);
-	
+	public Page<CCPFeedback> searchallactivefeedback(String searchText, Pageable pageable);
+
     @Query(value = "select * from  ccpfeedback   where   feedbackStatus=1  AND  lower(description) LIKE  %:searchText% ", nativeQuery = true)
-	public Page<CCPFeedback> searchallarchivedfeedback(Pageable pageable);
+	public Page<CCPFeedback> searchallarchivedfeedback(String searchText, Pageable pageable);
 
 	
 }

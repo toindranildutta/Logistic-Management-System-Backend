@@ -53,16 +53,25 @@ public class CCPFeedbackController {
 	        return ResponseEntity.ok(ccpFeedbackService.listsearchfeedback(searchText, pageNumber ,size));
 	    }
 	 
+	 
 	 @RequestMapping(value = "/searchallactivefeedback", method = RequestMethod.GET)
-	    public ResponseEntity<?> searchallactivefeedback( @RequestParam(defaultValue = "0") final Integer pageNumber,
+	    public ResponseEntity<?> searchallactivefeedback(
+	    		@RequestParam(defaultValue = "test") final String searchText,
+	            @RequestParam(defaultValue = "0") final Integer pageNumber,
 	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
-	        return ResponseEntity.ok(ccpFeedbackService.searchallactivefeedback(pageNumber ,size));
+	        return ResponseEntity.ok(ccpFeedbackService.searchallactivefeedback(searchText, pageNumber ,size));
 	    }
+	 
+	 
 	 @RequestMapping(value = "/searchallarchivedfeedback", method = RequestMethod.GET)
-	    public ResponseEntity<?> searchallarchivedfeedback(@RequestParam(defaultValue = "0") final Integer pageNumber,
+	    public ResponseEntity<?> searchallarchivedfeedback(
+	    		@RequestParam(defaultValue = "test") final String searchText,
+	            @RequestParam(defaultValue = "0") final Integer pageNumber,
 	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
-	        return ResponseEntity.ok(ccpFeedbackService.searchallarchivedfeedback(pageNumber ,size));
+	        return ResponseEntity.ok(ccpFeedbackService.searchallarchivedfeedback(searchText, pageNumber ,size));
 	    }
+	 
+	 
 	 
 	 
 	 
