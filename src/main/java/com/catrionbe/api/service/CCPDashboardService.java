@@ -1400,7 +1400,7 @@ public List nonstaffsegmentprogresschart() {
 	allstaffsmapobj.setCompletedPer(Float.valueOf(decimalFormat.format(allStaffCompletePer)));
 	allstaffsegprogressmap.add(0,allstaffsmapobj);
 	
-	
+	/*
 	allstaffsmaploc allstaffsmapobj1 = new allstaffsmaploc();
 	int deptId1 = 2;
 	float allStaffCompletePer1 = 1.0f;
@@ -1571,6 +1571,9 @@ public List nonstaffsegmentprogresschart() {
      	DecimalFormat decimalFormat8 = new DecimalFormat("#.#");
      	allstaffsmapobj8.setCompletedPer(Float.valueOf(decimalFormat8.format(allStaffCompletePer8)));
         allstaffsegprogressmap.add(8,allstaffsmapobj8);
+        */
+	
+	
 	return allstaffsegprogressmap;
 }
 
@@ -1599,7 +1602,7 @@ List<allstaffsmapprogtable> allstaffsegprogresstable = new ArrayList<allstaffsma
 	allstaffsmapobj1.setRemainingStaffs(  satffCountDeptId1- staffCompleted1);
 	allstaffsegprogresstable.add(0,allstaffsmapobj1);
 	
-	 
+	 /*
 	 allstaffsmapprogtable allstaffsmapobj2 = new allstaffsmapprogtable();	 
 		int deptId2 = 2;float allStaffCompletePer2 = 2.0f; 
 	 	int  satffCountDeptId2=  objCCPUserActRepository.getTotalStaffsDept(deptId2 );
@@ -1882,7 +1885,7 @@ List<allstaffsmapprogtable> allstaffsegprogresstable = new ArrayList<allstaffsma
 															allstaffsmapobj15.setRemainingStaffs(  satffCountDeptId15- staffCompleted15);
 															allstaffsegprogresstable.add(14,allstaffsmapobj15);
 	
-	
+	*/
 	// TODO Auto-generated method stub
 	return allstaffsegprogresstable;
 	
