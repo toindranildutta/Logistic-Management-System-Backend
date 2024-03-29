@@ -36,6 +36,12 @@ public interface  CCPIncidentRepsitory extends CrudRepository<CCPIncident, Integ
     @Query(value = "SELECT *  FROM ccpincident  WHERE  lower(description) LIKE  %:searchText% OR lower(incidentSubject) LIKE  %:searchText% ", nativeQuery = true)
 	public Page<CCPIncident> listsearchincident(String searchText, Pageable pageable);
 
+    @Query(value = "select * from  ccpincident   where   statusId=1 AND  lower(description) LIKE  %:searchText% OR lower(incidentSubject) LIKE  %:searchText%", nativeQuery = true)
+	public Page<CCPIncident> searchallactiveincidents(Pageable pageable);
+
+	@Query(value = "select * from  ccpincident   where   statusId=0 AND  lower(description) LIKE  %:searchText% OR lower(incidentSubject) LIKE  %:searchText%", nativeQuery = true)
+	public Page<CCPIncident> searchallarchivedincidents(Pageable pageable);
+
  
 	
 }

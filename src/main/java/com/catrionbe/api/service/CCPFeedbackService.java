@@ -85,118 +85,18 @@ public class CCPFeedbackService {
 		Pageable pageable = PageRequest.of(pageNumber, size );
 		  return		objCCPFeedbackRepsitory.listsearchincident(searchText,pageable); 
 	}
+ 
+ 
+	public Page<CCPFeedback> searchallactivefeedback(int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+		  return ( objCCPFeedbackRepsitory.searchallactivefeedback(pageable));
+		 }
 
-	
+	public Page<CCPFeedback> searchallarchivedfeedback(int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+		  return (  objCCPFeedbackRepsitory.searchallarchivedfeedback(pageable));
+		 }
 	 
 	
-	/*
-	public CCPSigning  acceptUndertaking(CCPSigningRequest  signObj) {
-		String username =  objCCPSigningRepsitory.fetchFirstandLastName ( signObj.getUserId());
-		System.out.println(" username  "+ username);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-		Date date = new Date();
-		
-		System.out.println(dateFormat.format(date));
-		
-		CCPSigning objCCPSigning = new CCPSigning();
-		objCCPSigning.setUserId(signObj.getUserId());
-		objCCPSigning.setStatusId(signObj.getStatusId());
-		objCCPSigning.setSigningItem("UNDERTAKING");
-		objCCPSigning.setTokenVal(bcryptEncoder.encode(username));
-		objCCPSigning.setDisplayDate((dateFormat.format(date)).toString()+" UTC");
-		objCCPSigning.setFullName( username);
-		objCCPSigning.setIsActive(signObj.getIsActive());
-		objCCPSigning.setIsAprroved(signObj.getIsAprroved());
-		objCCPSigning.setModifiedBy(signObj.getModifiedBy());
-		objCCPSigning.setModifiedDate(signObj.getModifiedDate());
-		objCCPSigning.setCreatedBy(signObj.getCreatedBy());
-		objCCPSigning.setCreatedDate(signObj.getCreatedDate());
-		objCCPSigningRepsitory.save(objCCPSigning);
-		return objCCPSigning;
-	}
-
-	public Object acceptDeclaration(CCPSigningRequest signObj) {
-		String username =  objCCPSigningRepsitory.fetchFirstandLastName ( signObj.getUserId());
-		System.out.println(" username  "+ username);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-		Date date = new Date();
-		
-		System.out.println(dateFormat.format(date));
-		
-		CCPSigning objCCPSigning = new CCPSigning();
-		objCCPSigning.setUserId(signObj.getUserId());
-		objCCPSigning.setStatusId(signObj.getStatusId());
-		objCCPSigning.setSigningItem("DECLARATION");
-		objCCPSigning.setTokenVal(bcryptEncoder.encode(username));
-		objCCPSigning.setDisplayDate((dateFormat.format(date)).toString()+" UTC");
-		objCCPSigning.setFullName( username);
-		objCCPSigning.setIsActive(signObj.getIsActive());
-		objCCPSigning.setIsAprroved(signObj.getIsAprroved());
-		objCCPSigning.setModifiedBy(signObj.getModifiedBy());
-		objCCPSigning.setModifiedDate(signObj.getModifiedDate());
-		objCCPSigning.setCreatedBy(signObj.getCreatedBy());
-		objCCPSigning.setCreatedDate(signObj.getCreatedDate());
-		objCCPSigningRepsitory.save(objCCPSigning);
-		return objCCPSigning;
-	}
-
-	public Object acceptPolicy(CCPSigningRequest signObj) {
-		String username =  objCCPSigningRepsitory.fetchFirstandLastName ( signObj.getUserId());
-		System.out.println(" username  "+ username);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-		Date date = new Date();
-		
-		System.out.println(dateFormat.format(date));
-		
-		CCPSigning objCCPSigning = new CCPSigning();
-		objCCPSigning.setUserId(signObj.getUserId());
-		objCCPSigning.setStatusId(signObj.getStatusId());
-		objCCPSigning.setSigningItem("POLICY");
-		objCCPSigning.setTokenVal(bcryptEncoder.encode(username));
-		objCCPSigning.setDisplayDate((dateFormat.format(date)).toString()+" UTC");
-		objCCPSigning.setFullName( username);
-		objCCPSigning.setIsActive(signObj.getIsActive());
-		objCCPSigning.setIsAprroved(signObj.getIsAprroved());
-		objCCPSigning.setModifiedBy(signObj.getModifiedBy());
-		objCCPSigning.setModifiedDate(signObj.getModifiedDate());
-		objCCPSigning.setCreatedBy(signObj.getCreatedBy());
-		objCCPSigning.setCreatedDate(signObj.getCreatedDate());
-		objCCPSigningRepsitory.save(objCCPSigning);
-		return objCCPSigning;
-	}
-
-	
-	public boolean checkUndertaking ( UserIdRequest userIdObj) {
-		int userId = userIdObj.getUserId();
-		boolean undertakeAccepted = false;
-        int count = objCCPSigningRepsitory.checkUndertaking( userId);
-		if (count > 0) {
-			undertakeAccepted = true;
-		}
-		return undertakeAccepted;
-	}
-
-	public Object checkDeclaration(UserIdRequest userIdObj) {
-		boolean declAccepted = false;
-		int userId = userIdObj.getUserId();
-        int count = objCCPSigningRepsitory.checkUndertaking( userId);
-		if (count > 0) {
-			declAccepted = true;
-		}
-		return declAccepted;
-	}
-
-	public Object checkPolicy(UserIdRequest userIdObj) {
-		boolean policyAccepted = false;
-		int userId = userIdObj.getUserId();
-        int count = objCCPSigningRepsitory.checkUndertaking( userId);
-		if (count > 0) {
-			policyAccepted = true;
-		}
-		return policyAccepted;
-	}
-	*/
+	 
 }

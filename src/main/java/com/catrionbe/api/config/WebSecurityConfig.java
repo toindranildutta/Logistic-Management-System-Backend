@@ -67,10 +67,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/listallactivefeedback", "/listallarchivedfeedback", "/updatefeedback", "/savefeedback",
 						"/checkpolicy", "/checkdeclaration", "/checkundertaking", "/acceptpolicy", "/acceptdeclaration",
 						"/acceptundertaking", "/commencedcyberbasic", "/loginusers", "/totalcatrionusers",
-						"/startedbutnotcompleted", "/loginbutstarted", "/remainder", "/completedwithmobile",
-						"/completedccbasic", "/completedwithworkemail", "/authenticate", "/register",
-						"/checkUserCredentials", "/validateotp", "/generateccptoken", "/fetchuserdetails", "/fetchnews",
-						"/markcoursecomplete", "/fetchmaxscreenId", "/markquizcomplete", "/checkquizcomplete",
+						"/startedbutnotcompleted", "/loginbutstarted", "/remainder", "/completedwithmobile","/searchallarchivedincidents",
+						"/completedccbasic", "/completedwithworkemail", "/authenticate", "/register","/searchallactiveincidents", 
+						"/checkUserCredentials", "/validateotp", "/generateccptoken", "/fetchuserdetails", "/fetchnews","/searchallarchivedfeedback", 
+						"/markcoursecomplete", "/fetchmaxscreenId", "/markquizcomplete", "/checkquizcomplete","/searchallactivefeedback",
 						"/fetchnews", "/savenews", "/updatenews", "/deletenews","/nonstaffsegmentprogresschart", "/nonstaffsegmentprogresstable")
 				.permitAll().
 				// .authorizeRequests().antMatchers("/authenticate").permitAll().

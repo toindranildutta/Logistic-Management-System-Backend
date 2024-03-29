@@ -69,6 +69,20 @@ public class CCPIncidentController {
 	        return ResponseEntity.ok(ccpIncidentService.listsearchincident(searchText, pageNumber ,size));
 	    }
 	 
+	 
+	 @RequestMapping(value = "/searchallactiveincidents", method = RequestMethod.GET)
+	    public ResponseEntity<?> searchallactiveincidents( @RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
+	        return ResponseEntity.ok(ccpIncidentService.searchallactiveincidents(pageNumber ,size));
+	    }
+	 
+	 @RequestMapping(value = "/searchallarchivedincidents", method = RequestMethod.GET)
+	    public ResponseEntity<?> searchallarchivedincidents( @RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
+	        return ResponseEntity.ok(ccpIncidentService.searchallarchivedincidents(pageNumber ,size));
+	    }
+	 
+	 
 	 /*
 	  *  
 	 
