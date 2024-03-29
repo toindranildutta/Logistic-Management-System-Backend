@@ -313,14 +313,14 @@ public class CCPIncidentService {
 	public Page<CCPIncident> searchallarchivedincidents(String searchText, Integer pageNumber, Integer size) {
 		// TODO Auto-generated method stub
 		Pageable pageable = PageRequest.of(pageNumber, size );
-		  return		objCCPIncidentRepsitory.listsearchincident(searchText,pageable); 
+		  return		objCCPIncidentRepsitory.searchallarchivedincidents(searchText,pageable); 
 	}
 	
 	
 	public Page<CCPIncident> searchallactiveincidents(String searchText, Integer pageNumber, Integer size) {
 		// TODO Auto-generated method stub
 		Pageable pageable = PageRequest.of(pageNumber, size );
-		  return		objCCPIncidentRepsitory.listsearchincident(searchText,pageable); 
+		  return		objCCPIncidentRepsitory.searchallactiveincidents(searchText,pageable); 
 	}
 	
 	 
