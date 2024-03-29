@@ -375,8 +375,7 @@ public class CCPIncidentService {
 
 
 	        BlobClient blob=container.getBlobClient(file.getOriginalFilename());
-
-	        blob.upload(file.getInputStream(),file.getSize(),true);
+ 	        blob.upload(file.getInputStream(),file.getSize(),true);
 
 	        List<ImageIdResponse> imagemap = new ArrayList<ImageIdResponse> () ;
 	        ImageIdResponse ImageIdResponseobj= new ImageIdResponse();

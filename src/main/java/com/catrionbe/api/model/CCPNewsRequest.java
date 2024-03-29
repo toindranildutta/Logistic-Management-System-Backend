@@ -9,7 +9,15 @@ public class CCPNewsRequest  implements Serializable {
     private static final long serialVersionUID = 5926468583005150707L;
 
 
- 
+private String referenceUrl;
+	 
+	
+	public String getReferenceUrl() {
+		return referenceUrl;
+	}
+	public void setReferenceUrl(String referenceUrl) {
+		this.referenceUrl = referenceUrl;
+	}
 	private int newsId;
 	
  	private String newsTitle;

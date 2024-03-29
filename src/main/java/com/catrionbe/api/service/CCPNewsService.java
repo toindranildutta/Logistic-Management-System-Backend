@@ -32,6 +32,7 @@ public class CCPNewsService {
 		 newsObj.setNewsTitle(news.getNewsTitle());
 		 newsObj.setNewsContent(news.getNewsContent());
 		 newsObj.setImageUrl(news.getImageUrl());
+		 newsObj.setReferenceUrl(news.getReferenceUrl());
 		 newsObj.setRating(news.getRating());
 		 newsObj.setIsActive(news.getIsActive());
 		 newsObj.setIsAprroved(news.getIsAprroved());
@@ -47,6 +48,7 @@ public class CCPNewsService {
 		 newsObj.setNewsTitle(news.getNewsTitle());
 		 newsObj.setNewsContent(news.getNewsContent());
 		 newsObj.setImageUrl(news.getImageUrl());
+		 newsObj.setReferenceUrl(news.getReferenceUrl());
 		 newsObj.setRating(news.getRating());
 		 newsObj.setIsActive(news.getIsActive());
 		 newsObj.setIsAprroved(news.getIsAprroved());

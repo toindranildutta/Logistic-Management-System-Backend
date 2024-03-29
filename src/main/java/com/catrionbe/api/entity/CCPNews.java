@@ -32,6 +32,16 @@ public class CCPNews {
 	@Column(name = "newsContent", nullable = false)
 	private String newsContent;
 	
+	@Column(name = "referenceUrl", nullable = false)
+	private String referenceUrl;
+	 
+	
+	public String getReferenceUrl() {
+		return referenceUrl;
+	}
+	public void setReferenceUrl(String referenceUrl) {
+		this.referenceUrl = referenceUrl;
+	}
 	@Column(name = "rating", nullable = false)
 	private int rating;
 	
