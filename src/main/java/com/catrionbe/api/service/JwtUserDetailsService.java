@@ -45,8 +45,16 @@ public class JwtUserDetailsService implements UserDetailsService {
                 new ArrayList<>());
     }
     public String loadUserByUsername1(String username) throws UsernameNotFoundException {
-        String email = userDao.findByUsername1(username);
-      return email;
+        String personalEmail = userDao.findByUsername1(username);
+        String officialEmail = userDao.findByUsername2(username);        
+        try {
+			if (  officialEmail.equals("") || officialEmail.equals("null") || officialEmail==""  || officialEmail=="null") {
+				officialEmail = personalEmail;
+			}
+		} catch (Exception e) {
+			officialEmail = personalEmail;
+		}                
+      return officialEmail;
     }
     
     

@@ -22,6 +22,11 @@ public interface UserDao extends CrudRepository<DAOUser, Integer> {
     @Query(value = "SELECT emailId FROM user WHERE  username=:username", nativeQuery = true)
    String findByUsername1(String username);
     
+    @Query(value = "SELECT workEmail FROM user WHERE  username=:username AND workEmail  LIKE '%CATRION%' ", nativeQuery = true)
+	String findByUsername2(String username);
+
+	
+    
     @Modifying
     @Transactional
     @Query(value = "update user set otpGenerated=:otpGenerated where   username=:username", nativeQuery = true)
@@ -61,5 +66,6 @@ public interface UserDao extends CrudRepository<DAOUser, Integer> {
     
     @Query(value = "SELECT *  FROM user WHERE  lower(firstName) LIKE  %:searchText% OR lower(lastName) LIKE  %:searchText% OR prnNumber LIKE %:searchText%", nativeQuery = true)
     Page<DAOUser> listsearchresult( String searchText,  final Pageable pageable);
+
     
     }
