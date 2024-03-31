@@ -53,10 +53,8 @@ import com.catrionbe.api.repositories.CCPSigningRepsitory;
 import com.catrionbe.api.repositories.UserDao;
 import com.azure.storage.blob.BlobContainerClient;
 
-
 import com.microsoft.azure.storage.*;
 import com.microsoft.azure.storage.blob.*;
-
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -82,20 +80,17 @@ public class CCPIncidentService {
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
 
-	
-	 @Value("${azure.storage.account-name}")
-	    private String accountName;
+	@Value("${azure.storage.account-name}")
+	private String accountName;
 
-	    @Value("${azure.storage.account-key}")
-	    private String accountKey;
+	@Value("${azure.storage.account-key}")
+	private String accountKey;
 
-	    @Value("${azure.storage.blob-endpoint}")
-	    private String url;
+	@Value("${azure.storage.blob-endpoint}")
+	private String url;
 
-	    @Value("${azure.storage.container-name}")
-	    private String container;
-	    
- 
+	@Value("${azure.storage.container-name}")
+	private String container;
 
 	public String updateFeedback(CCPUpdateFeedbackReq feedbackReq) throws Exception {
 		String message = "Feedback Status Updated";
@@ -140,24 +135,18 @@ public class CCPIncidentService {
 		objCCPIncident.setIncidentSubject(incidentReq.getIncidentSubject());
 		objCCPIncident.setAttachementUrl(incidentReq.getImage());
 		String randomImageName = this.generateFileNames();
-	 System.out.println("Step 1 ");
-	
-	 /*if ( incidentReq.getImage()==null   ) {
-			System.out.println("Step  -1  ");
-			objCCPIncident.setAttachementUrl("test.jpg");
-			
-		} else {
-			System.out.println("Step 2 ");
-			String attachUrl = null;
-			try {
-				attachUrl = this.uploadBlob(incidentReq.getImage(), randomImageName);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println("attachUrl  - - - - -  >    " + attachUrl);
-			objCCPIncident.setAttachementUrl(attachUrl);
-		}*/
+		System.out.println("Step 1 ");
+
+		/*
+		 * if ( incidentReq.getImage()==null ) { System.out.println("Step  -1  ");
+		 * objCCPIncident.setAttachementUrl("test.jpg");
+		 * 
+		 * } else { System.out.println("Step 2 "); String attachUrl = null; try {
+		 * attachUrl = this.uploadBlob(incidentReq.getImage(), randomImageName); } catch
+		 * (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); }
+		 * System.out.println("attachUrl  - - - - -  >    " + attachUrl);
+		 * objCCPIncident.setAttachementUrl(attachUrl); }
+		 */
 
 		objCCPIncident.setIsActive(incidentReq.getIsActive());
 		objCCPIncident.setIsAprroved(incidentReq.getIsAprroved());
@@ -171,88 +160,85 @@ public class CCPIncidentService {
 		return objCCPIncident;
 	}
 
-	 
-
-	
 	@Bean
-    public BlobContainerClient getBlobContainerClient(){
+	public BlobContainerClient getBlobContainerClient() {
 
-        BlobContainerClient blobContainerClient = getBlobServiceClient().getBlobContainerClient(container);
+		BlobContainerClient blobContainerClient = getBlobServiceClient().getBlobContainerClient(container);
 
-        return blobContainerClient;
+		return blobContainerClient;
 
-    }
-	
+	}
+
 	@Bean
-    public BlobServiceClient getBlobServiceClient() {
+	public BlobServiceClient getBlobServiceClient() {
 
-    StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
-    String endpoint = String.format(Locale.ROOT, url, accountName);
-    BlobServiceClient storageClient = new BlobServiceClientBuilder().endpoint(endpoint).credential(credential).buildClient();
-    return storageClient;
-    }
-	
-    public String createBlobContainer (String blobContainerName) {
+		StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
+		String endpoint = String.format(Locale.ROOT, url, accountName);
+		BlobServiceClient storageClient = new BlobServiceClientBuilder().endpoint(endpoint).credential(credential)
+				.buildClient();
+		return storageClient;
+	}
 
-        BlobContainerClient blobContainerClient = getBlobServiceClient().createBlobContainer(blobContainerName);
+	public String createBlobContainer(String blobContainerName) {
 
-        return  blobContainerClient.getBlobContainerUrl();
-    }
+		BlobContainerClient blobContainerClient = getBlobServiceClient().createBlobContainer(blobContainerName);
 
-    public String uploadBlob(MultipartFile file , String randomImageName) throws IOException {
+		return blobContainerClient.getBlobContainerUrl();
+	}
 
-      /*  BlockBlobClient blobClient = getBlobContainerClient().getBlobClient(file.getOriginalFilename()).getBlockBlobClient();
+	// working method
+	public String uploadBlob(MultipartFile file, String randomImageName) throws IOException {
 
-        File fileData=convertMultiPartToFile(file );
-        InputStream dataStream = new ByteArrayInputStream(file.getBytes());
+		String constr = "";
 
-         
-        blobClient.upload(dataStream, file.getSize());
+		BlobContainerClient container = new BlobContainerClientBuilder().connectionString(constr)
+				.containerName("portal-image").buildClient();
 
-        dataStream.close();
-        */
-        String constr="";
+		BlobClient blob = container.getBlobClient(file.getOriginalFilename());
 
+		blob.upload(file.getInputStream(), file.getSize(), true);
 
-        BlobContainerClient container = new BlobContainerClientBuilder()
-                .connectionString(constr)
-                .containerName("portal-image")
-                .buildClient();
+		String response = url + container + "/" + file.getOriginalFilename();
 
+		return response;
+	}
 
-        BlobClient blob=container.getBlobClient(file.getOriginalFilename());
+	public File convertMultiPartToFile(MultipartFile file) throws IOException {
+		File convFile = new File(file.getOriginalFilename());
+		FileOutputStream fos = new FileOutputStream(convFile);
+		fos.write(file.getBytes());
+		fos.close();
+		return convFile;
+	}
 
-        blob.upload(file.getInputStream(),file.getSize(),true);
-
-
-        String response=url+container+"/"+file.getOriginalFilename();
-        
-        return response;
-    }
-    
-    public File convertMultiPartToFile(MultipartFile file ) throws IOException
-    {
-        File convFile = new File( file.getOriginalFilename() );
-        FileOutputStream fos = new FileOutputStream( convFile );
-        fos.write( file.getBytes() );
-        fos.close();
-        return convFile;
-    }
-    
-	public String uploadImage(MultipartFile image, String randomImageName) {
-
+	public List<ImageIdResponse> uploadImage1(MultipartFile image) {
+		List<ImageIdResponse> imagemap = new ArrayList<ImageIdResponse>();
+		ImageIdResponse ImageIdResponseobj = new ImageIdResponse();
+		String fileUrl = "https://cyberportal.blob.core.windows.net/portal-image/";
+		String fullfileName = "test.jpg";
 		try {
+			CloudStorageAccount account = CloudStorageAccount.parse(connectionString);
+			CloudBlobClient serviceClient = account.createCloudBlobClient();
+
+			CloudBlobContainer container = serviceClient.getContainerReference("portal-image");
+
 			String blobName = generateFileNames();
+			//System.out.println(" blobName " + blobName);
 			// Get a blob reference for a text file.
-			//CloudBlockBlob blob = container.getBlockBlobReference(blobName);
-			//new FileOutputStream(randomImageName).write(image);
+			CloudBlockBlob blob = container.getBlockBlobReference(blobName + ".jpg");
+			fullfileName =  fileUrl+blobName+ ".jpg";
+			//System.out.println(" blob " + blob); // new FileOutputStream(randomImageName).write(image);
 			// Upload some text into the blob.
-		//	blob.upload(image.getInputStream(), image.getSize()); // Mani - Enable this to test file upload
+			blob.getProperties().setContentType("image/jpg");
+			blob.upload(image.getInputStream(), image.getSize());
+			ImageIdResponseobj.setImageName(fullfileName);
+			imagemap.add(0, ImageIdResponseobj);
 		} catch (Exception e) {
+			System.out.println(" e  " + e);
 			// Output the stack trace.
 			e.printStackTrace();
 		}
-		return "Success";
+		return imagemap;
 	}
 
 	public String updateIncident(IncidentUpdateRequest incidentUpdateReq) throws Exception {
@@ -269,61 +255,48 @@ public class CCPIncidentService {
 
 	}
 
- 
-
 	public Page<CCPIncident> listallarchivedincidents(int pageNumber, int size) {
 		Pageable pageable = PageRequest.of(pageNumber, size);
 		return (objCCPIncidentRepsitory.listallarchivedincidents(pageable));
 
 	}
-	 
- 
+
+	// working - but downloading
 	public List<ImageIdResponse> uploadImage(MultipartFile file) throws IOException {
 		// TODO Auto-generated method stub
-		  String constr="DefaultEndpointsProtocol=https;AccountName=cyberportal;AccountKey=9fKUci4CZQEhTL8eISLWZgwWpq+wqEg93XGtu+DcHTqT7/O7cfmqooeeuTrDh/uAWsw/xQzuRVkD+AStwk+iOg==;EndpointSuffix=core.windows.net";
+		String constr = "DefaultEndpointsProtocol=https;AccountName=cyberportal;AccountKey=9fKUci4CZQEhTL8eISLWZgwWpq+wqEg93XGtu+DcHTqT7/O7cfmqooeeuTrDh/uAWsw/xQzuRVkD+AStwk+iOg==;EndpointSuffix=core.windows.net";
 
+		BlobContainerClient container = new BlobContainerClientBuilder().connectionString(constr)
+				.containerName("portal-image").buildClient();
 
-	        BlobContainerClient container = new BlobContainerClientBuilder()
-	                .connectionString(constr)
-	                .containerName("portal-image")
-	                .buildClient();
+		BlobClient blob = container.getBlobClient(file.getOriginalFilename());
+		blob.upload(file.getInputStream(), file.getSize(), true);
 
-
-	        BlobClient blob=container.getBlobClient(file.getOriginalFilename());
- 	        blob.upload(file.getInputStream(),file.getSize(),true);
-
-	        List<ImageIdResponse> imagemap = new ArrayList<ImageIdResponse> () ;
-	        ImageIdResponse ImageIdResponseobj= new ImageIdResponse();
-	        String imageName=url+container+"/"+file.getOriginalFilename();
-	        ImageIdResponseobj.setImageName(imageName);
-	        //List<ImageIdResponse> response=url+container+"/"+file.getOriginalFilename();
-	        imagemap.add(0,ImageIdResponseobj);
-	        return imagemap;
+		List<ImageIdResponse> imagemap = new ArrayList<ImageIdResponse>();
+		ImageIdResponse ImageIdResponseobj = new ImageIdResponse();
+		String imageName = url + container + "/" + file.getOriginalFilename();
+		ImageIdResponseobj.setImageName(imageName);
+		// List<ImageIdResponse> response=url+container+"/"+file.getOriginalFilename();
+		imagemap.add(0, ImageIdResponseobj);
+		return imagemap;
 	}
 
- 
 	public Page<CCPIncident> listsearchincident(String searchText, Integer pageNumber, Integer size) {
 		// TODO Auto-generated method stub
-		Pageable pageable = PageRequest.of(pageNumber, size );
-		  return		objCCPIncidentRepsitory.listsearchincident(searchText,pageable); 
+		Pageable pageable = PageRequest.of(pageNumber, size);
+		return objCCPIncidentRepsitory.listsearchincident(searchText, pageable);
 	}
- 
-	 
-	
+
 	public Page<CCPIncident> searchallarchivedincidents(String searchText, Integer pageNumber, Integer size) {
 		// TODO Auto-generated method stub
-		Pageable pageable = PageRequest.of(pageNumber, size );
-		  return		objCCPIncidentRepsitory.searchallarchivedincidents(searchText,pageable); 
+		Pageable pageable = PageRequest.of(pageNumber, size);
+		return objCCPIncidentRepsitory.searchallarchivedincidents(searchText, pageable);
 	}
-	
-	
+
 	public Page<CCPIncident> searchallactiveincidents(String searchText, Integer pageNumber, Integer size) {
 		// TODO Auto-generated method stub
-		Pageable pageable = PageRequest.of(pageNumber, size );
-		  return		objCCPIncidentRepsitory.searchallactiveincidents(searchText,pageable); 
+		Pageable pageable = PageRequest.of(pageNumber, size);
+		return objCCPIncidentRepsitory.searchallactiveincidents(searchText, pageable);
 	}
-	
-	 
-	
-	
+
 }

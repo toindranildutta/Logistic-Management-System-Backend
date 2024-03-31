@@ -40,7 +40,7 @@ public class CCPIncidentController {
 	 @RequestMapping(value = "/uploadImage", method = RequestMethod.POST ,headers="Accept=application/json"  )  
 	 public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
 		    
-	        return ResponseEntity.ok(ccpIncidentService.uploadImage(file));
+	        return ResponseEntity.ok(ccpIncidentService.uploadImage1(file));
 	    }
 	 
 	
