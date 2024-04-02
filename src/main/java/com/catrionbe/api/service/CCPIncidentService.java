@@ -104,6 +104,8 @@ public class CCPIncidentService {
 		return message;
 	}
 
+	
+
 	public Page<CCPIncident> listallactiveincidents(int pageNumber, int size) {
 		Pageable pageable = PageRequest.of(pageNumber, size);
 		return (objCCPIncidentRepsitory.listallactiveincidents(pageable));
@@ -134,6 +136,7 @@ public class CCPIncidentService {
 		objCCPIncident.setDescription(incidentReq.getDescription());
 		objCCPIncident.setIncidentSubject(incidentReq.getIncidentSubject());
 		objCCPIncident.setAttachementUrl(incidentReq.getImage());
+		objCCPIncident.setUserContactInfo(incidentReq.getUserContactInfo());
 		String randomImageName = this.generateFileNames();
 		System.out.println("Step 1 ");
 

@@ -92,8 +92,15 @@ public class CCPIncident {
 	private int modifiedBy;	
  @Column(name = "modifiedDate", nullable = false)
 	private Date modifiedDate;
- 
+ @Column(name = "userContactInfo", nullable = false)
+	private String userContactInfo;
 	  
+public String getUserContactInfo() {
+	return userContactInfo;
+}
+public void setUserContactInfo(String userContactInfo) {
+	this.userContactInfo = userContactInfo;
+}
 public int getUserId() {
 	return userId;
 }

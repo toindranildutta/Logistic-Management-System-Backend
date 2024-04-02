@@ -23,7 +23,14 @@ public class CCPIncidentRequest implements Serializable {
 	public int getStatusId() {
 		return statusId;
 	}
-
+	private String userContactInfo;
+	  
+public String getUserContactInfo() {
+	return userContactInfo;
+}
+public void setUserContactInfo(String userContactInfo) {
+	this.userContactInfo = userContactInfo;
+}
 	public void setStatusId(int statusId) {
 		this.statusId = statusId;
 	}
