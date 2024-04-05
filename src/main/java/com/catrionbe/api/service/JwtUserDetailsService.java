@@ -117,7 +117,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setWorkEmail(user.getWorkEmail());
         newUser.setDeptId(user.getDeptId());
         newUser.setLocationId(user.getLocationId());
-        
+        newUser.setManagerEmail(user.getManagerEmail());        
         
         ccputil.sendWelcomeEmail(user.getEmailId(), incrementedPrnNumber, user.getFirstName(), user.getUsername());
         
@@ -162,6 +162,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setIsAprroved(user.getIsAprroved());
         newUser.setModifiedBy(user.getModifiedBy());
         newUser.setModifiedDate(user.getModifiedDate());        
+        newUser.setManagerEmail(user.getManagerEmail());    
         return userDao.save(newUser);
     }
 	public int updateuserasarchived(UserIdRequest user) {

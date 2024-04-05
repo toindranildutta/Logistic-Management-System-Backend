@@ -13,7 +13,34 @@ public class UpdateUserDTO {
     public String getFirstName() {
 	return firstName;
 }
+    private String isAdmin;
+	 private String workEmail;
+	 private int deptId;
+	private int locationId;
+    public String getIsAdmin() {
+		return isAdmin;
+	}
 
+	public void setIsAdmin(String isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public String getWorkEmail() {
+		return workEmail;
+	}
+
+	public void setWorkEmail(String workEmail) {
+		this.workEmail = workEmail;
+	}
+	
+    private String managerEmail;
+	 
+	 public String getManagerEmail() {
+		return managerEmail;
+	}
+	public void setManagerEmail(String managerEmail) {
+		this.managerEmail = managerEmail;
+	}
 public void setFirstName(String firstName) {
 	this.firstName = firstName;
 }
@@ -180,5 +207,21 @@ public void setNationalId(String nationalId) {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public int getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
+	}
+
+	public int getLocationId() {
+		return locationId;
+	}
+
+	public void setLocationId(int locationId) {
+		this.locationId = locationId;
 	}
 }
