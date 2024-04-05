@@ -93,7 +93,14 @@ public void setNationalId(String nationalId) {
  	 private String workEmail;
  	 private int deptId;
  	private int locationId;
+ private String managerEmail;
 	 
+	 public String getManagerEmail() {
+		return managerEmail;
+	}
+	public void setManagerEmail(String managerEmail) {
+		this.managerEmail = managerEmail;
+	}
  	public int getLocationId() {
  		return locationId;
  	}

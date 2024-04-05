@@ -192,8 +192,16 @@ public class DAOUser {
 		private String isAdmin;
 	 @Column(name = "workEmail", nullable = false)
 		private String workEmail;
-
-	 @Column(name = "locationId", nullable = false)
+	 @Column(name = "managerEmail", nullable = false)
+	 private String managerEmail;
+	 
+	 public String getManagerEmail() {
+		return managerEmail;
+	}
+	public void setManagerEmail(String managerEmail) {
+		this.managerEmail = managerEmail;
+	}
+	@Column(name = "locationId", nullable = false)
 		private int locationId;
 	 
 	public int getLocationId() {
