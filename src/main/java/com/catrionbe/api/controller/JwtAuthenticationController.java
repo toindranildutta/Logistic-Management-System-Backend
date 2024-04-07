@@ -27,6 +27,9 @@ import utils.ccputil;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,6 +44,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 /*
 Expose a POST API /authenticate using the JwtAuthenticationController. The POST API gets username and password in the
@@ -73,37 +78,65 @@ public class JwtAuthenticationController {
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
      System.out.println("Inside  / Authenticate ");
+     String token = "";
+     String email ="";
         try {
 			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+			
+			 System.out.println(authenticationRequest.getUsername());
+		        System.out.println(authenticationRequest.getPassword());
+		        final UserDetails userDetails = userDetailsService
+		                .loadUserByUsername(authenticationRequest.getUsername());
+		        //JwtResponsewithEmail JwtResponsewithEmailObj = new JwtResponsewithEmail();
+		           token = jwtTokenUtil.generateToken(userDetails);
+		        String username= userDetails.getUsername();
+		        String OTPGenerated = generateSixDigitOTP();
+		        System.out.println(userDetails.getUsername());
+		        email = userDetailsService.loadUserByUsername1(username);
+		        //JwtResponsewithEmailObj.setEmailId(email);
+		        //JwtResponsewithEmailObj.setToken(token);
+		    	if (email != "" && email != null) {
+		    		System.out.println(email);
+					ccputil ccputil = new ccputil();
+					 userDetailsService.updateUserByUsername(username,Integer.parseInt(OTPGenerated));
+					ccputil.sendEmail(email, OTPGenerated);
+				} else {
+					throw new Exception("This Email not found in the record");
+				}
+		    	
 		} catch (Exception e) {
-		 
+		 //If no user found try to connect for Catrion 
+			retry( authenticationRequest.getUsername() );
 			e.printStackTrace();
 		}
 
-        System.out.println(authenticationRequest.getUsername());
-        System.out.println(authenticationRequest.getPassword());
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
-        //JwtResponsewithEmail JwtResponsewithEmailObj = new JwtResponsewithEmail();
-        final String token = jwtTokenUtil.generateToken(userDetails);
-        String username= userDetails.getUsername();
-        String OTPGenerated = generateSixDigitOTP();
-        System.out.println(userDetails.getUsername());
-        String email = userDetailsService.loadUserByUsername1(username);
-        //JwtResponsewithEmailObj.setEmailId(email);
-        //JwtResponsewithEmailObj.setToken(token);
-    	if (email != "" && email != null) {
-    		System.out.println(email);
-			ccputil ccputil = new ccputil();
-			 userDetailsService.updateUserByUsername(username,Integer.parseInt(OTPGenerated));
-			ccputil.sendEmail(email, OTPGenerated);
-		} else {
-			throw new Exception("This Email not found in the record");
-		}
+       
         return ResponseEntity.ok(new JwtResponsewithEmail(token,email));
     }
 
-    @RequestMapping(value = "/validateotp", method = RequestMethod.POST)
+    private void retry(String prn) {
+    	try {
+			System.out.println("Inside Retry ----  ");
+			HttpHeaders headers = new HttpHeaders();
+			String jwtToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoie1wiZGF0YVwiOiBcInN1Y2Nlc3NcIn0ifQ.DGD8DUxrJb-EMus3IPXwJqnxzrHNpME8Z2P_PuDG4ag";
+			headers.add("Authorization", "Bearer " + jwtToken);
+
+			UserDTO  dto = new UserDTO();
+			HttpEntity<UserDTO> requestEntity = new HttpEntity<>(dto, headers);
+
+			ResponseEntity resp =
+			            new RestTemplate().exchange("https://catrion-python-api.smartx.services/api/all-prn/get-by-prnid/"+prn,
+			                    HttpMethod.GET, requestEntity, String.class);
+			
+			System.out.println(resp.toString());
+		} catch (RestClientException e) {
+			 System.out.print("Exception here ");
+		}
+		
+	}
+
+
+	@RequestMapping(value = "/validateotp", method = RequestMethod.POST)
     public ResponseEntity<?> validateOtp(@RequestBody OtpRequest  otpValidationRequest) throws Exception {
     	System.out.println(" Hit the Controller  0 00  0 0");
     	 
@@ -140,6 +173,7 @@ public class JwtAuthenticationController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             
         } catch (DisabledException e) {
+        	
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);

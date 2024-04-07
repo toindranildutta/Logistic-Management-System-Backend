@@ -1,15 +1,10 @@
 package com.catrionbe.api.service;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import com.catrionbe.api.entity.CCPUserActivity;
 import com.catrionbe.api.entity.DAOUser;
-import com.catrionbe.api.model.CCPUserActivityReq;
 import com.catrionbe.api.model.UpdateUserDTO;
 import com.catrionbe.api.model.UserDTO;
 import com.catrionbe.api.model.UserIdRequest;
-import com.catrionbe.api.repositories.CCPUserActRepository;
 import com.catrionbe.api.repositories.UserDao;
 
 import utils.ccputil;
@@ -18,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

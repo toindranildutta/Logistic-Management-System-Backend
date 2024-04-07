@@ -20,6 +20,7 @@ public class CCPCoursesController {
     @Autowired
     private CCPCourseService objCCPCourseService;       
     
+    //Mark Courses comepleted when user completed the course
     @RequestMapping(value = "/markcoursecomplete", method = RequestMethod.POST)
     public ResponseEntity<?> saveCourse(@RequestBody CourseUpdateRequest  courseUpdateRequest) throws Exception {	
     	 return ResponseEntity.ok(objCCPCourseService.save(courseUpdateRequest));   	
