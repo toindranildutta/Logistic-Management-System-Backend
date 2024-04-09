@@ -4,42 +4,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 
-public class UpdateUserDTO {
-	private int userId;
-	
+public class UserInCatrionSytemDTO {
     private String username;
     private String password;
  private String firstName;
     public String getFirstName() {
 	return firstName;
 }
-    private String isAdmin;
-	 private String workEmail;
- 
-    public String getIsAdmin() {
-		return isAdmin;
-	}
 
-	public void setIsAdmin(String isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
-	public String getWorkEmail() {
-		return workEmail;
-	}
-
-	public void setWorkEmail(String workEmail) {
-		this.workEmail = workEmail;
-	}
-	
-    private String managerEmail;
-	 
-	 public String getManagerEmail() {
-		return managerEmail;
-	}
-	public void setManagerEmail(String managerEmail) {
-		this.managerEmail = managerEmail;
-	}
 public void setFirstName(String firstName) {
 	this.firstName = firstName;
 }
@@ -117,19 +89,25 @@ public void setNationalId(String nationalId) {
  	private String fatherName; 
  	private String grandFatherName; 
  	 private String nationalId;
- 	 
- 	private String deptName;
- 	private String locationName;
- 	
- 	public String getDeptName() {
-		return deptName;
-	}
-
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
-	}
-
+ 	 private String isAdmin;
+ 	 private String workEmail;
+ 	 private int deptId;
+ 	private int locationId;
+ private String managerEmail;
 	 
+	 public String getManagerEmail() {
+		return managerEmail;
+	}
+	public void setManagerEmail(String managerEmail) {
+		this.managerEmail = managerEmail;
+	}
+ 	public int getLocationId() {
+ 		return locationId;
+ 	}
+ 	public void setLocationId(int locationId) {
+ 		this.locationId = locationId;
+ 	}
+ 	 
  		public String getIsActive() {
 		return isActive;
 	}
@@ -211,20 +189,27 @@ public void setNationalId(String nationalId) {
 		this.lastName = lastName;
 	}
 
-	public int getUserId() {
-		return userId;
+	public String getIsAdmin() {
+		return isAdmin;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setIsAdmin(String isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
-	public String getLocationName() {
-		return locationName;
+	public String getWorkEmail() {
+		return workEmail;
 	}
 
-	public void setLocationName(String locationName) {
-		this.locationName = locationName;
+	public void setWorkEmail(String workEmail) {
+		this.workEmail = workEmail;
 	}
- 
+
+	public int getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
+	}
 }

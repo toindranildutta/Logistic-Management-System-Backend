@@ -5,6 +5,8 @@ import com.catrionbe.api.entity.DAOUser;
 import com.catrionbe.api.model.UpdateUserDTO;
 import com.catrionbe.api.model.UserDTO;
 import com.catrionbe.api.model.UserIdRequest;
+import com.catrionbe.api.repositories.CCPCitiesRepsitory;
+import com.catrionbe.api.repositories.CCPDeptRepsitory;
 import com.catrionbe.api.repositories.UserDao;
 
 import utils.ccputil;
@@ -28,9 +30,17 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
-
+    @Autowired
+    private CCPCitiesRepsitory  objCCPCitiesRepsitory;
+    
+    
+    @Autowired
+    private CCPDeptRepsitory  objCCPDeptRepsitory;
+    
+    
     
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    	System.out.println("User Name :  "+username);
         DAOUser user = userDao.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
@@ -88,7 +98,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         DAOUser newUser = new DAOUser();
         newUser.setUsername(user.getUsername());
         //Encrypt Username for Password 
-        newUser.setPassword(bcryptEncoder.encode(user.getUsername()));
+        newUser.setPassword(bcryptEncoder.encode(user.getPrnNumber()));
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
         newUser.setEmailId(user.getEmailId());
@@ -99,7 +109,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setOtpGenerated(user.getOtpGenerated());
         newUser.setUsername(user.getUsername());
         newUser.setNationalId(user.getNationalId());
-        newUser.setPrnNumber(incrementedPrnNumber);
+        newUser.setPrnNumber(user.getPrnNumber());
         newUser.setConfPassword(user.getConfPassword());
         newUser.setIsActive(user.getIsActive());
         newUser.setIsAprroved(user.getIsAprroved());
@@ -139,7 +149,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setUserId(user.getUserId());
         newUser.setUsername(user.getUsername());
         //Encrypt Username for Password 
-        newUser.setPassword(bcryptEncoder.encode(user.getUsername()));
+        newUser.setPassword(bcryptEncoder.encode(user.getPrnNumber()));
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
         newUser.setEmailId(user.getEmailId());
@@ -157,6 +167,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setModifiedBy(user.getModifiedBy());
         newUser.setModifiedDate(user.getModifiedDate());        
         newUser.setManagerEmail(user.getManagerEmail());    
+        
         return userDao.save(newUser);
     }
 	public int updateuserasarchived(UserIdRequest user) {
@@ -185,6 +196,49 @@ public class JwtUserDetailsService implements UserDetailsService {
 				  return		userDao.listsearchresult(searchText,pageable); 
 						
 					}
+	public DAOUser  save2(UpdateUserDTO user) {
+		String maxId = userDao.getMaxPrnNumber();
+     	long maxIdnum  = Long.parseLong(maxId);
+    	long maxidnextnum = maxIdnum+1;
+    	String incrementedPrnNumber= String.valueOf(maxidnextnum);
+        DAOUser newUser = new DAOUser();
+        newUser.setUsername(user.getUsername());
+        //Encrypt Username for Password 
+        newUser.setPassword(bcryptEncoder.encode(user.getUsername()));
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        newUser.setEmailId(user.getEmailId());
+        newUser.setConfPassword(user.getConfPassword());
+        newUser.setFatherName(user.getFatherName());
+        newUser.setGrandFatherName(user.getGrandFatherName());
+        newUser.setOtpEntered(user.getOtpEntered());
+        newUser.setOtpGenerated(user.getOtpGenerated());
+        newUser.setUsername(user.getUsername());
+        newUser.setNationalId(user.getNationalId());
+        newUser.setPrnNumber(user.getPrnNumber());
+        newUser.setConfPassword(user.getConfPassword());
+        newUser.setIsActive(user.getIsActive());
+        newUser.setIsAprroved(user.getIsAprroved());
+        newUser.setModifiedBy(user.getModifiedBy());
+        newUser.setModifiedDate(user.getModifiedDate());
+        newUser.setCreatedBy(user.getCreatedBy());
+        newUser.setCreatedDate(user.getCreatedDate());
+        newUser.setIsAdmin(user.getIsAdmin());
+        newUser.setWorkEmail(user.getWorkEmail());
+        System.out.println(user.getDeptName());
+        int deptId = objCCPDeptRepsitory.getDeptId(user.getDeptName());
+        System.out.println(deptId);
+        newUser.setDeptId(deptId);
+        System.out.println(user.getLocationName());
+        int locationId = objCCPCitiesRepsitory.getCityId(user.getLocationName());
+        newUser.setLocationId(locationId);
+        newUser.setManagerEmail(user.getManagerEmail());        
+        
+        ccputil.sendWelcomeEmail(user.getEmailId(), incrementedPrnNumber, user.getFirstName(), user.getUsername());
+        
+        return userDao.save(newUser);
+		
+	}
 	
 	
 	

@@ -1,5 +1,6 @@
 package com.catrionbe.api.controller;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -76,17 +77,40 @@ public class JwtAuthenticationController {
 
     
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)  {
      System.out.println("Inside  / Authenticate ");
      String token = "";
      String email ="";
+     UserDetails userDetails = null;
         try {
 			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-			
-			 System.out.println(authenticationRequest.getUsername());
+        } catch (Exception e) {
+        	System.out.println(e);
+   		 //If no user found try to connect for Catrion 
+        	retry( authenticationRequest.getPassword() );
+        	System.out.println(" 00 ");
+   		}
+        System.out.println(" 0 ");
+			    System.out.println(authenticationRequest.getUsername());
 		        System.out.println(authenticationRequest.getPassword());
-		        final UserDetails userDetails = userDetailsService
-		                .loadUserByUsername(authenticationRequest.getUsername());
+		            try {
+						userDetails = userDetailsService
+						    .loadUserByUsername(authenticationRequest.getUsername());
+					} catch (UsernameNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		          System.out.println(" 1 ");
+		          if (userDetails == null || userDetails.equals("null")|| userDetails.equals("") ) {
+		        	  //  userDetails = retry( authenticationRequest.getUsername() );
+		        	    System.out.println(" 2 ");
+		        	    try {
+							authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+						} catch (Exception e) {
+							 
+						}
+		          }
+		          System.out.println(" 3 ");
 		        //JwtResponsewithEmail JwtResponsewithEmailObj = new JwtResponsewithEmail();
 		           token = jwtTokenUtil.generateToken(userDetails);
 		        String username= userDetails.getUsername();
@@ -101,21 +125,17 @@ public class JwtAuthenticationController {
 					 userDetailsService.updateUserByUsername(username,Integer.parseInt(OTPGenerated));
 					ccputil.sendEmail(email, OTPGenerated);
 				} else {
-					throw new Exception("This Email not found in the record");
+					// throw new Exception("This Email not found in the record");
 				}
 		    	
-		} catch (Exception e) {
-		 //If no user found try to connect for Catrion 
-			retry( authenticationRequest.getUsername() );
-			e.printStackTrace();
-		}
+		
 
        
         return ResponseEntity.ok(new JwtResponsewithEmail(token,email));
     }
 
-    private void retry(String prn) {
-    	try {
+    public  UpdateUserDTO retry(String prn) {
+    	 
 			System.out.println("Inside Retry ----  ");
 			HttpHeaders headers = new HttpHeaders();
 			String jwtToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoie1wiZGF0YVwiOiBcInN1Y2Nlc3NcIn0ifQ.DGD8DUxrJb-EMus3IPXwJqnxzrHNpME8Z2P_PuDG4ag";
@@ -124,14 +144,30 @@ public class JwtAuthenticationController {
 			UserDTO  dto = new UserDTO();
 			HttpEntity<UserDTO> requestEntity = new HttpEntity<>(dto, headers);
 
-			ResponseEntity resp =
+			ResponseEntity<  UpdateUserDTO > resp =
 			            new RestTemplate().exchange("https://catrion-python-api.smartx.services/api/all-prn/get-by-prnid/"+prn,
-			                    HttpMethod.GET, requestEntity, String.class);
+			                    HttpMethod.GET, requestEntity, UpdateUserDTO.class);
 			
-			System.out.println(resp.toString());
-		} catch (RestClientException e) {
-			 System.out.print("Exception here ");
-		}
+			System.out.println(resp.getBody().getLocationName());
+			
+			
+			UpdateUserDTO userObj = new UpdateUserDTO();
+			userObj.setPrnNumber(resp.getBody().getPrnNumber());
+			userObj.setFirstName(resp.getBody().getFirstName());
+			userObj.setLastName(resp.getBody().getLastName());
+			userObj.setEmailId(resp.getBody().getEmailId());
+			userObj.setFatherName(resp.getBody().getFatherName());
+			userObj.setGrandFatherName(resp.getBody().getGrandFatherName());
+			userObj.setNationalId(resp.getBody().getNationalId());
+			userObj.setUsername(resp.getBody().getUsername());
+			userObj.setManagerEmail(resp.getBody().getManagerEmail());
+			userObj.setLocationName(resp.getBody().getLocationName());
+			userObj.setDeptName(resp.getBody().getDeptName());
+			userObj.setWorkEmail(resp.getBody().getWorkEmail());
+		     userDetailsService.save2(userObj);
+			
+		 
+		return userObj ;
 		
 	}
 
@@ -169,6 +205,9 @@ public class JwtAuthenticationController {
 
     private void authenticate(String username, String password) throws Exception {
         try {
+        	System.out.println("Inside Auth - - - - ");
+        	System.out.println("User Name :  "+username );
+        	System.out.println("Password :  "+password);
         	
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             
@@ -199,11 +238,9 @@ public class JwtAuthenticationController {
   			System.out.println(userDetails.getUsername()); 			 
 		} catch (UsernameNotFoundException e) {
 			throw new Exception("User not found in the record");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {			
 			throw new Exception("User not found in the record");
-		}
- 
+		} 
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
