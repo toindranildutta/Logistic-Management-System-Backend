@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,8 @@ import com.google.zxing.qrcode.QRCodeWriter;
 @RequestMapping("/qr")
 public class CCPQrCodeController {
 
- @GetMapping(value = "/GenerateQRCode", produces = MediaType.IMAGE_PNG_VALUE)
+	 
+	@RequestMapping (value = "/GenerateQRCode",method = RequestMethod.POST, produces = MediaType.IMAGE_PNG_VALUE)
  //public ResponseEntity<BufferedImage> barbecueEAN13Barcode(@PathVariable("barcode") String barcode)
  public ResponseEntity<BufferedImage> barbecueEAN13Barcode(@RequestBody QRCodeRequest  qrcodeReq)
 
