@@ -4,7 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 
-public class UpdateUserDTO {
+public class UpdateUserDTO2 {
 	private int userId;
 	
     private String username;
@@ -118,8 +118,16 @@ public void setNationalId(String nationalId) {
  	private String grandFatherName; 
  	 private String nationalId;
  	 
- 
- 	 
+ 	private String deptName;
+ 	private String locationName;
+ 	
+ 	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 
 	 
  		public String getIsActive() {
@@ -176,22 +184,9 @@ public void setNationalId(String nationalId) {
  		private Date createdDate;	
  		private int modifiedBy;	
  		private Date modifiedDate;
- 	 	 private int deptId;
- 	 	private int locationId;
 	 
- 		public int getLocationId() {
- 	 		return locationId;
- 	 	}
- 	 	public void setLocationId(int locationId) {
- 	 		this.locationId = locationId;
- 	 	}
- 	 	public int getDeptId() {
- 			return deptId;
- 		}
-
- 		public void setDeptId(int deptId) {
- 			this.deptId = deptId;
- 		}
+	 
+	 
     public String getUsername() {
         return username;
     }
@@ -223,6 +218,13 @@ public void setNationalId(String nationalId) {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
- 
+
+	public String getLocationName() {
+		return locationName;
+	}
+
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
  
 }

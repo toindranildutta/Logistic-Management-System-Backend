@@ -19,6 +19,7 @@ import com.catrionbe.api.model.JwtResponse;
 import com.catrionbe.api.model.JwtResponsewithEmail;
 import com.catrionbe.api.model.OtpRequest;
 import com.catrionbe.api.model.UpdateUserDTO;
+import com.catrionbe.api.model.UpdateUserDTO2;
 import com.catrionbe.api.model.UserDTO;
 import com.catrionbe.api.model.UserIdRequest;
 import com.catrionbe.api.repositories.CCPUserActRepository;
@@ -134,7 +135,7 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(new JwtResponsewithEmail(token,email));
     }
 
-    public  UpdateUserDTO retry(String prn) {
+    public  UpdateUserDTO2 retry(String prn) {
     	 
 			System.out.println("Inside Retry ----  ");
 			HttpHeaders headers = new HttpHeaders();
@@ -144,14 +145,14 @@ public class JwtAuthenticationController {
 			UserDTO  dto = new UserDTO();
 			HttpEntity<UserDTO> requestEntity = new HttpEntity<>(dto, headers);
 
-			ResponseEntity<  UpdateUserDTO > resp =
+			ResponseEntity<  UpdateUserDTO2 > resp =
 			            new RestTemplate().exchange("https://catrion-python-api.smartx.services/api/all-prn/get-by-prnid/"+prn,
-			                    HttpMethod.GET, requestEntity, UpdateUserDTO.class);
+			                    HttpMethod.GET, requestEntity, UpdateUserDTO2.class);
 			
-			System.out.println(resp.getBody().getLocationName());
+			 
 			
 			
-			UpdateUserDTO userObj = new UpdateUserDTO();
+			UpdateUserDTO2 userObj = new UpdateUserDTO2();
 			userObj.setPrnNumber(resp.getBody().getPrnNumber());
 			userObj.setFirstName(resp.getBody().getFirstName());
 			userObj.setLastName(resp.getBody().getLastName());
@@ -297,5 +298,19 @@ public class JwtAuthenticationController {
 	        return ResponseEntity.ok(userDetailsService.listsearchresult(searchText, pageNumber ,size));
 	    }
 	  
+	  @RequestMapping(value = "/listallusersfromdb", method = RequestMethod.GET)
+	    public ResponseEntity<?> listallusersfromdb(
+	            @RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
+	        return ResponseEntity.ok(userDetailsService.listallusersfromdb(pageNumber ,size));
+	    }
+	  
+	  @RequestMapping(value = "/listsearchallusersfromdb", method = RequestMethod.GET)
+	    public ResponseEntity<?> listsearchallusersfromdb(
+	    		@RequestParam(defaultValue = "test") final String searchText,
+	            @RequestParam(defaultValue = "0") final Integer pageNumber,
+	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
+	        return ResponseEntity.ok(userDetailsService.listsearchallusersfromdb(searchText, pageNumber ,size));
+	    }
 	  
 }

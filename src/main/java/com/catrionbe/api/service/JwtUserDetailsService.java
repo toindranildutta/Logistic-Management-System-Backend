@@ -3,6 +3,7 @@ package com.catrionbe.api.service;
 import java.util.ArrayList;
 import com.catrionbe.api.entity.DAOUser;
 import com.catrionbe.api.model.UpdateUserDTO;
+import com.catrionbe.api.model.UpdateUserDTO2;
 import com.catrionbe.api.model.UserDTO;
 import com.catrionbe.api.model.UserIdRequest;
 import com.catrionbe.api.repositories.CCPCitiesRepsitory;
@@ -163,6 +164,8 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setPrnNumber(user.getPrnNumber());
         newUser.setConfPassword(user.getConfPassword());
         newUser.setIsActive(user.getIsActive());
+        newUser.setLocationId(user.getLocationId());
+        newUser.setDeptId(user.getDeptId());
         newUser.setIsAprroved(user.getIsAprroved());
         newUser.setModifiedBy(user.getModifiedBy());
         newUser.setModifiedDate(user.getModifiedDate());        
@@ -196,7 +199,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 				  return		userDao.listsearchresult(searchText,pageable); 
 						
 					}
-	public DAOUser  save2(UpdateUserDTO user) {
+	public DAOUser  save2(UpdateUserDTO2 user) {
 		String maxId = userDao.getMaxPrnNumber();
      	long maxIdnum  = Long.parseLong(maxId);
     	long maxidnextnum = maxIdnum+1;
@@ -239,8 +242,18 @@ public class JwtUserDetailsService implements UserDetailsService {
         return userDao.save(newUser);
 		
 	}
+ 
 	
+	public Page<DAOUser> listallusersfromdb( int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+				  return		userDao.listallusersfromdb(pageable); 
+						
+					}
+ 
 	
-	
-	
+	public Page<DAOUser> listsearchallusersfromdb(String searchText ,int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+				  return		userDao.listsearchallusersfromdb(searchText,pageable); 
+						
+					}
 }

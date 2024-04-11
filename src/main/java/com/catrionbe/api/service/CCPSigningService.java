@@ -161,6 +161,12 @@ public class CCPSigningService {
 		return objCCPCertificateRepsitory.generatecertificatedata (userIdObj.getUserId()) ;
 		 
 	}
-
+	
+	public CCPCertificate  displaycertificate(String  prNumber  ) {
+		System.out.println(" service ");
+		return objCCPCertificateRepsitory.displaycertificate ( prNumber) ;
+		 
+	}
+	
 	
 }

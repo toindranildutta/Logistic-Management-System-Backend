@@ -13,5 +13,8 @@ public interface  CCPCertificateRepsitory extends CrudRepository<CCPCertificate,
 
 	@Query(value = "select     *   from ccpcertificate   where   userId =:userId ORDER BY userId DESC LIMIT 1", nativeQuery = true)
 	public CCPCertificate  generatecertificatedata(int userId);
+
+	@Query(value = "  select     *   from ccpcertificate  a , user b  where   a.userId=b.userId AND b.prnNumber=:prNumber", nativeQuery = true)
+	public CCPCertificate displaycertificate(String prNumber);
 	
 }

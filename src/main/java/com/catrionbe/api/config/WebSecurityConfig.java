@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 // dont authenticate this particular request
 				.authorizeRequests()
-				.antMatchers("/listsearchincident", "/listsearchfeedback", "/onlystaffsegmentprogresstable","/uploadImage","/listallarchivedincidents", "/onlystaffsegmentprogresschart",
+				.antMatchers("/listsearchallusersfromdb","/listallusersfromdb", "/listsearchincident", "/listsearchfeedback", "/onlystaffsegmentprogresstable","/uploadImage","/listallarchivedincidents", "/onlystaffsegmentprogresschart",
 						"/allstaffsegmentprogresstable", "/allstaffsegmentprogresschart", "/accessbycertificate",
 						"/accessbydate", "/listsearchresult", "/saveuseractivity", "/generatecertificatedata",
 						"/listallactiveincidents", "/updateincidentstatus", "/saveincident", "/listallarchivedusers",
@@ -72,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/checkUserCredentials", "/validateotp", "/generateccptoken", "/fetchuserdetails", "/fetchnews","/searchallarchivedfeedback", 
 						"/markcoursecomplete", "/fetchmaxscreenId", "/markquizcomplete", "/checkquizcomplete","/searchallactivefeedback",
 						"/fetchnews", "/savenews", "/updatenews", "/deletenews","/nonstaffsegmentprogresschart", "/nonstaffsegmentprogresstable",
-						"/api/all-prn/get-by-prnid","/qr")
+						"/api/all-prn/get-by-prnid","/qr" ,"/showCertificate/*")
 				.permitAll().
 				// .authorizeRequests().antMatchers("/authenticate").permitAll().
 				// all other requests need to be authenticated

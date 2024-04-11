@@ -1,6 +1,8 @@
 package com.catrionbe.api.controller;
 
  
+ 
+
 import java.awt.image.BufferedImage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,27 +27,12 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 @RestController
-@RequestMapping("/qr")
-public class CCPQrCodeController {
+@RequestMapping("/showqr")
+public class CCPShowCertController {
 
 	 @Autowired
 	    private CCPSigningService  objCCPSigningService;
-	  
-	 
-	@RequestMapping (value = "/GenerateQRCode",method = RequestMethod.POST, produces = MediaType.IMAGE_PNG_VALUE)
- //public ResponseEntity<BufferedImage> barbecueEAN13Barcode(@PathVariable("barcode") String barcode)
- public ResponseEntity<BufferedImage> barbecueEAN13Barcode(@RequestBody QRCodeRequest  qrcodeReq)
-
  
- 
-   throws Exception {
-
-  QRCodeWriter barcodeWriter = new QRCodeWriter();
-     BitMatrix bitMatrix = 
-       barcodeWriter.encode(qrcodeReq.getQrCodeUrl(), BarcodeFormat.QR_CODE, 200, 200);
-
-  return new ResponseEntity<>(MatrixToImageWriter.toBufferedImage(bitMatrix),HttpStatus.OK);
- }
 	
 	 @GetMapping(value = "/{prNumber}" )
 	 public ResponseEntity<?> fetchCertificate(@PathVariable("prNumber") String prNumber)
