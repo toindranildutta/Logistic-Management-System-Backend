@@ -90,15 +90,12 @@ public class JwtUserDetailsService implements UserDetailsService {
        
     }
     
-    public DAOUser save(UserDTO user) {
-    	String maxId = userDao.getMaxPrnNumber();
-    	System.out.println(maxId);
-    	long maxIdnum  = Long.parseLong(maxId);
-    	long maxidnextnum = maxIdnum+1;
-    	String incrementedPrnNumber= String.valueOf(maxidnextnum);
+    public DAOUser save(UserDTO user) {    
+    	 
         DAOUser newUser = new DAOUser();
         newUser.setUsername(user.getUsername());
         //Encrypt Username for Password 
+        System.out.println(bcryptEncoder.encode(user.getPrnNumber()));
         newUser.setPassword(bcryptEncoder.encode(user.getPrnNumber()));
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
@@ -123,10 +120,12 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setDeptId(user.getDeptId());
         newUser.setLocationId(user.getLocationId());
         newUser.setManagerEmail(user.getManagerEmail());        
-        
-        ccputil.sendWelcomeEmail(user.getEmailId(), incrementedPrnNumber, user.getFirstName(), user.getUsername());
+        newUser.setMobileNumber(user.getMobileNumber());
+        newUser.setIsArchived(user.getIsArchived());
+        ccputil.sendWelcomeEmail(user.getEmailId(), user.getPrnNumber(), user.getFirstName(), user.getUsername());
         
         return userDao.save(newUser);
+      //  return null;
     }
     
     
@@ -170,7 +169,8 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setModifiedBy(user.getModifiedBy());
         newUser.setModifiedDate(user.getModifiedDate());        
         newUser.setManagerEmail(user.getManagerEmail());    
-        
+        newUser.setMobileNumber(user.getMobileNumber());
+        newUser.setIsArchived(user.getIsArchived());
         return userDao.save(newUser);
     }
 	public int updateuserasarchived(UserIdRequest user) {

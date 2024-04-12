@@ -8,9 +8,30 @@ public class UserDTO {
     private String username;
     private String password;
  private String firstName;
+ 
+ 
+  private String mobileNumber;
+ public String getMobileNumber() {
+	return mobileNumber;
+}
+public void setMobileNumber(String mobileNumber) {
+	this.mobileNumber = mobileNumber;
+}
+ 	private int isArchived;
+  
+ 
+ 
+ public int getIsArchived() {
+	return isArchived;
+}
+public void setIsArchived(int isArchived) {
+	this.isArchived = isArchived;
+}
     public String getFirstName() {
 	return firstName;
 }
+    
+    
 
 public void setFirstName(String firstName) {
 	this.firstName = firstName;

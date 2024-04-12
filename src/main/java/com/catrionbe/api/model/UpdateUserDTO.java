@@ -119,7 +119,21 @@ public void setNationalId(String nationalId) {
  	 private String nationalId;
  	 
  
+
+ 	  private String mobileNumber;
+ 	 public String getMobileNumber() {
+ 		return mobileNumber;
+ 	}
+ 	public void setMobileNumber(String mobileNumber) {
+ 		this.mobileNumber = mobileNumber;
+ 	}
+ 	 	private int isArchived;
+ 	  
  	 
+ 	 
+ 	 public int getIsArchived() {
+ 		return isArchived;
+ 	}
 
 	 
  		public String getIsActive() {

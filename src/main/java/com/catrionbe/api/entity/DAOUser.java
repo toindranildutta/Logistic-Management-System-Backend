@@ -194,8 +194,26 @@ public class DAOUser {
 		private String workEmail;
 	 @Column(name = "managerEmail", nullable = false)
 	 private String managerEmail;
+	 @Column(name = "mobileNumber", nullable = false)
+	 private String mobileNumber;
+	 public String getMobileNumber() {
+		return mobileNumber;
+	}
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+	@Column(name = "isArchived", nullable = false)
+		private int isArchived;
+	  
 	 
-	 public String getManagerEmail() {
+	 
+	 public int getIsArchived() {
+		return isArchived;
+	}
+	public void setIsArchived(int isArchived) {
+		this.isArchived = isArchived;
+	}
+	public String getManagerEmail() {
 		return managerEmail;
 	}
 	public void setManagerEmail(String managerEmail) {
