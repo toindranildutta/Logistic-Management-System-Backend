@@ -65,7 +65,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			
 			
 			logger.warn("JWT Token does not begin with Bearer String");
-			if (request.getServletPath().equals("/authenticate") ||  request.getServletPath().equals ("/register")) {
+			if (request.getServletPath().equals("/authenticate")    ) {
 				System.out.println(" No JWT Token Passed --- ------------------- >  showqr");
 				chain.doFilter(request, response);
 				return;

@@ -298,6 +298,7 @@ public class JwtAuthenticationController {
 	        return ResponseEntity.ok(userDetailsService.listsearchresult(searchText, pageNumber ,size));
 	    }
 	  
+	  // Dashboard APIs
 	  @RequestMapping(value = "/listallusersfromdb", method = RequestMethod.GET)
 	    public ResponseEntity<?> listallusersfromdb(
 	            @RequestParam(defaultValue = "0") final Integer pageNumber,

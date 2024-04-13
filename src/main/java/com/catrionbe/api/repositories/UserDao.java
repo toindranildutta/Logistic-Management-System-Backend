@@ -73,5 +73,10 @@ public interface UserDao extends CrudRepository<DAOUser, Integer> {
     @Query(value = "SELECT *  FROM user WHERE  lower(firstName) LIKE  %:searchText% OR lower(lastName) LIKE  %:searchText% OR prnNumber LIKE %:searchText%", nativeQuery = true)
 	Page<DAOUser> listsearchallusersfromdb(String searchText, Pageable pageable);
 
+    @Modifying
+    @Transactional
+    @Query(value = "update user set isCertified=1  where   userId=:userId", nativeQuery = true)
+	int updateuserascertifed(int userId);
+    
     
     }

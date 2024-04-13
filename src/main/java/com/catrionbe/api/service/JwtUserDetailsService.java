@@ -122,7 +122,27 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setManagerEmail(user.getManagerEmail());        
         newUser.setMobileNumber(user.getMobileNumber());
         newUser.setIsArchived(user.getIsArchived());
-        ccputil.sendWelcomeEmail(user.getEmailId(), user.getPrnNumber(), user.getFirstName(), user.getUsername());
+        String personalEmail = user.getEmailId();
+        String officialEmail =user.getWorkEmail();        
+        try {
+     			if (  officialEmail.equals("") || officialEmail.equals("null") || officialEmail==""  || officialEmail=="null") {     				 
+     				newUser.setIsEmployee(0);
+     			}
+     			else {     				 
+     					newUser.setIsEmployee(1);     				 
+     			} 
+     		} catch (Exception e) {
+     			newUser.setIsEmployee(0);
+     		}       
+        try {
+			if (  officialEmail.equals("") || officialEmail.equals("null") || officialEmail==""  || officialEmail=="null") {
+				officialEmail = personalEmail;
+			}
+		} catch (Exception e) {
+			officialEmail = personalEmail;
+		}                        
+        
+        ccputil.sendWelcomeEmail(officialEmail, user.getPrnNumber(), user.getFirstName(), user.getUsername());
         
         return userDao.save(newUser);
       //  return null;

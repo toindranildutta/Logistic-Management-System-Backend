@@ -30,7 +30,9 @@ public class CCPSigningService {
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
 	 
-	
+    @Autowired
+    private UserDao userDao;
+    
 	public CCPSigning  acceptUndertaking(CCPSigningRequest  signObj) {
 		String username =  objCCPSigningRepsitory.fetchFirstandLastName ( signObj.getUserId());
 		System.out.println(" username  "+ username);
@@ -119,7 +121,8 @@ public class CCPSigningService {
 		objCCPCertificate.setModifiedDate(signObj.getModifiedDate());
 		objCCPCertificate.setCreatedBy(signObj.getCreatedBy());
 		objCCPCertificate.setCreatedDate(signObj.getCreatedDate());
-		objCCPCertificateRepsitory.save(objCCPCertificate);
+		objCCPCertificateRepsitory.save(objCCPCertificate);		
+		userDao.updateuserascertifed(signObj.getUserId());		
 		return objCCPSigning;
 	}
 

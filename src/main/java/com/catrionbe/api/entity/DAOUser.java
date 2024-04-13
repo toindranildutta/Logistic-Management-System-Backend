@@ -247,6 +247,26 @@ public class DAOUser {
 		this.workEmail = workEmail;
 	}
 	 
+	@Column(name = "isEmployee", nullable = false)
+	private int isEmployee;
+	
+	public int getIsEmployee() {
+		return isEmployee;
+	}
+	public void setIsEmployee(int isEmployee) {
+		this.isEmployee = isEmployee;
+	}
+	
+	@Column(name = "isCertified", nullable = false)
+	public int getIsCertified() {
+		return isCertified;
+	}
+	public void setIsCertified(int isCertified) {
+		this.isCertified = isCertified;
+	}
+	@Column(name = "isCertified", nullable = false)
+	private int isCertified;
+	
 	  
  
 }
