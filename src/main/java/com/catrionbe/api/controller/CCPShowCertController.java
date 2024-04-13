@@ -1,8 +1,5 @@
 package com.catrionbe.api.controller;
 
- 
- 
-
 import java.awt.image.BufferedImage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +27,14 @@ import com.google.zxing.qrcode.QRCodeWriter;
 @RequestMapping("/showqr")
 public class CCPShowCertController {
 
-	 @Autowired
-	    private CCPSigningService  objCCPSigningService;
- 
-	
-	 @GetMapping(value = "/{prNumber}" )
-	 public ResponseEntity<?> fetchCertificate(@PathVariable("prNumber") String prNumber)
-	   throws Exception {
-		 System.out.println(" - - - - - -     ");
-		 objCCPSigningService.displaycertificate(prNumber);
-		return  ResponseEntity.ok(objCCPSigningService.displaycertificate(prNumber)); 
-		 
-	 } 
+	@Autowired
+	private CCPSigningService objCCPSigningService;
+
+	@GetMapping(value = "/{prNumber}")
+	public ResponseEntity<?> fetchCertificate(@PathVariable("prNumber") String prNumber) throws Exception {
+		System.out.println(" - - - - - -     ");
+		objCCPSigningService.displaycertificate(prNumber);
+		return ResponseEntity.ok(objCCPSigningService.displaycertificate(prNumber));
+
+	}
 }

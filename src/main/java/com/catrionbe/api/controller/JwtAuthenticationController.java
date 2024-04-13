@@ -58,260 +58,235 @@ a JWT token is created using the JWTTokenUtil and provided to the client.
 @CrossOrigin
 public class JwtAuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 
-    @Autowired
-    private JwtUserDetailsService userDetailsService;
-    
-    
+	@Autowired
+	private JwtUserDetailsService userDetailsService;
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
-    	
-    	
-        return ResponseEntity.ok(userDetailsService.save(user));
-    }
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
 
-    
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)  {
-     System.out.println("Inside  / Authenticate ");
-     String token = "";
-     String email ="";
-     UserDetails userDetails = null;
-        try {
-			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-        } catch (Exception e) {
-        	System.out.println(e);
-   		 //If no user found try to connect for Catrion 
-        	retry( authenticationRequest.getPassword() );
-        	System.out.println(" 00 ");
-   		}
-        System.out.println(" 0 ");
-			    System.out.println(authenticationRequest.getUsername());
-		        System.out.println(authenticationRequest.getPassword());
-		            try {
-						userDetails = userDetailsService
-						    .loadUserByUsername(authenticationRequest.getUsername());
-					} catch (UsernameNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-		          System.out.println(" 1 ");
-		          if (userDetails == null || userDetails.equals("null")|| userDetails.equals("") ) {
-		        	  //  userDetails = retry( authenticationRequest.getUsername() );
-		        	    System.out.println(" 2 ");
-		        	    try {
-							authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-						} catch (Exception e) {
-							 
-						}
-		          }
-		          System.out.println(" 3 ");
-		        //JwtResponsewithEmail JwtResponsewithEmailObj = new JwtResponsewithEmail();
-		           token = jwtTokenUtil.generateToken(userDetails);
-		        String username= userDetails.getUsername();
-		        String OTPGenerated = generateSixDigitOTP();
-		        System.out.println(userDetails.getUsername());
-		        email = userDetailsService.loadUserByUsername1(username);
-		        //JwtResponsewithEmailObj.setEmailId(email);
-		        //JwtResponsewithEmailObj.setToken(token);
-		    	if (email != "" && email != null) {
-		    		System.out.println(email);
-					ccputil ccputil = new ccputil();
-					 userDetailsService.updateUserByUsername(username,Integer.parseInt(OTPGenerated));
-					ccputil.sendEmail(email, OTPGenerated);
-				} else {
-					// throw new Exception("This Email not found in the record");
-				}
-		    	
-		
-
-       
-        return ResponseEntity.ok(new JwtResponsewithEmail(token,email));
-    }
-
-    public  UpdateUserDTO2 retry(String prn) {
-    	 
-			System.out.println("Inside Retry ----  ");
-			HttpHeaders headers = new HttpHeaders();
-			String jwtToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoie1wiZGF0YVwiOiBcInN1Y2Nlc3NcIn0ifQ.DGD8DUxrJb-EMus3IPXwJqnxzrHNpME8Z2P_PuDG4ag";
-			headers.add("Authorization", "Bearer " + jwtToken);
-
-			UserDTO  dto = new UserDTO();
-			HttpEntity<UserDTO> requestEntity = new HttpEntity<>(dto, headers);
-
-			ResponseEntity<  UpdateUserDTO2 > resp =
-			            new RestTemplate().exchange("https://catrion-python-api.smartx.services/api/all-prn/get-by-prnid/"+prn,
-			                    HttpMethod.GET, requestEntity, UpdateUserDTO2.class);
-			
-			 
-			
-			
-			UpdateUserDTO2 userObj = new UpdateUserDTO2();
-			userObj.setPrnNumber(resp.getBody().getPrnNumber());
-			userObj.setFirstName(resp.getBody().getFirstName());
-			userObj.setLastName(resp.getBody().getLastName());
-			userObj.setEmailId(resp.getBody().getEmailId());
-			userObj.setFatherName(resp.getBody().getFatherName());
-			userObj.setGrandFatherName(resp.getBody().getGrandFatherName());
-			userObj.setNationalId(resp.getBody().getNationalId());
-			userObj.setUsername(resp.getBody().getUsername());
-			userObj.setManagerEmail(resp.getBody().getManagerEmail());
-			userObj.setLocationName(resp.getBody().getLocationName());
-			userObj.setDeptName(resp.getBody().getDeptName());
-			userObj.setWorkEmail(resp.getBody().getWorkEmail());
-		     userDetailsService.save2(userObj);
-			
-		 
-		return userObj ;
-		
+		return ResponseEntity.ok(userDetailsService.save(user));
 	}
 
+	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
+		System.out.println("Inside  / Authenticate ");
+		String token = "";
+		String email = "";
+		UserDetails userDetails = null;
+		try {
+			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		} catch (Exception e) {
+			System.out.println(e);
+			// If no user found try to connect for Catrion
+			retry(authenticationRequest.getPassword());
+			System.out.println(" 00 ");
+		}
+		System.out.println(" 0 ");
+		System.out.println(authenticationRequest.getUsername());
+		System.out.println(authenticationRequest.getPassword());
+		try {
+			userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+		} catch (UsernameNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println(" 1 ");
+		if (userDetails == null || userDetails.equals("null") || userDetails.equals("")) {
+			// userDetails = retry( authenticationRequest.getUsername() );
+			System.out.println(" 2 ");
+			try {
+				authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+			} catch (Exception e) {
+
+			}
+		}
+		System.out.println(" 3 ");
+		// JwtResponsewithEmail JwtResponsewithEmailObj = new JwtResponsewithEmail();
+		token = jwtTokenUtil.generateToken(userDetails);
+		String username = userDetails.getUsername();
+		String OTPGenerated = generateSixDigitOTP();
+		System.out.println(userDetails.getUsername());
+		email = userDetailsService.loadUserByUsername1(username);
+		// JwtResponsewithEmailObj.setEmailId(email);
+		// JwtResponsewithEmailObj.setToken(token);
+		if (email != "" && email != null) {
+			System.out.println(email);
+			ccputil ccputil = new ccputil();
+			userDetailsService.updateUserByUsername(username, Integer.parseInt(OTPGenerated));
+			ccputil.sendEmail(email, OTPGenerated);
+		} else {
+			// throw new Exception("This Email not found in the record");
+		}
+
+		return ResponseEntity.ok(new JwtResponsewithEmail(token, email));
+	}
+
+	public UpdateUserDTO2 retry(String prn) {
+
+		System.out.println("Inside Retry ----  ");
+		HttpHeaders headers = new HttpHeaders();
+		String jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoie1wiZGF0YVwiOiBcInN1Y2Nlc3NcIn0ifQ.DGD8DUxrJb-EMus3IPXwJqnxzrHNpME8Z2P_PuDG4ag";
+		headers.add("Authorization", "Bearer " + jwtToken);
+
+		UserDTO dto = new UserDTO();
+		HttpEntity<UserDTO> requestEntity = new HttpEntity<>(dto, headers);
+
+		ResponseEntity<UpdateUserDTO2> resp = new RestTemplate().exchange(
+				"https://catrion-python-api.smartx.services/api/all-prn/get-by-prnid/" + prn, HttpMethod.GET,
+				requestEntity, UpdateUserDTO2.class);
+
+		UpdateUserDTO2 userObj = new UpdateUserDTO2();
+		userObj.setPrnNumber(resp.getBody().getPrnNumber());
+		userObj.setFirstName(resp.getBody().getFirstName());
+		userObj.setLastName(resp.getBody().getLastName());
+		userObj.setEmailId(resp.getBody().getEmailId());
+		userObj.setFatherName(resp.getBody().getFatherName());
+		userObj.setGrandFatherName(resp.getBody().getGrandFatherName());
+		userObj.setNationalId(resp.getBody().getNationalId());
+		userObj.setUsername(resp.getBody().getUsername());
+		userObj.setManagerEmail(resp.getBody().getManagerEmail());
+		userObj.setLocationName(resp.getBody().getLocationName());
+		userObj.setDeptName(resp.getBody().getDeptName());
+		userObj.setWorkEmail(resp.getBody().getWorkEmail());
+		userDetailsService.save2(userObj);
+
+		return userObj;
+
+	}
 
 	@RequestMapping(value = "/validateotp", method = RequestMethod.POST)
-    public ResponseEntity<?> validateOtp(@RequestBody OtpRequest  otpValidationRequest) throws Exception {
-    	System.out.println(" Hit the Controller  0 00  0 0");
-    	 
-    	 String username = null; 
-    	 
-    	DAOUser userDetails = (DAOUser) userDetailsService.autheticateOtp( otpValidationRequest.getEmailId(), otpValidationRequest.getOtpgenerated());
-    	
- 
-        
-        String jsonString = new com.google.gson.Gson().toJson(userDetails);
-        return ResponseEntity.status(HttpStatus.OK).body(jsonString.getBytes("UTF-8"));		
-        //return ResponseEntity.ok(new JwtResponse(token));
-    }
-    
-    @RequestMapping(value = "/fetchuserdetails", method = RequestMethod.POST)
-    public ResponseEntity<?> fetchUserDetailsByEmail(@RequestBody EmailIdRequest  emailId) throws Exception {
-    	System.out.println(" Hit the Controller  0 00  20");
-    	 
-     
-    	 
-    	DAOUser userDetails = (DAOUser) userDetailsService.fetchUserDetails( emailId.getEmailId());
-    	
- 
-        
-        String jsonString = new com.google.gson.Gson().toJson(userDetails);
-        return ResponseEntity.status(HttpStatus.OK).body(jsonString.getBytes("UTF-8"));		
-        //return ResponseEntity.ok(new JwtResponse(token));
-    }
-    
+	public ResponseEntity<?> validateOtp(@RequestBody OtpRequest otpValidationRequest) throws Exception {
+		System.out.println(" Hit the Controller  0 00  0 0");
 
-    private void authenticate(String username, String password) throws Exception {
-        try {
-        	System.out.println("Inside Auth - - - - ");
-        	System.out.println("User Name :  "+username );
-        	System.out.println("Password :  "+password);
-        	
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            
-        } catch (DisabledException e) {
-        	
-            throw new Exception("USER_DISABLED", e);
-        } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
-    }
-    
+		String username = null;
+
+		DAOUser userDetails = (DAOUser) userDetailsService.autheticateOtp(otpValidationRequest.getEmailId(),
+				otpValidationRequest.getOtpgenerated());
+
+		String jsonString = new com.google.gson.Gson().toJson(userDetails);
+		return ResponseEntity.status(HttpStatus.OK).body(jsonString.getBytes("UTF-8"));
+		// return ResponseEntity.ok(new JwtResponse(token));
+	}
+
+	@RequestMapping(value = "/fetchuserdetails", method = RequestMethod.POST)
+	public ResponseEntity<?> fetchUserDetailsByEmail(@RequestBody EmailIdRequest emailId) throws Exception {
+		System.out.println(" Hit the Controller  0 00  20");
+
+		DAOUser userDetails = (DAOUser) userDetailsService.fetchUserDetails(emailId.getEmailId());
+
+		String jsonString = new com.google.gson.Gson().toJson(userDetails);
+		return ResponseEntity.status(HttpStatus.OK).body(jsonString.getBytes("UTF-8"));
+		// return ResponseEntity.ok(new JwtResponse(token));
+	}
+
+	private void authenticate(String username, String password) throws Exception {
+		try {
+			System.out.println("Inside Auth - - - - ");
+			System.out.println("User Name :  " + username);
+			System.out.println("Password :  " + password);
+
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+
+		} catch (DisabledException e) {
+
+			throw new Exception("USER_DISABLED", e);
+		} catch (BadCredentialsException e) {
+			throw new Exception("INVALID_CREDENTIALS", e);
+		}
+	}
+
 	public String generateSixDigitOTP() {
 		String random = RandomStringUtils.randomNumeric(6);
 		return random;
 	}
-    
-	
+
 	@RequestMapping(value = "/generateccptoken", method = RequestMethod.POST)
-    public ResponseEntity<?> generateCCPToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+	public ResponseEntity<?> generateCCPToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-     //   authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		// authenticate(authenticationRequest.getUsername(),
+		// authenticationRequest.getPassword());
 
-          String token = null;
+		String token = null;
 		try {
-			final UserDetails userDetails = userDetailsService
-			        .loadUserByUsername(authenticationRequest.getUsername());
+			final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 			token = jwtTokenUtil.generateToken(userDetails);
-  			System.out.println(userDetails.getUsername()); 			 
+			System.out.println(userDetails.getUsername());
 		} catch (UsernameNotFoundException e) {
 			throw new Exception("User not found in the record");
-		} catch (Exception e) {			
+		} catch (Exception e) {
 			throw new Exception("User not found in the record");
-		} 
-        return ResponseEntity.ok(new JwtResponse(token));
-    }
+		}
+		return ResponseEntity.ok(new JwtResponse(token));
+	}
 
-	 @RequestMapping(value = "/totalcatrionusers", method = RequestMethod.GET)
-	    public ResponseEntity<?> totalCatrionUsers( ) throws Exception {
-	    	 return ResponseEntity.ok(  (userDetailsService.totalCatrionUsers( )));
-	    }
-	  
-	  
-	  @RequestMapping(value = "/loginusers", method = RequestMethod.GET)
-	    public ResponseEntity<?> loginUsers( ) throws Exception {
-	    	 return ResponseEntity.ok(  (userDetailsService.loginUsers( )));
-	    }
-	  
-	  @RequestMapping(value = "/commencedcyberbasic", method = RequestMethod.GET)
-	    public ResponseEntity<?> commencedCyberBasic( ) throws Exception {
-	    	 return ResponseEntity.ok(  (userDetailsService.commencedCyberBasic( )));
-	    }
-	  
-	  @RequestMapping(value = "/updateuser", method = RequestMethod.PUT)
-	    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDTO user) throws Exception {
-	        return ResponseEntity.ok(userDetailsService.update(user));
-	    }
-    
-	  @RequestMapping(value = "/updateuserasarchived", method = RequestMethod.PUT)
-	    public ResponseEntity<?> updateuserasarchived(@RequestBody UserIdRequest userObj) throws Exception {
-	        return ResponseEntity.ok(userDetailsService.updateuserasarchived(userObj));
-	    }
-	  
-	  @RequestMapping(value = "/listallactiveusers", method = RequestMethod.GET)
-	    public ResponseEntity<?> listallactiveusers(
-	            @RequestParam(defaultValue = "0") final Integer pageNumber,
-	            @RequestParam(defaultValue = "10") final Integer size )throws Exception {
-	        return ResponseEntity.ok(userDetailsService.listallactiveusers( pageNumber ,size ));
-	    }
-	  
-	  @RequestMapping(value = "/listallnewusers", method = RequestMethod.GET)
-	    public ResponseEntity<?> listallnewusers(
-	            @RequestParam(defaultValue = "0") final Integer pageNumber,
-	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
-	        return ResponseEntity.ok(userDetailsService.listallnewusers(pageNumber ,size));
-	    }
-	  @RequestMapping(value = "/listallarchivedusers", method = RequestMethod.GET)
-	    public ResponseEntity<?> listallarchivedusers(
-	            @RequestParam(defaultValue = "0") final Integer pageNumber,
-	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
-	        return ResponseEntity.ok(userDetailsService.listallarchivedusers(pageNumber ,size));
-	    }
-	  @RequestMapping(value = "/listsearchresult", method = RequestMethod.GET)
-	    public ResponseEntity<?> listsearchresult(
-	    		@RequestParam(defaultValue = "test") final String searchText,
-	            @RequestParam(defaultValue = "0") final Integer pageNumber,
-	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
-	        return ResponseEntity.ok(userDetailsService.listsearchresult(searchText, pageNumber ,size));
-	    }
-	  
-	  // Dashboard APIs
-	  @RequestMapping(value = "/listallusersfromdb", method = RequestMethod.GET)
-	    public ResponseEntity<?> listallusersfromdb(
-	            @RequestParam(defaultValue = "0") final Integer pageNumber,
-	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
-	        return ResponseEntity.ok(userDetailsService.listallusersfromdb(pageNumber ,size));
-	    }
-	  
-	  @RequestMapping(value = "/listsearchallusersfromdb", method = RequestMethod.GET)
-	    public ResponseEntity<?> listsearchallusersfromdb(
-	    		@RequestParam(defaultValue = "test") final String searchText,
-	            @RequestParam(defaultValue = "0") final Integer pageNumber,
-	            @RequestParam(defaultValue = "10") final Integer size) throws Exception {
-	        return ResponseEntity.ok(userDetailsService.listsearchallusersfromdb(searchText, pageNumber ,size));
-	    }
-	  
+	@RequestMapping(value = "/totalcatrionusers", method = RequestMethod.GET)
+	public ResponseEntity<?> totalCatrionUsers() throws Exception {
+		return ResponseEntity.ok((userDetailsService.totalCatrionUsers()));
+	}
+
+	@RequestMapping(value = "/loginusers", method = RequestMethod.GET)
+	public ResponseEntity<?> loginUsers() throws Exception {
+		return ResponseEntity.ok((userDetailsService.loginUsers()));
+	}
+
+	@RequestMapping(value = "/commencedcyberbasic", method = RequestMethod.GET)
+	public ResponseEntity<?> commencedCyberBasic() throws Exception {
+		return ResponseEntity.ok((userDetailsService.commencedCyberBasic()));
+	}
+
+	@RequestMapping(value = "/updateuser", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateUser(@RequestBody UpdateUserDTO user) throws Exception {
+		return ResponseEntity.ok(userDetailsService.update(user));
+	}
+
+	@RequestMapping(value = "/updateuserasarchived", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateuserasarchived(@RequestBody UserIdRequest userObj) throws Exception {
+		return ResponseEntity.ok(userDetailsService.updateuserasarchived(userObj));
+	}
+
+	@RequestMapping(value = "/listallactiveusers", method = RequestMethod.GET)
+	public ResponseEntity<?> listallactiveusers(@RequestParam(defaultValue = "0") final Integer pageNumber,
+			@RequestParam(defaultValue = "10") final Integer size) throws Exception {
+		return ResponseEntity.ok(userDetailsService.listallactiveusers(pageNumber, size));
+	}
+
+	@RequestMapping(value = "/listallnewusers", method = RequestMethod.GET)
+	public ResponseEntity<?> listallnewusers(@RequestParam(defaultValue = "0") final Integer pageNumber,
+			@RequestParam(defaultValue = "10") final Integer size) throws Exception {
+		return ResponseEntity.ok(userDetailsService.listallnewusers(pageNumber, size));
+	}
+
+	@RequestMapping(value = "/listallarchivedusers", method = RequestMethod.GET)
+	public ResponseEntity<?> listallarchivedusers(@RequestParam(defaultValue = "0") final Integer pageNumber,
+			@RequestParam(defaultValue = "10") final Integer size) throws Exception {
+		return ResponseEntity.ok(userDetailsService.listallarchivedusers(pageNumber, size));
+	}
+
+	@RequestMapping(value = "/listsearchresult", method = RequestMethod.GET)
+	public ResponseEntity<?> listsearchresult(@RequestParam(defaultValue = "test") final String searchText,
+			@RequestParam(defaultValue = "0") final Integer pageNumber,
+			@RequestParam(defaultValue = "10") final Integer size) throws Exception {
+		return ResponseEntity.ok(userDetailsService.listsearchresult(searchText, pageNumber, size));
+	}
+
+	// Dashboard APIs
+	@RequestMapping(value = "/listallusersfromdb", method = RequestMethod.GET)
+	public ResponseEntity<?> listallusersfromdb(@RequestParam(defaultValue = "0") final Integer pageNumber,
+			@RequestParam(defaultValue = "10") final Integer size) throws Exception {
+		return ResponseEntity.ok(userDetailsService.listallusersfromdb(pageNumber, size));
+	}
+
+	@RequestMapping(value = "/listsearchallusersfromdb", method = RequestMethod.GET)
+	public ResponseEntity<?> listsearchallusersfromdb(@RequestParam(defaultValue = "test") final String searchText,
+			@RequestParam(defaultValue = "0") final Integer pageNumber,
+			@RequestParam(defaultValue = "10") final Integer size) throws Exception {
+		return ResponseEntity.ok(userDetailsService.listsearchallusersfromdb(searchText, pageNumber, size));
+	}
+
 }

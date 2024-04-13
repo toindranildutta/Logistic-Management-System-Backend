@@ -18,23 +18,21 @@ import com.catrionbe.api.service.CCPQuizService;
 @CrossOrigin
 public class CCPQuizController {
 
-	   @Autowired
-	    private CCPQuizService objCCPQuizService;
-	    
-	    
-	    @RequestMapping(value = "/markquizcomplete", method = RequestMethod.POST)
-	    public ResponseEntity<?> saveCourse(@RequestBody CCPQuizDetailRequest  courseUpdateRequest) throws Exception {
-		
-	    	 return ResponseEntity.ok(objCCPQuizService.save(courseUpdateRequest));
-	    	
-	     
-	    }
-	    @RequestMapping(value = "/checkquizcomplete", method = RequestMethod.POST)
-	    public ResponseEntity<?> checkquizcomplete(@RequestBody UserIdRequest  userIdRequest) throws Exception {
-		
-	    	 return ResponseEntity.ok( String.valueOf(objCCPQuizService.checkquizcomplete(userIdRequest.getUserId())));
-	    	
-	     
-	    }
-	    
+	@Autowired
+	private CCPQuizService objCCPQuizService;
+
+	@RequestMapping(value = "/markquizcomplete", method = RequestMethod.POST)
+	public ResponseEntity<?> saveCourse(@RequestBody CCPQuizDetailRequest courseUpdateRequest) throws Exception {
+
+		return ResponseEntity.ok(objCCPQuizService.save(courseUpdateRequest));
+
+	}
+
+	@RequestMapping(value = "/checkquizcomplete", method = RequestMethod.POST)
+	public ResponseEntity<?> checkquizcomplete(@RequestBody UserIdRequest userIdRequest) throws Exception {
+
+		return ResponseEntity.ok(String.valueOf(objCCPQuizService.checkquizcomplete(userIdRequest.getUserId())));
+
+	}
+
 }

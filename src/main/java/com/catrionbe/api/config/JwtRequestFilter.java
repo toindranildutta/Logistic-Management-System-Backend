@@ -58,15 +58,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				throw new UnauthorizedException("JWT Token has expired");
 			}
 		} else {
-			System.out.println(" No JWT Token Passed --- ------------------- >    "+request.getServletPath() );
-			System.out.println(" No JWT Token Passed --- ------------------- > " );
-			System.out.println(" No JWT Token Passed --- ------------------- > ");
-			System.out.println(" No JWT Token Passed --- ------------------- > ");
-			
-			
+
 			logger.warn("JWT Token does not begin with Bearer String");
-			if (request.getServletPath().equals("/authenticate")    ) {
-				System.out.println(" No JWT Token Passed --- ------------------- >  showqr");
+			if (request.getServletPath().equals("/authenticate")) {
+
 				chain.doFilter(request, response);
 				return;
 			} else {
