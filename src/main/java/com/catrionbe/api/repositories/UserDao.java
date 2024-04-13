@@ -77,6 +77,24 @@ public interface UserDao extends CrudRepository<DAOUser, Integer> {
     @Transactional
     @Query(value = "update user set isCertified=1  where   userId=:userId", nativeQuery = true)
 	int updateuserascertifed(int userId);
+
+    @Query(value = "SELECT *  FROM user  where isArchived=1", nativeQuery = true)
+	Page<DAOUser> listallarcusersfromdb(Pageable pageable);
+
+    @Query(value = "SELECT *  FROM user WHERE  lower(firstName) LIKE  %:searchText% OR lower(lastName) LIKE  %:searchText% OR prnNumber LIKE %:searchText% AND   isArchived=1", nativeQuery = true)
+	Page<DAOUser> listsearchallarchusersfromdb(String searchText, Pageable pageable);
+
+    @Query(value = "SELECT *  FROM user  where   isEmployee=1", nativeQuery = true)
+	Page<DAOUser> listallemployeesfromdb(Pageable pageable);
+
+    @Query(value = "SELECT *  FROM user WHERE  lower(firstName) LIKE  %:searchText% OR lower(lastName) LIKE  %:searchText% OR prnNumber LIKE %:searchText% AND   isEmployee=1", nativeQuery = true)
+	Page<DAOUser> listsearchallemployeesfromdb(String searchText, Pageable pageable);
+
+    @Query(value = "SELECT *  FROM user  where  isEmployee=0 ", nativeQuery = true)
+	Page<DAOUser> listallnonemployeesfromdb(Pageable pageable);
+
+    @Query(value = "SELECT *  FROM user WHERE  lower(firstName) LIKE  %:searchText% OR lower(lastName) LIKE  %:searchText% OR prnNumber LIKE %:searchText% AND  isEmployee=0", nativeQuery = true)
+	Page<DAOUser> listsearchallnonemployeesfromdb(String searchText, Pageable pageable);
     
     
     }

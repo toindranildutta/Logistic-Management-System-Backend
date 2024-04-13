@@ -58,9 +58,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable()
 				// dont authenticate this particular request
 				.authorizeRequests()
-				.antMatchers("/listsearchallusersfromdb", "/listallusersfromdb", "/listsearchincident",
-						"/listsearchfeedback", "/onlystaffsegmentprogresstable", "/uploadImage",
-						"/listallarchivedincidents", "/onlystaffsegmentprogresschart", "/allstaffsegmentprogresstable",
+				.antMatchers("/listsearchallnonemployeesfromdb", "/listallnonemployeesfromdb",
+						"/listsearchallemployeesfromdb", "/listallemployeesfromdb", "/listsearchallusersfromdb",
+						"/listallusersfromdb", "/listsearchincident", "/listsearchfeedback",
+						"/onlystaffsegmentprogresstable", "/uploadImage", "/listallarchivedincidents",
+						"/onlystaffsegmentprogresschart", "/allstaffsegmentprogresstable",
 						"/allstaffsegmentprogresschart", "/accessbycertificate", "/accessbydate", "/listsearchresult",
 						"/saveuseractivity", "/generatecertificatedata", "/listallactiveincidents",
 						"/updateincidentstatus", "/saveincident", "/listallarchivedusers", "/listallnewusers",

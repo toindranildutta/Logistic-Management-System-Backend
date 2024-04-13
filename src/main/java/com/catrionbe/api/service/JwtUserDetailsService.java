@@ -276,4 +276,34 @@ public class JwtUserDetailsService implements UserDetailsService {
 				  return		userDao.listsearchallusersfromdb(searchText,pageable); 
 						
 					}
+ 
+	public Page<DAOUser> listallarcusersfromdb( int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+				  return		userDao.listallarcusersfromdb(pageable); 						
+					}	
+	public Page<DAOUser> listsearchallarchusersfromdb(String searchText ,int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+				  return		userDao.listsearchallarchusersfromdb(searchText,pageable); 
+						
+					}
+ 
+	public Page<DAOUser> listallemployeesfromdb( int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+				  return		userDao.listallemployeesfromdb(pageable); 						
+					}	
+	public Page<DAOUser> listsearchallemployeesfromdb(String searchText ,int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+				  return		userDao.listsearchallemployeesfromdb(searchText,pageable); 						
+					} 
+	public Page<DAOUser> listallnonemployeesfromdb( int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+				  return		userDao.listallnonemployeesfromdb(pageable); 						
+					}	
+	public Page<DAOUser> listsearchallnonemployeesfromdb(String searchText ,int pageNumber,int size) {
+		  Pageable pageable = PageRequest.of(pageNumber, size );
+				  return		userDao.listsearchallnonemployeesfromdb(searchText,pageable); 
+						
+					}
+	
+	
 }

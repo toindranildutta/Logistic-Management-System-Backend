@@ -81,66 +81,45 @@ public class JwtAuthenticationController {
 		UserDetails userDetails = null;
 		try {
 			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-		} catch (Exception e) {
-			System.out.println(e);
-			// If no user found try to connect for Catrion
-			retry(authenticationRequest.getPassword());
-			System.out.println(" 00 ");
-		}
-		System.out.println(" 0 ");
-		System.out.println(authenticationRequest.getUsername());
-		System.out.println(authenticationRequest.getPassword());
+		} catch (Exception e) {			
+			retry(authenticationRequest.getPassword());			
+		}		
 		try {
 			userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		} catch (UsernameNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		System.out.println(" 1 ");
-		if (userDetails == null || userDetails.equals("null") || userDetails.equals("")) {
-			// userDetails = retry( authenticationRequest.getUsername() );
-			System.out.println(" 2 ");
+		if (userDetails == null || userDetails.equals("null") || userDetails.equals("")) {			
 			try {
 				authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 			} catch (Exception e) {
-
 			}
-		}
-		System.out.println(" 3 ");
-		// JwtResponsewithEmail JwtResponsewithEmailObj = new JwtResponsewithEmail();
+		}		
 		token = jwtTokenUtil.generateToken(userDetails);
 		String username = userDetails.getUsername();
 		String OTPGenerated = generateSixDigitOTP();
 		System.out.println(userDetails.getUsername());
-		email = userDetailsService.loadUserByUsername1(username);
-		// JwtResponsewithEmailObj.setEmailId(email);
-		// JwtResponsewithEmailObj.setToken(token);
+		email = userDetailsService.loadUserByUsername1(username);	
 		if (email != "" && email != null) {
 			System.out.println(email);
 			ccputil ccputil = new ccputil();
 			userDetailsService.updateUserByUsername(username, Integer.parseInt(OTPGenerated));
 			ccputil.sendEmail(email, OTPGenerated);
-		} else {
-			// throw new Exception("This Email not found in the record");
+		} else {			
 		}
-
 		return ResponseEntity.ok(new JwtResponsewithEmail(token, email));
 	}
 
 	public UpdateUserDTO2 retry(String prn) {
-
-		System.out.println("Inside Retry ----  ");
 		HttpHeaders headers = new HttpHeaders();
 		String jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoie1wiZGF0YVwiOiBcInN1Y2Nlc3NcIn0ifQ.DGD8DUxrJb-EMus3IPXwJqnxzrHNpME8Z2P_PuDG4ag";
 		headers.add("Authorization", "Bearer " + jwtToken);
-
 		UserDTO dto = new UserDTO();
 		HttpEntity<UserDTO> requestEntity = new HttpEntity<>(dto, headers);
-
 		ResponseEntity<UpdateUserDTO2> resp = new RestTemplate().exchange(
 				"https://catrion-python-api.smartx.services/api/all-prn/get-by-prnid/" + prn, HttpMethod.GET,
 				requestEntity, UpdateUserDTO2.class);
-
 		UpdateUserDTO2 userObj = new UpdateUserDTO2();
 		userObj.setPrnNumber(resp.getBody().getPrnNumber());
 		userObj.setFirstName(resp.getBody().getFirstName());
@@ -155,46 +134,31 @@ public class JwtAuthenticationController {
 		userObj.setDeptName(resp.getBody().getDeptName());
 		userObj.setWorkEmail(resp.getBody().getWorkEmail());
 		userDetailsService.save2(userObj);
-
 		return userObj;
 
 	}
 
 	@RequestMapping(value = "/validateotp", method = RequestMethod.POST)
 	public ResponseEntity<?> validateOtp(@RequestBody OtpRequest otpValidationRequest) throws Exception {
-		System.out.println(" Hit the Controller  0 00  0 0");
-
 		String username = null;
-
 		DAOUser userDetails = (DAOUser) userDetailsService.autheticateOtp(otpValidationRequest.getEmailId(),
 				otpValidationRequest.getOtpgenerated());
-
 		String jsonString = new com.google.gson.Gson().toJson(userDetails);
-		return ResponseEntity.status(HttpStatus.OK).body(jsonString.getBytes("UTF-8"));
-		// return ResponseEntity.ok(new JwtResponse(token));
+		return ResponseEntity.status(HttpStatus.OK).body(jsonString.getBytes("UTF-8"));	 
 	}
 
 	@RequestMapping(value = "/fetchuserdetails", method = RequestMethod.POST)
 	public ResponseEntity<?> fetchUserDetailsByEmail(@RequestBody EmailIdRequest emailId) throws Exception {
-		System.out.println(" Hit the Controller  0 00  20");
-
 		DAOUser userDetails = (DAOUser) userDetailsService.fetchUserDetails(emailId.getEmailId());
-
 		String jsonString = new com.google.gson.Gson().toJson(userDetails);
 		return ResponseEntity.status(HttpStatus.OK).body(jsonString.getBytes("UTF-8"));
-		// return ResponseEntity.ok(new JwtResponse(token));
+		 
 	}
 
 	private void authenticate(String username, String password) throws Exception {
-		try {
-			System.out.println("Inside Auth - - - - ");
-			System.out.println("User Name :  " + username);
-			System.out.println("Password :  " + password);
-
+		try { 
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-
 		} catch (DisabledException e) {
-
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
 			throw new Exception("INVALID_CREDENTIALS", e);
@@ -207,11 +171,7 @@ public class JwtAuthenticationController {
 	}
 
 	@RequestMapping(value = "/generateccptoken", method = RequestMethod.POST)
-	public ResponseEntity<?> generateCCPToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-
-		// authenticate(authenticationRequest.getUsername(),
-		// authenticationRequest.getPassword());
-
+	public ResponseEntity<?> generateCCPToken(@RequestBody JwtRequest authenticationRequest) throws Exception { 
 		String token = null;
 		try {
 			final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
@@ -275,7 +235,7 @@ public class JwtAuthenticationController {
 		return ResponseEntity.ok(userDetailsService.listsearchresult(searchText, pageNumber, size));
 	}
 
-	// Dashboard APIs
+ 
 	@RequestMapping(value = "/listallusersfromdb", method = RequestMethod.GET)
 	public ResponseEntity<?> listallusersfromdb(@RequestParam(defaultValue = "0") final Integer pageNumber,
 			@RequestParam(defaultValue = "10") final Integer size) throws Exception {
@@ -288,5 +248,48 @@ public class JwtAuthenticationController {
 			@RequestParam(defaultValue = "10") final Integer size) throws Exception {
 		return ResponseEntity.ok(userDetailsService.listsearchallusersfromdb(searchText, pageNumber, size));
 	}
+	
+	 
+		@RequestMapping(value = "/listallarcusersfromdb", method = RequestMethod.GET)
+		public ResponseEntity<?> listallarcusersfromdb(@RequestParam(defaultValue = "0") final Integer pageNumber,
+				@RequestParam(defaultValue = "10") final Integer size) throws Exception {
+			return ResponseEntity.ok(userDetailsService.listallarcusersfromdb(pageNumber, size));
+		}
+
+		@RequestMapping(value = "/listsearchallarchusersfromdb", method = RequestMethod.GET)
+		public ResponseEntity<?> listsearchallarchusersfromdb(@RequestParam(defaultValue = "test") final String searchText,
+				@RequestParam(defaultValue = "0") final Integer pageNumber,
+				@RequestParam(defaultValue = "10") final Integer size) throws Exception {
+			return ResponseEntity.ok(userDetailsService.listsearchallarchusersfromdb(searchText, pageNumber, size));
+		}
+		
+	 
+				@RequestMapping(value = "/listallemployeesfromdb", method = RequestMethod.GET)
+				public ResponseEntity<?> listallemployeesfromdb(@RequestParam(defaultValue = "0") final Integer pageNumber,
+						@RequestParam(defaultValue = "10") final Integer size) throws Exception {
+					return ResponseEntity.ok(userDetailsService.listallemployeesfromdb(pageNumber, size));
+				}
+				
+				@RequestMapping(value = "/listsearchallemployeesfromdb", method = RequestMethod.GET)
+				public ResponseEntity<?> listsearchallemployeesfromdb(@RequestParam(defaultValue = "test") final String searchText,
+						@RequestParam(defaultValue = "0") final Integer pageNumber,
+						@RequestParam(defaultValue = "10") final Integer size) throws Exception {
+					return ResponseEntity.ok(userDetailsService.listsearchallemployeesfromdb(searchText, pageNumber, size));
+				}
+				
+			 
+				@RequestMapping(value = "/listallnonemployeesfromdb", method = RequestMethod.GET)
+				public ResponseEntity<?> listallnonemployeesfromdb(@RequestParam(defaultValue = "0") final Integer pageNumber,
+						@RequestParam(defaultValue = "10") final Integer size) throws Exception {
+					return ResponseEntity.ok(userDetailsService.listallnonemployeesfromdb(pageNumber, size));
+				}
+
+				@RequestMapping(value = "/listsearchallnonemployeesfromdb", method = RequestMethod.GET)
+				public ResponseEntity<?> listsearchallnonemployeesfromdb(@RequestParam(defaultValue = "test") final String searchText,
+						@RequestParam(defaultValue = "0") final Integer pageNumber,
+						@RequestParam(defaultValue = "10") final Integer size) throws Exception {
+					return ResponseEntity.ok(userDetailsService.listsearchallnonemployeesfromdb(searchText, pageNumber, size));
+				}
+		
 
 }
