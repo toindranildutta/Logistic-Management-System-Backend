@@ -7,11 +7,11 @@
 		<version>2.5.6</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<groupId>com.routemasterapi</groupId>
+	<artifactId>routemasterapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>routemasterapi</name>
+	<description>Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -27,23 +27,11 @@
 			<groupId>com.azure.spring</groupId>
 			<artifactId>spring-cloud-azure-starter-storage</artifactId>
 		</dependency> -->
-		<dependency>
-			<groupId>com.microsoft.azure</groupId>
-			<artifactId>azure-storage</artifactId>
-			<version>8.4.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>core</artifactId>
-			<version>3.5.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>javase</artifactId>
-			<version>3.5.2</version>
-		</dependency>
+	  <dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-commons</artifactId>
+    <version>2.4.8</version>
+</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -116,28 +104,8 @@
 			<artifactId>azure-mgmt-mysql</artifactId>
 			<version>1.0.0-beta-4</version>
 		</dependency>
-
-		<dependency>
-			<groupId>com.azure.spring</groupId>
-			<artifactId>azure-spring-boot-starter-storage</artifactId>
-			<version>3.10.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.azure</groupId>
-			<artifactId>azure-storage-blob</artifactId>
-			<version>12.13.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.microsoft.azure</groupId>
-			<artifactId>applicationinsights-spring-boot-starter</artifactId>
-			<version>1.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.microsoft.azure</groupId>
-			<artifactId>applicationinsights-logging-logback</artifactId>
-			<version>2.3.1</version>
-		</dependency>
+ 
+	  
 
 
 	</dependencies>
