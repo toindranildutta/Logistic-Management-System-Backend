@@ -1,7 +1,7 @@
-# CGDN-SpringBoot-JWT-MySql
-## Bắt đầu với file WebSecurityConfig. Nơi mình sẽ khai báo các webservice nào bắt buộc phải login và cái nào không. Đồng thời 
-mình nhúng JwtAuthenticationEntryPoint và  jwtRequestFilter vào sử dụng
-+ Mục đích của JwtAuthenticationEntryPoint là để reject tất cả các request mà không authenticate vào hệ thống. Nếu 1 request mà không
-đăng nhập thì sẽ ném về lỗi 403
-+ Mục đích của jwtRequestFilter kiểm tra tất cả các request truyền lên server có hợp lệ hay không bằng việc kiểm tra token trên header
-+ JwtTokenUtil có nhiệm vụ sinh ra token dự vào key mình cung cấp trong file application.properties
+# ID-SpringBoot-JWT-MySql
+## Start with the WebSecurityConfig file. Where I will declare which web services require login and which do not.
++ Simultaneously I embedded JwtAuthenticationEntryPoint and jwtRequestFilter to use
+
+The purpose of JwtAuthenticationEntryPoint is to reject all requests that do not authenticate into the system. If a request is not logged in, a 403 error will be thrown
+The purpose of jwtRequestFilter is to check whether all requests transmitted to the server are valid or not by checking the token in the header.
+JwtTokenUtil is responsible for generating tokens based on the key you provide in the application.properties file
